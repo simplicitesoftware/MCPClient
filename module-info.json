@@ -1,0 +1,10 @@
+{
+    "date": "2026-08-24 17:03:51",
+    "name": "McpClient",
+    "format": "json",
+    "files": ["McpClient.json"],
+    "repository": {},
+    "version": "7",
+    "branch": "master",
+    "platform": "7.0.0-alpha"
+}

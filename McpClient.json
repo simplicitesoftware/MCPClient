@@ -1,0 +1,38 @@
+{
+ "object": "Module",
+ "userkey": "McpClient",
+ "item": {
+  "mdl_name": "McpClient",
+  "mdl_prefix": null,
+  "mdl_version": "7",
+  "mdl_type": "X",
+  "mdl_icon": null,
+  "mdl_url": null,
+  "mdl_comment": null,
+  "mdl_lib": {
+   "path": "build/module-mcpclient.jar",
+   "mime": "application/java-archive",
+   "name": "module-mcpclient.jar"
+  }
+ },
+ "links": [{
+  "object": "Script",
+  "label": "Shared code",
+  "icon": "img/system/shared_code",
+  "field": "row_module_id",
+  "list": [{
+   "object": "Script",
+   "userkey": "McpClientManager",
+   "item": {
+    "scr_code": "McpClientManager",
+    "scr_file": {
+     "path": "src/com/simplicite/commons/McpClient/McpClientManager.java",
+     "mime": "text/plain",
+     "name": "McpClientManager.java"
+    },
+    "scr_type": "JSR",
+    "row_module_id__mdl_name": "McpClient"
+   }
+  }]
+ }]
+}
