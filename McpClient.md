@@ -11,8 +11,14 @@
 `McpClient` module definition
 =============================
 
+External objects
+----------------
+
+* `AiMcpClientApi`: _No description._
+
 Shared code
 -----------
 
+* `LlmTools` _(Server script)_
 * `McpClientManager` _(Server script)_
 

@@ -15,24 +15,73 @@
    "name": "module-mcpclient.jar"
   }
  },
- "links": [{
-  "object": "Script",
-  "label": "Shared code",
-  "icon": "img/system/shared_code",
-  "field": "row_module_id",
-  "list": [{
+ "links": [
+  {
+   "object": "ObjectExternal",
+   "label": "External objects",
+   "icon": "img/system/external_object",
+   "field": "row_module_id",
+   "list": [{
+    "object": "ObjectExternal",
+    "userkey": "AiMcpClientApi",
+    "item": {
+     "obe_name": "AiMcpClientApi",
+     "obe_type": "E",
+     "obe_nature": "com_simplicite_webapp_services_RESTServiceExternalObject",
+     "obe_url": null,
+     "obe_settings": null,
+     "obe_comment": null,
+     "obe_help": null,
+     "obe_class": null,
+     "obe_script_id": {
+      "path": "src/com/simplicite/extobjects/McpClient/AiMcpClientApi.java",
+      "mime": "text/plain",
+      "name": "AiMcpClientApi.java"
+     },
+     "obe_icon": null,
+     "obe_permalink": null,
+     "obe_widget": null,
+     "row_module_id__mdl_name": "McpClient",
+     "obe_width": null,
+     "obe_height": null
+    }
+   }]
+  },
+  {
    "object": "Script",
-   "userkey": "McpClientManager",
-   "item": {
-    "scr_code": "McpClientManager",
-    "scr_file": {
-     "path": "src/com/simplicite/commons/McpClient/McpClientManager.java",
-     "mime": "text/plain",
-     "name": "McpClientManager.java"
+   "label": "Shared code",
+   "icon": "img/system/shared_code",
+   "field": "row_module_id",
+   "list": [
+    {
+     "object": "Script",
+     "userkey": "McpClientManager",
+     "item": {
+      "scr_code": "McpClientManager",
+      "scr_file": {
+       "path": "src/com/simplicite/commons/McpClient/McpClientManager.java",
+       "mime": "text/plain",
+       "name": "McpClientManager.java"
+      },
+      "scr_type": "JSR",
+      "row_module_id__mdl_name": "McpClient"
+     }
     },
-    "scr_type": "JSR",
-    "row_module_id__mdl_name": "McpClient"
-   }
-  }]
- }]
+    {
+     "object": "Script",
+     "userkey": "LlmTools",
+     "item": {
+      "scr_code": "LlmTools",
+      "scr_file": {
+       "path": "src/com/simplicite/commons/McpClient/LlmTools.java",
+       "mime": "text/plain",
+       "name": "LlmTools.java"
+      },
+      "scr_type": "JSR",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    }
+   ]
+  }
+ ]
 }

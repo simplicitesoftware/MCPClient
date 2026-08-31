@@ -1,13 +1,10 @@
 package com.simplicite.commons.McpClient;
 
-import java.util.*;
-
-import com.simplicite.util.*;
-import java.util.Map;
-import com.simplicite.bpm.*;
-import com.simplicite.util.exceptions.*;
-import com.simplicite.util.tools.*;
-import com.simplicite.util.tools.RESTTool;
+import java.util.List;
+import com.simplicite.util.AppLog;
+import com.simplicite.util.Grant;
+import com.simplicite.util.Globals;
+import com.simplicite.util.Tool;
 import io.modelcontextprotocol.client.McpClient;
 import io.modelcontextprotocol.client.McpSyncClient;
 import io.modelcontextprotocol.client.transport.HttpClientStreamableHttpTransport;
@@ -18,112 +15,82 @@ import java.net.http.HttpRequest;
 import java.time.Duration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
-
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-/** Shared code McpClientManager */
-@SuppressWarnings("unused")
+
+/** Shared code McpClientManager 
+ * This class is used to manage the McpClient instance for the Simplicite MCP serveur.
+ * It provides methods to list tools, get tool description, call tools with prompt, and close the client.
+ * Used by the internal chatbot to interact with the MCP server.
+ * through {@link com.simplicite.webapp.mcp.McpUiServlet} servlet.
+*/
 public class McpClientManager implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
-    private static final  boolean AI_DEBUG_LOGS ="true".equals(Grant.getSystemAdmin().getParameter("AI_DEBUG_LOGS"));
+    /**
+     * Singleton instance of the McpClientManager.
+     */
     private static McpClientManager instance;
-    private McpSyncClient client;
-    private String token ;
-    private String baseUrl;
+    /**
+     * Singleton instance of the McpClient.
+     */
+    private transient McpSyncClient client;
+
+    /**
+     * Constructor of the McpClientManager.
+     * @param g The grant object.
+     */
     private McpClientManager(Grant g) {
-        init(g);
-
+        initHttpClientUi(g);
     }
-
-
+    /**
+     * Get the singleton instance of the McpClientManager.
+     * @param g The grant object.
+     * @return The singleton instance of the McpClientManager.
+     */
     public static synchronized McpClientManager getInstance(Grant g) {
         if (instance == null) {
             instance = new McpClientManager(g);
         }
         return instance;
     }
-    private void init(Grant g) {
 
-        String jwt = AuthTool.createJWTToken(g);
-        token = getBearerToken(g);
-        baseUrl=g.getContextURL();
-
-        if (AI_DEBUG_LOGS) AppLog.info("baseUrl "+baseUrl);
-
-        //initStdioClient();
-        StringBuilder str = new StringBuilder();
-        str.append("session: \n");
-        Enumeration<String> names = g.getSession().getAttributeNames();
-        while (names.hasMoreElements()) {
-            String e = names.nextElement();
-            str.append(e).append("\n");
-        }
-        str.append("-------------------------------------------------------------------");
-        AppLog.info(str.toString());
-       //initHttpClientApi(g);
-       try{
-    initHttpClientUi(g);
-       }catch(Exception e){
-           AppLog.error(e,g);
-       }
-    }
-     private String getBearerToken(Grant g) {
-        try (BusinessObject bo = new BusinessObject(Grant.getSystemAdmin(), "UserToken")) {
-            bo
-            .getTmpObject() // or getInstance("MyInstance")
-            .withAllAccess() // = withCRUD(true, true, true, true)
-            .preserveContext() // keep the instance definition to be restored on close
-            .forCreateOrUpdate(Map.of(
-                "utk_usr_id", g.getUserUniqueId(),
-                "utk_type", "API","utk_expirydate",">=[DATETIME]"))
-            .withValue("utk_expirydate","")
-            .validateAndSave(msg ->  AppLog.info("save = "+msg))
-            .returns(msg -> AppLog.info("msg = "+msg));
-            return bo.getObject().getFieldValue("utk_token");
-        }
-        catch (GetException | ValidateException | SaveException  e) {
-            AppLog.error("There was an error", e);
-            return null;
-        }
-    }
-
-    private void initHttpClientApi(Grant g) {
-        //String token =g.getAuthToken();
-        // builder(String) -> la commande est le premier argument obligatoire
-      HttpClientStreamableHttpTransport transport = HttpClientStreamableHttpTransport
-        .builder(baseUrl)
-        .endpoint(Globals.WEB_API_PATH + Globals.WEB_MCP_PATH )
-        .requestBuilder(HttpRequest.newBuilder()
-            .header("Authorization","Bearer " + token))
-        .build();
-
-        //Inspecter McpJsonMapper pour trouver l'impl disponible
-        AppLog.warning("=== McpJsonMapper ===", null);
-        for (java.lang.reflect.Constructor<?> c :
-                io.modelcontextprotocol.json.McpJsonMapper.class.getDeclaredConstructors()) {
-            AppLog.warning("  Constructor: " + c, null);
-        }
-
-        client = McpClient.sync(transport).requestTimeout(Duration.ofSeconds(30)).build();
-
-        client.initialize();
-
-    }
+    /**
+     * Get the singleton instance of the McpClient.
+     * @return The singleton instance of the McpClient.
+     */
     public McpSyncClient getClient() {
         return client;
     }
 
+    /**
+     * List the tools available on the MCP server.
+     * @return The list of tools.
+     */
     public ListToolsResult listTools() {
         return client.listTools();
     }
-    public String  getServerInstructions() {
+
+    /**
+     * Get the server instructions.
+     * @return The server instructions.
+     */
+    public String getServerInstructions() {
         return client.getServerInstructions();
     }
+
+    /**
+     * List the tools available on the MCP server in OpenAI format.
+     * @return The list of tools in OpenAI format.
+     */
     public JSONArray listToolsAsOpenAIFormat() {
         return mcpToolsToOpenAIFormat(listTools().tools());
     }
+
+    /**
+     * Convert the list of tools to OpenAI format.
+     * @param mcpTools The list of tools.
+     * @return The list of tools in OpenAI format.
+     */
     private static JSONArray mcpToolsToOpenAIFormat(List<io.modelcontextprotocol.spec.McpSchema.Tool> mcpTools) {
         JSONArray tools = new JSONArray();
         for (io.modelcontextprotocol.spec.McpSchema.Tool mcpTool : mcpTools) {
@@ -133,84 +100,99 @@ public class McpClientManager implements java.io.Serializable {
             JSONObject function = new JSONObject();
             function.put("name", mcpTool.name());
             function.put("description", mcpTool.description() != null ? mcpTool.description() : "");
-
+            JSONObject parameters;
             if (mcpTool.inputSchema() != null) {
                 // inputSchema() returns an McpSchema.JsonSchema
                 // convert to a JSONObject
                 try {
                     ObjectMapper mapper = new ObjectMapper();
                     String schemaJson = mapper.writeValueAsString(mcpTool.inputSchema());
-                    function.put("parameters", new JSONObject(schemaJson));
+                    parameters = new JSONObject(schemaJson);
                 } catch (Exception e) {
                     // fallback : empty schema
                     AppLog.warning("fallback : empty schema for tool " + mcpTool.name(), e);
-                    function.put("parameters", new JSONObject()
-                        .put("type", "object")
-                        .put("properties", new JSONObject()));
+                    parameters = new JSONObject()
+                            .put("type", "object")
+                            .put("properties", new JSONObject());
                 }
             } else {
-                function.put("parameters", new JSONObject()
-                    .put("type", "object")
-                    .put("properties", new JSONObject()));
+                parameters = new JSONObject()
+                        .put("type", "object")
+                        .put("properties", new JSONObject());
             }
+            function.put("parameters", parameters);
 
             tool.put("function", function);
             tools.put(tool);
         }
-        if (AI_DEBUG_LOGS) AppLog.info("tools: "+tools.toString(1));
         return tools;
     }
+
+    /**
+     * Call a tool with a prompt.
+     * @param toolName The name of the tool.
+     * @param arguments The arguments of the tool.
+     * @return The result of the tool call.
+     */
     public CallToolResult callWithPrompt(String toolName, JSONObject arguments) {
-        return client.callTool(new CallToolRequest(toolName, arguments.toMap()));
+        return client.callTool(CallToolRequest.builder(toolName)
+                .arguments(arguments.toMap())
+                .build());
     }
 
+    /**
+     * Close the McpClient.
+     */
     public void close() {
         if (client != null) {
             try {
                 client.closeGracefully();
             } catch (Exception e) {
-                AppLog.warning("Close error",e);
+                AppLog.warning("Close error", e);
             }
         }
     }
-     public String getToolDescription(String toolName) {
-        if(Tool.isEmpty(toolName)) return null;
-        if(client == null) return null;
+
+    /**
+     * Get the description of a tool.
+     * @param toolName The name of the tool.
+     * @return The description of the tool.
+     */
+    public String getToolDescription(String toolName) {
+        if (Tool.isEmpty(toolName))
+            return null;
+        if (client == null)
+            return null;
         try {
             return client.listTools().tools().stream()
-        .filter(tool -> tool.name().equals(toolName))
-        .findFirst()
-        .map(tool -> tool.description())
-        .orElse("");
+                    .filter(tool -> tool.name().equals(toolName))
+                    .findFirst()
+                    .map(io.modelcontextprotocol.spec.McpSchema.Tool::description)
+                    .orElse("");
         } catch (Exception e) {
-            AppLog.warning("Get tool description error",e);
+            AppLog.warning("Get tool description error", e);
             return null;
         }
 
-     }
+    }
 
-
-
-
-
-     public void initHttpClientUi(Grant g) throws Exception {
-
-    String sessionId=g.getSession().getId();
-    HttpClientStreamableHttpTransport transport = HttpClientStreamableHttpTransport
-        .builder(baseUrl)
-        .endpoint(Globals.WEB_UI_PATH + Globals.WEB_MCP_PATH )
-        .requestBuilder(HttpRequest.newBuilder()
-            .header("Cookie", "JSESSIONID=" + sessionId).header("Cookie", "JSESSIONID=" + sessionId))
-        .build();
-
-        AppLog.warning("=== McpJsonMapper ===", null);
-        for (java.lang.reflect.Constructor<?> c :
-                io.modelcontextprotocol.json.McpJsonMapper.class.getDeclaredConstructors()) {
-            AppLog.warning("  Constructor: " + c, null);
-        }
+    /**
+     * Initialize the McpClient.
+     * @param g The grant object.
+     */
+    public void initHttpClientUi(Grant g) {
+        // connect to the MCP server using the session ID
+        String sessionId = g.getSession().getId();
+        // create the transport
+        HttpClientStreamableHttpTransport transport = HttpClientStreamableHttpTransport
+                .builder(g.getContextURL())
+                .endpoint(Globals.WEB_UI_PATH + Globals.WEB_MCP_PATH)
+                .requestBuilder(HttpRequest.newBuilder()
+                        .header("Cookie", "JSESSIONID=" + sessionId).header("Cookie", "JSESSIONID=" + sessionId))
+                .build();
+        // create the client
         client = McpClient.sync(transport).requestTimeout(Duration.ofSeconds(30)).build();
-
+        // initialize the client
         client.initialize();
-
     }
 }
