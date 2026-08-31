@@ -1,17 +1,20 @@
 package com.simplicite.extobjects.McpClient;
 
-import java.util.*;
 
-import org.json.*;
+import org.json.JSONObject;
+import org.json.JSONArray;
 
-import com.simplicite.util.*;
-import com.simplicite.util.exceptions.*;
-import com.simplicite.util.tools.*;
-import com.simplicite.commons.AIBySimplicite.AITools;
-import com.simplicite.commons.McpClient.McpClientManager;
 import io.modelcontextprotocol.spec.McpSchema.CallToolResult;
-import io.modelcontextprotocol.spec.McpSchema.ListToolsResult;
-import io.modelcontextprotocol.spec.McpSchema.Content;
+
+import com.simplicite.util.Grant;
+import com.simplicite.util.AppLog;
+import com.simplicite.util.Tool;
+import com.simplicite.util.Message;
+import com.simplicite.util.exceptions.HTTPException;
+import com.simplicite.util.tools.Parameters;
+import com.simplicite.commons.McpClient.LlmTools;
+import com.simplicite.commons.McpClient.McpClientManager;
+
 
 /** REST service external object AiMcpClientApi */
 public class AiMcpClientApi extends com.simplicite.webapp.services.RESTServiceExternalObject {
@@ -21,15 +24,13 @@ public class AiMcpClientApi extends com.simplicite.webapp.services.RESTServiceEx
     private static JSONArray tools; // = manager.listToolsAsOpenAIFormat();
     private static String serverInstructions;
 
-    private static final String JSON_OBJECT_NAME_KEY = "objectName";
-    private static final String JSON_OBJECT_ID_KEY = "objectID";
     private static final String PARAMS_PROMPT_KEY = "prompt";
     private static final String JSON_REQ_TYPE = "reqType";
 
     @Override
     public void init(Parameters params) {
         Grant g = getGrant();
-        if (AITools.AI_DEBUG_LOGS) AppLog.info("init API with GRANT " + g.getLogin());
+        if (LlmTools.AI_DEBUG_LOGS) AppLog.info("init API with GRANT " + g.getLogin());
         manager = McpClientManager.getInstance(g);
         tools = manager.listToolsAsOpenAIFormat();
         serverInstructions = manager.getServerInstructions();
@@ -53,56 +54,34 @@ public class AiMcpClientApi extends com.simplicite.webapp.services.RESTServiceEx
     @Override
     public Object post(Parameters params) throws HTTPException {
 
-        if (AITools.AI_DEBUG_LOGS) {
+        if (LlmTools.AI_DEBUG_LOGS) {
             AppLog.info("McpClientApi POST tools: " + tools.toString(1), getGrant());
         }
         try {
             JSONObject req = params.getJSONObject();
             String prompt = getParamOrreqParam(PARAMS_PROMPT_KEY, params, req);
-            String objectName = getParamOrreqParam(JSON_OBJECT_NAME_KEY, params, req);
             String type = getParamOrreqParam(JSON_REQ_TYPE, params, req);
-            String objectID = getParamOrreqParam(JSON_OBJECT_ID_KEY, params, req);
             if (Tool.isEmpty(type)) type = "default";
-            else if (!Tool.isEmpty(objectName) && !Tool.isEmpty(objectID))
-                type = Tool.isEmpty(prompt) ? "frontAiCall" : "paramField";
 
             switch (type) { // use switch for future extension
                 case "provider":
-                    return new JSONObject().put("provider", AITools.provider());
+                    return new JSONObject().put("provider", LlmTools.provider());
                 case "chatBot":
                     return chatbotCaller(prompt, params, req);
-                case "metrics":
-                    return badRequest("Metrics are not supported yet with MCP");
-                case "saveMetrics":
-                    return badRequest("Metrics are not supported yet with MCP");
-                case "errorMetricsSolver":
-                    return badRequest("Metrics are not supported yet with MCP");
-                case "reformulateMetrics":
-                    return badRequest("Metrics are not supported yet with MCP");
                 case "BOT_NAME":
-                    return new JSONObject().put("botName", AITools.getBotName());
+                    return new JSONObject().put("botName", LlmTools.getBotName());
                 case "CHECK_SPEECH_RECOGNITION":
                     return new JSONObject()
-                            .put("isSpeechRecognitionSupported", AITools.checkSpeechRecognition());
+                            .put("isSpeechRecognitionSupported", LlmTools.checkSpeechRecognition());
                 case "ping":
                     return ping();
-                case "audio":
-                    return badRequest("Audio are not supported yet with MCP");
-                case "requestField":
-                    return badRequest("Request field will not be supported with MCP");
-                case "paramField":
-                    return badRequest("Param field will not be supported with MCP");
-                case "frontAiCall":
-                    return badRequest("Front AI call will not be supported with MCP");
-                case "commentCode":
-                    return badRequest("Comment code is not supported yet with MCP");
                 case "recallWithTools":
                     return recallWithTools(prompt, params, req);
                 default:
                     AppLog.info("AI API ERROR: " + type + params.toJSON());
                     return error(
                             400,
-                            "Call me with a predefined request type, prompt or a object param please!");
+                            "Call me with a predefined request type please!");
             }
 
         } catch (Exception e) {
@@ -124,8 +103,8 @@ public class AiMcpClientApi extends com.simplicite.webapp.services.RESTServiceEx
     }
 
     private Object ping() {
-        String ping = AITools.pingAI();
-        boolean isSuccess = AITools.PING_SUCCESS.equals(ping);
+        String ping = LlmTools.pingAI();
+        boolean isSuccess = LlmTools.PING_SUCCESS.equals(ping);
         if (isSuccess) {
             ping = Message.formatInfo("AI_SUCCESS_PING", null, null);
         }
@@ -148,21 +127,21 @@ public class AiMcpClientApi extends com.simplicite.webapp.services.RESTServiceEx
             if (Tool.isEmpty(prompt)) {
                 return badRequest("need a prompt");
             }
-            if (AITools.AI_DEBUG_LOGS) {
+            if (LlmTools.AI_DEBUG_LOGS) {
                 AppLog.info("McpClientApi POST request: " + req.toString(1), getGrant());
             }
             String id = getParamOrreqParam("id",params,req);
-            JSONArray historic = Tool.isEmpty(id)?AITools.optJSONArray(getParamOrreqParam("historic", params, req)):getHistoric(id);
+            JSONArray historic = Tool.isEmpty(id)?LlmTools.optJSONArray(getParamOrreqParam("historic", params, req)):getHistoric(id);
             if (tools.length() == 0) {
                 AppLog.warning("NO MCP TOOLS FOUND, Call api without tools");
-                JSONObject result = AITools.aiCaller(getGrant(), serverInstructions, historic, prompt);
+                JSONObject result = LlmTools.aiCaller(getGrant(), serverInstructions, historic, prompt);
                 addHist(id,result,prompt,null,null);
                 return result;
             } else {
 
                 JSONArray assistantToolsCalls = new JSONArray();
                 JSONArray userToolsResponse = new JSONArray();
-                JSONArray p = AITools.optJSONArray(prompt);
+                JSONArray p = LlmTools.optJSONArray(prompt);
                 if (acceptedTools != null && acceptedTools.length() > 0
                         || refusedTools != null && refusedTools.length() > 0) {
                    // istool = true;
@@ -180,7 +159,7 @@ public class AiMcpClientApi extends com.simplicite.webapp.services.RESTServiceEx
                         JSONObject userToolResponse = new JSONObject();
                         userToolResponse.put("tool_call_id", tool.optString("id"));
                         userToolResponse.put("role", "tool");
-                        userToolResponse.put(AITools.CONTENT_KEY, getToolResponse(tool));
+                        userToolResponse.put(LlmTools.CONTENT_KEY, getToolResponse(tool));
                         userToolsResponse.put(userToolResponse);
                     }
                     for (int i = 0; i < refusedTools.length(); i++) {
@@ -197,7 +176,7 @@ public class AiMcpClientApi extends com.simplicite.webapp.services.RESTServiceEx
                         JSONObject userToolResponse = new JSONObject();
                         userToolResponse.put("tool_call_id", tool.optString("id"));
                         userToolResponse.put("role", "tool");
-                        userToolResponse.put(AITools.CONTENT_KEY, "Tool execution denied by user. Ask the user what they would like to do now");
+                        userToolResponse.put(LlmTools.CONTENT_KEY, "Tool execution denied by user. Ask the user what they would like to do now");
                         userToolsResponse.put(userToolResponse);
                     }
                 }
@@ -207,7 +186,7 @@ public class AiMcpClientApi extends com.simplicite.webapp.services.RESTServiceEx
 
                 }
                 JSONObject response =
-                        AITools.aiCallerWithMCP(
+                        LlmTools.aiCallerWithMCP(
                                 getGrant(),
                                 serverInstructions,
                                 historic,
@@ -215,7 +194,7 @@ public class AiMcpClientApi extends com.simplicite.webapp.services.RESTServiceEx
                                 tools,
                                 assistantToolsCalls,
                                 userToolsResponse);
-                if (AITools.AI_DEBUG_LOGS) {
+                if (LlmTools.AI_DEBUG_LOGS) {
                     AppLog.info("McpClientApi POST response: " + response.toString(1), getGrant());
                 }
                 JSONArray toolCall = new JSONArray();
@@ -282,23 +261,23 @@ public class AiMcpClientApi extends com.simplicite.webapp.services.RESTServiceEx
 
             JSONObject lastHist = hist.getJSONObject(hist.length()-1);
              logs.append(lastHist.toString(1)+"\n");
-            if(!"tool".equals(lastHist.optString("role","")) && !("user".equals(lastHist.optString("role","")) && usermsg.equals(lastHist.optString(AITools.CONTENT_KEY,""))))hist.put(new JSONObject().put("role","user").put(AITools.CONTENT_KEY,usermsg));
+            if(!"tool".equals(lastHist.optString("role","")) && !("user".equals(lastHist.optString("role","")) && usermsg.equals(lastHist.optString(LlmTools.CONTENT_KEY,""))))hist.put(new JSONObject().put("role","user").put(LlmTools.CONTENT_KEY,usermsg));
 
         }else {
             logs.append("is not ToolCall append usrmsg\n");
-            hist.put(new JSONObject().put("role","user").put(AITools.CONTENT_KEY,usermsg));
+            hist.put(new JSONObject().put("role","user").put(LlmTools.CONTENT_KEY,usermsg));
 
         }
         if(!Tool.isEmpty(toolsCall) && !Tool.isEmpty(toolsRep)){
-            JSONObject calls = new JSONObject().put("role","assistant").put("tool_calls",toolsCall).put(AITools.CONTENT_KEY,JSONObject.NULL);
+            JSONObject calls = new JSONObject().put("role","assistant").put("tool_calls",toolsCall).put(LlmTools.CONTENT_KEY,JSONObject.NULL);
             hist.put(calls);
             for (Object o:toolsRep) {
                 hist.put(o);  
             }
         }
         if(!isToolCall){ 
-            String botResponse = response.optJSONObject("response",new JSONObject()).optJSONArray("choices",new JSONArray()).optJSONObject(0,new JSONObject()).optJSONObject("message",new JSONObject()).optString(AITools.CONTENT_KEY,"not found");
-            hist.put(new JSONObject().put("role","assistant").put(AITools.CONTENT_KEY,Tool.isEmpty(botResponse)?"not found":botResponse));
+            String botResponse = response.optJSONObject("response",new JSONObject()).optJSONArray("choices",new JSONArray()).optJSONObject(0,new JSONObject()).optJSONObject("message",new JSONObject()).optString(LlmTools.CONTENT_KEY,"not found");
+            hist.put(new JSONObject().put("role","assistant").put(LlmTools.CONTENT_KEY,Tool.isEmpty(botResponse)?"not found":botResponse));
        }
         g.setParameter("AI_CHAT_HIST",json.toString(1));
         g.setUserSystemParam("AI_CHAT_HIST",json.toString(1),false);
