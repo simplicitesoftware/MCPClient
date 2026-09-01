@@ -3,7 +3,7 @@
  "userkey": "McpClient",
  "item": {
   "mdl_name": "McpClient",
-  "mdl_prefix": null,
+  "mdl_prefix": "mcpclt",
   "mdl_version": "7",
   "mdl_type": "X",
   "mdl_icon": null,
@@ -17,35 +17,479 @@
  },
  "links": [
   {
+   "object": "SystemParam",
+   "label": "System parameters",
+   "icon": "img/system/system_param",
+   "field": "row_module_id",
+   "list": [{
+    "object": "SystemParam",
+    "userkey": "MCP_MUTE_TOOLS",
+    "item": {
+     "sys_code": "MCP_MUTE_TOOLS",
+     "sys_value": "false",
+     "sys_type": null,
+     "sys_event": false,
+     "sys_desc": null,
+     "row_module_id__mdl_name": "McpClient"
+    }
+   }]
+  },
+  {
+   "object": "View",
+   "label": "Views",
+   "icon": "img/system/view",
+   "field": "row_module_id",
+   "list": [{
+    "object": "View",
+    "userkey": "AIMonitoring",
+    "item": {
+     "viw_name": "AIMonitoring",
+     "viw_type": "D",
+     "viw_ui": "<div>\n  <div class=\"area\" data-area=\"4\"><\/div>\n  <div class=\"area\" data-area=\"3\"><\/div>\n<\/div>",
+     "viw_order": 1,
+     "viw_icon": "monitoring",
+     "row_module_id__mdl_name": "McpClient"
+    }
+   }]
+  },
+  {
+   "object": "Group",
+   "label": "Groups",
+   "icon": "img/system/group",
+   "field": "row_module_id",
+   "list": [
+    {
+     "object": "Group",
+     "userkey": "MCP_CLT_ADMIN",
+     "item": {
+      "grp_name": "MCP_CLT_ADMIN",
+      "grp_comment": null,
+      "grp_type": ["G"],
+      "grp_parent_id__grp_name": null,
+      "row_module_id__mdl_name": "McpClient",
+      "grp_scope_id__sco_name": null,
+      "grp_scope_id__sco_home_id__viw_name": null
+     }
+    },
+    {
+     "object": "Group",
+     "userkey": "MCP_CLT_USER",
+     "item": {
+      "grp_name": "MCP_CLT_USER",
+      "grp_comment": null,
+      "grp_type": ["G"],
+      "grp_parent_id__grp_name": null,
+      "row_module_id__mdl_name": "McpClient",
+      "grp_scope_id__sco_name": null,
+      "grp_scope_id__sco_home_id__viw_name": null
+     }
+    }
+   ]
+  },
+  {
+   "object": "Profile",
+   "label": "Profiles",
+   "icon": "img/system/profile",
+   "field": "row_module_id",
+   "list": [
+    {
+     "object": "Profile",
+     "userkey": "MCP_CLT_ADMIN~MCP_CLT_USER",
+     "item": {
+      "prf_profile_id__grp_name": "MCP_CLT_ADMIN",
+      "prf_group_id__grp_name": "MCP_CLT_USER",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "Profile",
+     "userkey": "MCP_GROUP~MCP_CLT_USER",
+     "item": {
+      "prf_profile_id__grp_name": "MCP_GROUP",
+      "prf_group_id__grp_name": "MCP_CLT_USER",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    }
+   ]
+  },
+  {
+   "object": "ListOfValue",
+   "label": "Static text",
+   "icon": "img/system/static_text",
+   "field": "row_module_id",
+   "list": [
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~AI_DEFAULT_PARAM~ANY",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "AI_DEFAULT_PARAM",
+      "lov_lang": "ANY",
+      "lov_value": "{\n    \"bot_name\": {\n        \"type\": \"text\",\n        \"defaultValue\": \"George\",\n        \"help\": \"The name of the bot that will be displayed to users.\",\n        \"label\": {\n            \"FRA\": \"Nom du bot\",\n            \"ENU\": \"Bot Name\"\n        },\n        \"left_column\": true\n    },\n    \"data_number\": {\n        \"type\": \"text\",\n        \"defaultValue\": \"5\",\n        \"help\": \"The amount of data per object requested from the AI.\",\n        \"label\": {\n            \"FRA\": \"Nombre d'éléments à générer\",\n            \"ENU\": \"Number of items to generate\"\n        },\n        \"left_column\": true\n    },\n    \"code_max_token\": {\n        \"type\": \"text\",\n        \"defaultValue\": \"2000\",\n        \"help\": \"The maximum number of tokens the bot can handle for all technical calls, including  chart and modules generation.\",\n        \"label\": {\n            \"FRA\": \"Nombre maximum de jetons pour appels techniques\",\n            \"ENU\": \"Max Token for Technical Calls\"\n        }\n    },\n    \"default_max_token\": {\n        \"type\": \"text\",\n        \"defaultValue\": \"1500\",\n        \"help\": \"The maximum number of tokens the bot can handle by default for each interaction.\",\n        \"label\": {\n            \"FRA\": \"Nombre maximum de jetons par défaut\",\n            \"ENU\": \"Default Max Token\"\n        }\n    },\n    \"hist_depth\": {\n        \"type\": \"text\",\n        \"defaultValue\": \"3\",\n        \"help\": \"The number of previous messages the bot will consider when generating a new response.\",\n        \"label\": {\n            \"FRA\": \"Profondeur de l'historique\",\n            \"ENU\": \"History Depth\"\n        },\n        \"left_column\": true\n    },\n    \"provider\": {\n        \"type\": \"text\",\n        \"defaultValue\": \"\",\n        \"help\": \"Name of the model provider, used in the data disclaimer.\",\n        \"label\": {\n            \"FRA\": \"Fournisseur\",\n            \"ENU\": \"Provider\"\n        },\n        \"left_column\": true\n    },\n    \"showDataDisclaimer\": {\n        \"type\": \"boolean\",\n        \"defaultValue\": true,\n        \"help\": \"Indicates whether the data disclaimer should be shown to users.\",\n        \"label\": {\n            \"FRA\": \"Afficher la clause de non-responsabilité des données\",\n            \"ENU\": \"Show Data Disclaimer\"\n        },\n        \"left_column\": true\n    },\n    \"model\": {\n        \"type\": \"select\",\n        \"defaultValue\": \"\",\n        \"help\": \"Select the AI model to use for interactions.\",\n        \"label\": {\n            \"FRA\": \"Modèle\",\n            \"ENU\": \"Model\"\n        },\n        \"left_column\": true\n    },\n    \"api_key\": {\n        \"type\": \"text\",\n        \"defaultValue\": \"\",\n        \"help\": \"API key used to authenticate requests to the AI server.\",\n        \"label\": {\n            \"FRA\": \"Clé API\",\n            \"ENU\": \"API Key\"\n        }\n    },\n    \"completion_url\": {\n        \"type\": \"url\",\n        \"defaultValue\": \"\",\n        \"help\": \"URL where text completion requests will be sent.\",\n        \"label\": {\n            \"FRA\": \"URL de complétion\",\n            \"ENU\": \"Completion URL\"\n        }\n    },\n    \"stt_url\": {\n        \"type\": \"url\",\n        \"defaultValue\": \"\",\n        \"help\": \"URL used for speech recognition.\",\n        \"label\": {\n            \"FRA\": \"URL de la synthèse vocale \",\n            \"ENU\": \"Speech to text URL\"\n        }\n    },\n    \"ping_url\": {\n        \"type\": \"url\",\n        \"defaultValue\": \"\",\n        \"help\": \"URL used to check the availability of the AI server.\",\n        \"label\": {\n            \"FRA\": \"URL de ping\",\n            \"ENU\": \"Ping URL\"\n        }\n    }\n\n}",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~AI_DEFAULT_PROVIDER_NAME~ENU",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "AI_DEFAULT_PROVIDER_NAME",
+      "lov_lang": "ENU",
+      "lov_value": "the AI provider",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~AI_NO_PING_URL~ENU",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "AI_NO_PING_URL",
+      "lov_lang": "ENU",
+      "lov_value": "No ping URL configured. Please test via the chatbot.",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~AI_PING_ERROR~ENU",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "AI_PING_ERROR",
+      "lov_lang": "ENU",
+      "lov_value": "Error encountered during ping",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~AI_SUCCESS_PING~ENU",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "AI_SUCCESS_PING",
+      "lov_lang": "ENU",
+      "lov_value": "Successful ping",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~AI_DEFAULT_PROVIDER_NAME~FRA",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "AI_DEFAULT_PROVIDER_NAME",
+      "lov_lang": "FRA",
+      "lov_value": "le fournisseur d'IA",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~AI_NO_PING_URL~FRA",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "AI_NO_PING_URL",
+      "lov_lang": "FRA",
+      "lov_value": "Aucune URL de ping configuré. Veuillez effectuer un test via le chatbot.",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~AI_PING_ERROR~FRA",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "AI_PING_ERROR",
+      "lov_lang": "FRA",
+      "lov_value": "Erreur rencontrée lors du ping",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~AI_SUCCESS_PING~FRA",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "AI_SUCCESS_PING",
+      "lov_lang": "FRA",
+      "lov_value": "Ping réussi",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    }
+   ]
+  },
+  {
+   "object": "Domain",
+   "label": "Domains",
+   "icon": "img/system/domain",
+   "field": "row_module_id",
+   "list": [{
+    "object": "Domain",
+    "userkey": "McpcltDomaine",
+    "item": {
+     "obd_name": "McpcltDomaine",
+     "obd_comment": null,
+     "obd_type": "D",
+     "obd_menu": "L",
+     "obd_view_id__viw_name": "AIMonitoring",
+     "obd_nohome": false,
+     "obd_icon": null,
+     "obd_order": null,
+     "obd_domain_id__obd_name": "McpDomain",
+     "row_module_id__mdl_name": "McpClient"
+    }
+   }]
+  },
+  {
    "object": "ObjectExternal",
    "label": "External objects",
    "icon": "img/system/external_object",
    "field": "row_module_id",
-   "list": [{
-    "object": "ObjectExternal",
-    "userkey": "AiMcpClientApi",
-    "item": {
-     "obe_name": "AiMcpClientApi",
-     "obe_type": "E",
-     "obe_nature": "com_simplicite_webapp_services_RESTServiceExternalObject",
-     "obe_url": null,
-     "obe_settings": null,
-     "obe_comment": null,
-     "obe_help": null,
-     "obe_class": null,
-     "obe_script_id": {
-      "path": "src/com/simplicite/extobjects/McpClient/AiMcpClientApi.java",
-      "mime": "text/plain",
-      "name": "AiMcpClientApi.java"
-     },
-     "obe_icon": null,
-     "obe_permalink": null,
-     "obe_widget": null,
-     "row_module_id__mdl_name": "McpClient",
-     "obe_width": null,
-     "obe_height": null
+   "list": [
+    {
+     "object": "ObjectExternal",
+     "userkey": "AiMcpClientApi",
+     "item": {
+      "obe_name": "AiMcpClientApi",
+      "obe_type": "E",
+      "obe_nature": "com_simplicite_webapp_services_RESTServiceExternalObject",
+      "obe_url": null,
+      "obe_settings": null,
+      "obe_comment": null,
+      "obe_help": null,
+      "obe_class": null,
+      "obe_script_id": {
+       "path": "src/com/simplicite/extobjects/McpClient/AiMcpClientApi.java",
+       "mime": "text/plain",
+       "name": "AiMcpClientApi.java"
+      },
+      "obe_icon": null,
+      "obe_permalink": null,
+      "obe_widget": null,
+      "row_module_id__mdl_name": "McpClient",
+      "obe_width": null,
+      "obe_height": null
+     }
+    },
+    {
+     "object": "ObjectExternal",
+     "userkey": "AiMonitoring",
+     "item": {
+      "obe_name": "AiMonitoring",
+      "obe_type": "E",
+      "obe_nature": "com_simplicite_util_ExternalObject",
+      "obe_url": null,
+      "obe_settings": null,
+      "obe_comment": null,
+      "obe_help": null,
+      "obe_class": null,
+      "obe_script_id": {
+       "path": "src/com/simplicite/extobjects/McpClient/AiMonitoring.java",
+       "mime": "text/plain",
+       "name": "AiMonitoring.java"
+      },
+      "obe_icon": null,
+      "obe_permalink": "/ai-monitoring",
+      "obe_widget": null,
+      "row_module_id__mdl_name": "McpClient",
+      "obe_width": null,
+      "obe_height": null
+     }
     }
-   }]
+   ]
+  },
+  {
+   "object": "ViewItem",
+   "label": "View areas",
+   "icon": "object",
+   "field": "row_module_id",
+   "list": [
+    {
+     "object": "ViewItem",
+     "userkey": "AIMonitoring~3",
+     "item": {
+      "vwi_view_id__viw_name": "AIMonitoring",
+      "vwi_position": 3,
+      "vwi_type": "C",
+      "vwi_title": true,
+      "vwi_research_id__rch_name": null,
+      "vwi_research_id__rch_object_id__obo_name": null,
+      "vwi_research_id__rch_user_id__usr_login": null,
+      "vwi_search_spec": null,
+      "vwi_lov_code": "ChatBot",
+      "vwi_show": null,
+      "vwi_url": null,
+      "vwi_image": null,
+      "vwi_subview_id__viw_name": null,
+      "vwi_treeview_id__trv_name": null,
+      "vwi_crosstab_id__ctb_name": null,
+      "vwi_printtmpl_id__prt_name": null,
+      "vwi_printtmpl_id__prt_lang": null,
+      "row_module_id__mdl_name": "McpClient",
+      "vwi_shortcuts": null
+     }
+    },
+    {
+     "object": "ViewItem",
+     "userkey": "AIMonitoring~4",
+     "item": {
+      "vwi_view_id__viw_name": "AIMonitoring",
+      "vwi_position": 4,
+      "vwi_type": "E",
+      "vwi_title": true,
+      "vwi_research_id__rch_name": null,
+      "vwi_research_id__rch_object_id__obo_name": null,
+      "vwi_research_id__rch_user_id__usr_login": null,
+      "vwi_search_spec": null,
+      "vwi_lov_code": null,
+      "vwi_show": null,
+      "vwi_url": "[EXPR:HTMLTool.getExternalObjectURL(\"AiMonitoring\")]",
+      "vwi_image": null,
+      "vwi_subview_id__viw_name": null,
+      "vwi_treeview_id__trv_name": null,
+      "vwi_crosstab_id__ctb_name": null,
+      "vwi_printtmpl_id__prt_name": null,
+      "vwi_printtmpl_id__prt_lang": null,
+      "row_module_id__mdl_name": "McpClient",
+      "vwi_shortcuts": null
+     }
+    }
+   ]
+  },
+  {
+   "object": "Resource",
+   "label": "Resources",
+   "icon": "img/system/resource",
+   "field": "row_module_id",
+   "list": [
+    {
+     "object": "Resource",
+     "userkey": "ObjectExternal(AiMonitoring)~ANY~STYLES",
+     "item": {
+      "res_object": {
+       "object": "ObjectExternal",
+       "label": "External object",
+       "userkeylabel": "AiMonitoring",
+       "icon": "img/system/external_object",
+       "item": {"obe_name": "AiMonitoring"}
+      },
+      "res_type": "CSS",
+      "res_lang": "ANY",
+      "res_code": "STYLES",
+      "res_cached": false,
+      "res_file": {
+       "path": "resources/ObjectExternal/AiMonitoring/STYLES.less",
+       "mime": "text/x-less",
+       "name": "STYLES.less"
+      },
+      "res_file_compiled": {
+       "path": "resources/ObjectExternal/AiMonitoring/STYLES.min.css",
+       "mime": "text/css",
+       "name": "STYLES.min.css"
+      },
+      "res_image": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "Resource",
+     "userkey": "ObjectExternal(AiMonitoring)~FRA~HTML",
+     "item": {
+      "res_object": {
+       "object": "ObjectExternal",
+       "label": "External object",
+       "userkeylabel": "AiMonitoring",
+       "icon": "img/system/external_object",
+       "item": {"obe_name": "AiMonitoring"}
+      },
+      "res_type": "HTML",
+      "res_lang": "FRA",
+      "res_code": "HTML",
+      "res_cached": false,
+      "res_file": {
+       "path": "resources/ObjectExternal/AiMonitoring/FRA/HTML.html",
+       "mime": "text/html",
+       "name": "HTML.html"
+      },
+      "res_file_compiled": null,
+      "res_image": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "Resource",
+     "userkey": "ObjectExternal(AiMonitoring)~ANY~HTML",
+     "item": {
+      "res_object": {
+       "object": "ObjectExternal",
+       "label": "External object",
+       "userkeylabel": "AiMonitoring",
+       "icon": "img/system/external_object",
+       "item": {"obe_name": "AiMonitoring"}
+      },
+      "res_type": "HTML",
+      "res_lang": "ANY",
+      "res_code": "HTML",
+      "res_cached": false,
+      "res_file": {
+       "path": "resources/ObjectExternal/AiMonitoring/HTML.html",
+       "mime": "text/html",
+       "name": "HTML.html"
+      },
+      "res_file_compiled": null,
+      "res_image": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "Resource",
+     "userkey": "ObjectExternal(AiMonitoring)~ANY~SCRIPT",
+     "item": {
+      "res_object": {
+       "object": "ObjectExternal",
+       "label": "External object",
+       "userkeylabel": "AiMonitoring",
+       "icon": "img/system/external_object",
+       "item": {"obe_name": "AiMonitoring"}
+      },
+      "res_type": "JS",
+      "res_lang": "ANY",
+      "res_code": "SCRIPT",
+      "res_cached": false,
+      "res_file": {
+       "path": "resources/ObjectExternal/AiMonitoring/SCRIPT.js",
+       "mime": "text/javascript",
+       "name": "SCRIPT.js"
+      },
+      "res_file_compiled": {
+       "path": "resources/ObjectExternal/AiMonitoring/SCRIPT.min.js",
+       "mime": "text/javascript",
+       "name": "SCRIPT.min.js"
+      },
+      "res_image": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    }
+   ]
   },
   {
    "object": "Script",
@@ -78,6 +522,202 @@
        "name": "LlmTools.java"
       },
       "scr_type": "JSR",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    }
+   ]
+  },
+  {
+   "object": "TranslateDomain",
+   "label": "Domain translation",
+   "icon": "img/system/translation",
+   "field": "row_module_id",
+   "list": [
+    {
+     "object": "TranslateDomain",
+     "userkey": "Domain(McpcltDomaine)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "Domain",
+       "label": "Domain",
+       "userkeylabel": "McpcltDomaine",
+       "icon": "img/system/domain",
+       "item": {"obd_name": "McpcltDomaine"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "Llm",
+      "tsl_help": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateDomain",
+     "userkey": "Domain(McpcltDomaine)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "Domain",
+       "label": "Domain",
+       "userkeylabel": "McpcltDomaine",
+       "icon": "img/system/domain",
+       "item": {"obd_name": "McpcltDomaine"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "Llm",
+      "tsl_help": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    }
+   ]
+  },
+  {
+   "object": "TranslateExternal",
+   "label": "External object translate",
+   "icon": "img/system/translation",
+   "field": "row_module_id",
+   "list": [
+    {
+     "object": "TranslateExternal",
+     "userkey": "ObjectExternal(AiMonitoring)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "ObjectExternal",
+       "label": "External object",
+       "userkeylabel": "AiMonitoring",
+       "icon": "img/system/external_object",
+       "item": {"obe_name": "AiMonitoring"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "Monitoring",
+      "tsl_plural_value": null,
+      "tsl_help": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateExternal",
+     "userkey": "ObjectExternal(AiMonitoring)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "ObjectExternal",
+       "label": "External object",
+       "userkeylabel": "AiMonitoring",
+       "icon": "img/system/external_object",
+       "item": {"obe_name": "AiMonitoring"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "Monitoring",
+      "tsl_plural_value": null,
+      "tsl_help": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    }
+   ]
+  },
+  {
+   "object": "TranslateView",
+   "label": "View translation",
+   "icon": "img/system/translation",
+   "field": "row_module_id",
+   "list": [
+    {
+     "object": "TranslateView",
+     "userkey": "View(AIMonitoring)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "View",
+       "label": "View",
+       "userkeylabel": "AIMonitoring",
+       "icon": "img/system/view",
+       "item": {"viw_name": "AIMonitoring"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "Monitoring",
+      "tsl_help": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateView",
+     "userkey": "View(AIMonitoring)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "View",
+       "label": "View",
+       "userkeylabel": "AIMonitoring",
+       "icon": "img/system/view",
+       "item": {"viw_name": "AIMonitoring"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "Monitoring",
+      "tsl_help": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    }
+   ]
+  },
+  {
+   "object": "Permission",
+   "label": "Permissions",
+   "icon": "img/system/state_transition_permission",
+   "field": "row_module_id",
+   "list": [
+    {
+     "object": "Permission",
+     "userkey": "MCP_CLT_ADMIN~ObjectExternal(AiMonitoring)~",
+     "item": {
+      "prm_group_id__grp_name": "MCP_CLT_ADMIN",
+      "prm_object": {
+       "object": "ObjectExternal",
+       "label": "External object",
+       "userkeylabel": "AiMonitoring",
+       "icon": "img/system/external_object",
+       "item": {"obe_name": "AiMonitoring"}
+      },
+      "prm_perm": true,
+      "prm_upd": false,
+      "prm_req": false,
+      "prm_prop": null,
+      "prm_value": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "Permission",
+     "userkey": "MCP_CLT_USER~Domain(McpcltDomaine)~",
+     "item": {
+      "prm_group_id__grp_name": "MCP_CLT_USER",
+      "prm_object": {
+       "object": "Domain",
+       "label": "Domain",
+       "userkeylabel": "McpcltDomaine",
+       "icon": "img/system/domain",
+       "item": {"obd_name": "McpcltDomaine"}
+      },
+      "prm_perm": true,
+      "prm_upd": false,
+      "prm_req": false,
+      "prm_prop": null,
+      "prm_value": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "Permission",
+     "userkey": "MCP_CLT_USER~ObjectExternal(AiMcpClientApi)~",
+     "item": {
+      "prm_group_id__grp_name": "MCP_CLT_USER",
+      "prm_object": {
+       "object": "ObjectExternal",
+       "label": "External object",
+       "userkeylabel": "AiMcpClientApi",
+       "icon": "img/system/external_object",
+       "item": {"obe_name": "AiMcpClientApi"}
+      },
+      "prm_perm": true,
+      "prm_upd": false,
+      "prm_req": false,
+      "prm_prop": null,
+      "prm_value": null,
       "row_module_id__mdl_name": "McpClient"
      }
     }

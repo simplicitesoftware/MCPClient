@@ -11,10 +11,25 @@
 `McpClient` module definition
 =============================
 
+Domains
+-------
+
+_Domains organize the application's main navigation menu. Each domain groups the objects, processes, and external pages accessible to users from it. Domains can be nested: a domain may have a parent domain._
+
+* `McpcltDomaine` _(sub-domain of `McpDomain`)_
+
+System parameters
+-----------------
+
+| Code | Value | Type | Description |
+|---|---|---|---|
+| `MCP_MUTE_TOOLS` | `false` |  |  |
+
 External objects
 ----------------
 
 * `AiMcpClientApi`: _No description._
+* `AiMonitoring`: _No description._
 
 Shared code
 -----------

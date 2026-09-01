@@ -26,6 +26,7 @@ public class AiMcpClientApi extends com.simplicite.webapp.services.RESTServiceEx
 
     private static final String PARAMS_PROMPT_KEY = "prompt";
     private static final String JSON_REQ_TYPE = "reqType";
+    public static  boolean mcpMuteTools;
 
     @Override
     public void init(Parameters params) {
@@ -34,6 +35,9 @@ public class AiMcpClientApi extends com.simplicite.webapp.services.RESTServiceEx
         manager = McpClientManager.getInstance(g);
         tools = manager.listToolsAsOpenAIFormat();
         serverInstructions = manager.getServerInstructions();
+        String param = getGrant().getUserSystemParam("MCP_MUTE_TOOLS");
+        if(Tool.isEmpty(param)) param = Grant.getSystemAdmin().getParameter("MCP_MUTE_TOOLS");
+        mcpMuteTools="true".equals(param);
     }
 
     /** GET : liste les outils MCP disponibles */
@@ -111,11 +115,23 @@ public class AiMcpClientApi extends com.simplicite.webapp.services.RESTServiceEx
         return new JSONObject().put("msg", ping);
     }
 
-    private Object chatbotCaller(String prompt, Parameters params, JSONObject req) {
-        return chatbotCaller(prompt, params, req, null, null);
+    private JSONObject chatbotCaller(String prompt, Parameters params, JSONObject req) {
+        JSONObject result = chatbotCaller(prompt, params, req, null, null);
+        if(!mcpMuteTools){
+            return result;
+        }
+        JSONObject choice = result.optJSONObject("response", new JSONObject()).optJSONArray("choices", new JSONArray()).optJSONObject(0, new JSONObject());
+
+        while("tool_calls".equals(choice.optString("finish_reason"))){
+
+            JSONArray toolCalls = choice.optJSONObject("message",new JSONObject()).optJSONArray("tool_calls", new JSONArray());
+            result = chatbotCaller(prompt, params, req, toolCalls, new JSONArray());
+            choice = result.optJSONObject("response", new JSONObject()).optJSONArray("choices", new JSONArray()).optJSONObject(0, new JSONObject());
+        }
+        return result;
     }
 
-    private Object chatbotCaller(
+    private JSONObject chatbotCaller(
             String prompt,
             Parameters params,
             JSONObject req,
@@ -233,10 +249,7 @@ public class AiMcpClientApi extends com.simplicite.webapp.services.RESTServiceEx
     }
 
     private void addHist(String id, JSONObject response, Object prompt,JSONArray toolsRep, JSONArray toolsCall){
-        StringBuilder logs = new StringBuilder();
-        logs.append("-------------DEBUG add Hist---------------\n");
         boolean isToolCall ="tool_calls".equals(response.optJSONObject("response",new JSONObject()).optJSONArray("choices", new JSONArray()).optJSONObject(0, new JSONObject()).optString("finish_reason", ""));
-        logs.append("isToolCall: "+isToolCall+"\n");
         Grant g = getGrant();
         JSONObject json = g.getJSONObjectParameter("AI_CHAT_HIST","{}");
         if(!json.has(id))json.put(id,new JSONArray());
@@ -255,17 +268,12 @@ public class AiMcpClientApi extends com.simplicite.webapp.services.RESTServiceEx
             }
         }
         usermsg = usermsg.replaceAll("^\"|\"$", "");
-        logs.append("on user message: "+usermsg+"\n");
         if(isToolCall || !Tool.isEmpty(toolsCall)){
-            logs.append("isToolCall check last Hist\n");
-
-            JSONObject lastHist = hist.getJSONObject(hist.length()-1);
-             logs.append(lastHist.toString(1)+"\n");
-            if(!"tool".equals(lastHist.optString("role","")) && !("user".equals(lastHist.optString("role","")) && usermsg.equals(lastHist.optString(LlmTools.CONTENT_KEY,""))))hist.put(new JSONObject().put("role","user").put(LlmTools.CONTENT_KEY,usermsg));
+            JSONObject lastHist = hist.optJSONObject(hist.length()-1);
+            if(Tool.isEmpty(lastHist) ||(!"tool".equals(lastHist.optString("role","")) && !("user".equals(lastHist.optString("role","")) && usermsg.equals(lastHist.optString(LlmTools.CONTENT_KEY,"")))))hist.put(new JSONObject().put("role","user").put(LlmTools.CONTENT_KEY,usermsg));
 
         }else {
-            logs.append("is not ToolCall append usrmsg\n");
-            hist.put(new JSONObject().put("role","user").put(LlmTools.CONTENT_KEY,usermsg));
+           hist.put(new JSONObject().put("role","user").put(LlmTools.CONTENT_KEY,usermsg));
 
         }
         if(!Tool.isEmpty(toolsCall) && !Tool.isEmpty(toolsRep)){
@@ -281,9 +289,6 @@ public class AiMcpClientApi extends com.simplicite.webapp.services.RESTServiceEx
        }
         g.setParameter("AI_CHAT_HIST",json.toString(1));
         g.setUserSystemParam("AI_CHAT_HIST",json.toString(1),false);
-        logs.append("-------------END DEBUG add Hist---------------\n");
-        AppLog.info("\n"+logs.toString());
-
     }
 
 

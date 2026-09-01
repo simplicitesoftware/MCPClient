@@ -1,0 +1,37 @@
+<template id="AiMonitoringTemplate">
+    <div class="container">
+        <h1>Paramètres {{#isConfigurable}}locaux{{/isConfigurable}}{{^isConfigurable}}globaux{{/isConfigurable}} de l'IA</h1>
+        {{#columns}}
+        <div class="{{class}}">
+            {{#fields}}
+            <div class="item">
+                <label for="{{field}}">{{label}}:</label>
+                <span id="field">{{{value}}}</span>
+            </div>
+            {{/fields}}
+        </div>
+        {{/columns}}
+    </div>
+	{{#providerFields.length}}
+    <div class="provider-fields-container container">
+        <h1>Paramètres spécifiques pour {{provider}}</h1>
+        <div class="provider-fields">
+            {{#providerFields}}
+            <div class="item">
+                <label for="{{key}}">{{key}} :</label>
+                <span id="{{key}}">{{value}}</span>
+            </div>
+            {{/providerFields}}
+        </div>
+    </div>
+    {{/providerFields.length}}    
+    <div id="ping_banner" class="ping-banner loading_ping_banner">
+        Ping ...
+    </div>
+    <script>
+        AiMonitoring.ping();
+    </script>
+</template>    
+
+<div id="aimonitoring"></div>
+<div id="ctnSettings"></div>

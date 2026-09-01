@@ -1,15 +1,16 @@
 package com.simplicite.commons.McpClient;
 
+import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONException;
 
 import com.simplicite.util.*;
 import com.simplicite.util.exceptions.DeleteException;
-import com.simplicite.util.exceptions.GetException;
+
 import com.simplicite.util.exceptions.ValidateException;
 import com.simplicite.util.exceptions.SaveException;
-import com.simplicite.util.exceptions.SearchException;
+
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -22,7 +23,6 @@ import java.text.Normalizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.simplicite.util.tools.*;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -30,7 +30,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class LlmTools implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
-    
+
     public static final  boolean AI_DEBUG_LOGS ="true".equals(Grant.getSystemAdmin().getParameter("AI_DEBUG_LOGS"));
     private static final String AI_PING_ERROR="AI_PING_ERROR";
     private static final String SYSPARAM_AI_API_PARAM="AI_API_PARAM";
@@ -85,9 +85,13 @@ public class LlmTools implements java.io.Serializable {
     private static  String aiProvider = getProvider();
     private static String apiKey = getAIParam(API_KEY);
     private static String completionUrl = getAIParam(COMPLETION_KEY);
-    
-    
-    
+    private static  boolean showDataDisclaimer = aiApiParam.optBoolean("showDataDisclaimer",true);
+    private static final String HTML_LEFT_COLUMN_ID = "left_column";
+
+    private static final String LABEL_KEY = "label";
+
+
+
     public static class AITypeException extends Exception {
         private static final long serialVersionUID = 1L;
 
@@ -405,7 +409,7 @@ public class LlmTools implements java.io.Serializable {
             }
             return newPrompts;
         }   
-        
+
         private static String normalize(String text){
             text = removeAcent(text);
             text = Normalizer.normalize(text, Normalizer.Form.NFD).replaceAll("[\u0300-\u036F]", "").replaceAll("[^\\w\\(\\),`{}.\\[\\]\"@\\/:-]", " ");
@@ -419,7 +423,7 @@ public class LlmTools implements java.io.Serializable {
         private static String normalizeCode(String text){
             return removeAcent(text);
         }
-        
+
         private static String removeAcent(String text){
             text = text.replaceAll("(?u)[éèêë]", "e")
                     .replaceAll("(?u)[àâä]","a" )
@@ -475,7 +479,7 @@ public class LlmTools implements java.io.Serializable {
             return res;
         }
     }
-    
+
     private static JSONObject getOptAiApiParam(){
         String env = System.getenv(SYSPARAM_AI_API_PARAM);
         if(Tool.isEmpty(env)){
@@ -576,7 +580,7 @@ public class LlmTools implements java.io.Serializable {
         }
         return true;
     }
-    
+
     private static void reloadAIParams(){
                 aiApiParam =getOptAiApiParam();
         aiHistDepth = aiApiParam.optInt("hist_depth");
@@ -728,7 +732,7 @@ public class LlmTools implements java.io.Serializable {
                 break;
         }
     }
-    
+
 
     private static JSONObject formatErrorMsg(int responseCode,StringBuilder response ){
         String errorMessage;
@@ -736,7 +740,7 @@ public class LlmTools implements java.io.Serializable {
             JSONObject error = new JSONObject(response.toString());
 
             errorMessage = error.optJSONObject(ERROR_KEY,new JSONObject()).optString(MESSAGE_KEY,response.toString());
-        }catch(JSONException e){
+        }catch(@SuppressWarnings("unused") JSONException e){
             errorMessage = response.toString();
         }
         return new JSONObject().put("code",String.valueOf(responseCode)).put(ERROR_KEY,errorMessage);
@@ -745,11 +749,11 @@ public class LlmTools implements java.io.Serializable {
     public static JSONArray optJSONArray(String array){
         try{
             return new JSONArray(array);
-        }catch(Exception e){
+        }catch(@SuppressWarnings("unused") Exception e){
             return new JSONArray();
         }
     }
-   
+
     public static JSONObject aiCaller(Grant g, String specialisation, JSONArray historic, Object prompt){
         try{
             JSONObject params =  new JSONObject().put(CALLER_PARAM_SPE, specialisation)
@@ -797,5 +801,91 @@ public class LlmTools implements java.io.Serializable {
     public static JSONObject formatJsonOpenAIFormat(String result){
         return new JSONObject().put("choices",new JSONArray().put(new JSONObject().put(MESSAGE_KEY,new JSONObject().put(CONTENT_KEY,result))));
     }
-    
+    public static boolean isAIParam(){
+        return isAIParam(true);
+    }
+    public static boolean isAIParam(boolean checkPing){
+    	String ping = "";
+        if(checkPing) ping = pingAI();
+        return !(Tool.isEmpty(aiApiParam)|| Tool.isEmpty(completionUrl) || (checkPing && (!"/".equals(aiApiParam.optString("ping_url","/")) && !PING_SUCCESS.equals(ping))));
+    }
+
+    public static JSONObject getParameters(boolean forDisplay,String lang){
+        JSONObject params = new JSONObject(aiApiParam,JSONObject.getNames(aiApiParam));
+        if(!forDisplay) return params;
+        JSONObject defaultParam = new JSONObject(Grant.getSystemAdmin().T("AI_DEFAULT_PARAM"));
+        JSONArray specificParam = new JSONArray();
+        JSONObject newParam = new JSONObject();
+        JSONArray leftColumn = new JSONArray();
+        JSONArray rightColumn = new JSONArray();
+        for(String key: params.keySet()){
+            if(API_KEY.equals(key)) continue;
+            if(defaultParam.has(key)){
+                JSONObject data = new JSONObject().put("field", key).put("value", getDisplayField(key,params.get(key),defaultParam.optJSONObject(key))).put(LABEL_KEY, optLabel(key,defaultParam,lang));
+                if(defaultParam.optJSONObject(key).optBoolean(HTML_LEFT_COLUMN_ID)){
+                    leftColumn.put(data);
+                }else{
+                    rightColumn.put(data);
+                }
+            }else{
+
+                specificParam.put(new JSONObject().put("key", key).put("value", checkPrivate(params,key)));
+            }
+        }
+        newParam.put("columns", new JSONArray()
+                                .put(new JSONObject().put("class",HTML_LEFT_COLUMN_ID).put("fields", leftColumn))
+                                .put(new JSONObject().put("class","right_column").put("fields", rightColumn))
+        );
+        newParam.put(PROVIDER_KEY, aiProvider);
+        newParam.put("providerFields", specificParam);
+        newParam.put("isConfigurable",isConfigurable());
+        return newParam;
+    }
+    private static String getDisplayField(String key, Object value,JSONObject defaultField){
+        if(defaultField.optBoolean("private",false)) return "********";
+        switch(defaultField.optString("type")){
+            case "boolean":
+                return (boolean)value?"Yes":"No";
+            case "url":
+                return "<a id=\""+key+"\" href=\""+value+"\">"+value+"</a>";
+            default:
+                return value.toString();
+
+        }
+    }
+    public static boolean isConfigurable(){
+        return !IS_ENV_SETUP;
+    }
+    private static Object checkPrivate(JSONObject params, String key){
+        if(!params.has(PROVIDER_KEY)) return params.get(key);
+        Grant g = Grant.getSystemAdmin();
+        g.addResponsibility("MCP_CLT_ADMIN");
+        ObjectDB obj = g.getTmpObject("AIProvider");
+        synchronized(obj.getLock()){
+            obj.setFieldFilter("aiPrvProvider",params.getString(PROVIDER_KEY));
+            List<String[]> res = obj.search();
+            if(!res.isEmpty()){
+                JSONObject defParams = new JSONObject(res.get(0)[obj.getFieldIndex("aiPrvDataModel")]);
+                if(defParams.has(key) && defParams.getJSONObject(key).optBoolean("private",false)){
+                    return "********";   
+                }
+            }
+        }
+        return params.has(key)?params.get(key):null;
+    }
+
+    public static String optLabel(String key,JSONObject defaultFields,String lang){
+        JSONObject fieldDefLabel = defaultFields.optJSONObject(key,new JSONObject()).optJSONObject(LABEL_KEY);
+        if(Tool.isEmpty(fieldDefLabel)) return key.replaceAll("[_-]", " ");
+        if(!fieldDefLabel.has(lang)) lang = "ENU";
+        String label = fieldDefLabel.optString(lang);
+        return  (Tool.isEmpty(fieldDefLabel)?key.replaceAll("[_-]", " "):label);
+    }
+     public static String getDataDisclaimer(Grant g){
+        if (showDataDisclaimer){
+            return g.T("AI_DISCLAIMER_DATA").replace("[PROVIDER]", aiProvider);
+        }
+        return "";
+    }
+
 }
