@@ -146,6 +146,19 @@
     },
     {
      "object": "ListOfValue",
+     "userkey": "TEXT~AI_ERROR~ENU",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "AI_ERROR",
+      "lov_lang": "ENU",
+      "lov_value": "The AI has encountered an error, we apologise for any inconvenience caused.",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
      "userkey": "TEXT~AI_NO_PING_URL~ENU",
      "item": {
       "lov_name": "TEXT",
@@ -191,6 +204,19 @@
       "lov_code": "AI_DEFAULT_PROVIDER_NAME",
       "lov_lang": "FRA",
       "lov_value": "le fournisseur d'IA",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~AI_ERROR~FRA",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "AI_ERROR",
+      "lov_lang": "FRA",
+      "lov_value": "L'IA a rencontré une erreur , nous vous prions de nous excuser pour la gêne occasionnée.",
       "lov_order_by": 1,
       "lov_event_id__lev_code": null,
       "row_module_id__mdl_name": "McpClient"

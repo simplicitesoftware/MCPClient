@@ -370,7 +370,7 @@ public class LlmTools implements java.io.Serializable {
         }
         private static JSONArray getCleanHistoric(JSONArray historic){
             int len = historic.length();
-            if( len< aiHistDepth*2){
+            if(len <=0 || len< aiHistDepth*2){
                 return historic;
             }else{
                 // to redo for skip tools
@@ -378,6 +378,7 @@ public class LlmTools implements java.io.Serializable {
                 int nbUsrMsg = 0;
                 int begin=-1;
                 int index = len -1;
+                
                 while(nbUsrMsg < aiHistDepth && index > 0){
                     if("user".equals(historic.getJSONObject(index).optString("role"))){
                         nbUsrMsg+=1;

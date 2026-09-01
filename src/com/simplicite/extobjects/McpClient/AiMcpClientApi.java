@@ -115,7 +115,8 @@ public class AiMcpClientApi extends com.simplicite.webapp.services.RESTServiceEx
             result = simpleChatbotCaller(prompt,id, toolCalls, new JSONArray());
             choice = result.optJSONObject("response", new JSONObject()).optJSONArray("choices", new JSONArray()).optJSONObject(0, new JSONObject());
         }
-        String res= choice.optJSONObject("message", new JSONObject()).optString("content", "not found");
+        if(result.optJSONObject("response", new JSONObject()).has("error"))return getGrant().T("AI_ERROR");
+        String res= choice.optJSONObject("message", new JSONObject()).optString("content", getGrant().T("AI_ERROR"));
         return   HTMLTool.toSafeHTML(MarkdownTool.toHTML(res));
 
 
