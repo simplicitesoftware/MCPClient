@@ -291,9 +291,6 @@ public class LlmTools implements java.io.Serializable {
         private static JSONObject getClaudeFormatData(JSONObject postData) {
             JSONArray messages = postData.getJSONArray(MESSAGES_KEY);
             int toremove = -1;
-            AppLog.info(
-                    "postdata: " + postData.toString(1) + "\n message " + MESSAGES_KEY + " " + messages.toString(1));
-
             JSONArray convertedMessages = new JSONArray();
 
             for (int i = 0; i < messages.length(); i++) {
@@ -356,7 +353,6 @@ public class LlmTools implements java.io.Serializable {
                 }
 
                 if ("user".equals(role) && !Tool.isEmpty(message.optString(CONTENT_KEY))) {
-                    AppLog.info("message: " + message.toString(1) + "\n" + CONTENT_KEY);
                     Object content = message.opt(CONTENT_KEY);
                     if (content instanceof JSONArray contentArray) {
                         for (int j = 0; j < contentArray.length(); j++) {
@@ -475,7 +471,7 @@ public class LlmTools implements java.io.Serializable {
                  if(begin >= 0){
                     for (int i = begin; i < len; i++)
                         newHistoric.put(historic.getJSONObject(i));
-                    AppLog.info("newhist " + newHistoric.toString());
+                   
                     return newHistoric;
                 }
             }
@@ -826,7 +822,6 @@ public class LlmTools implements java.io.Serializable {
             }
             connection.disconnect();
             String res = response.toString();
-            AppLog.info("res no refactored: " + res);
             JSONObject resJson = refactorAiResponseInGPT(res);
             if (resJson.has(USAGE_KEY)) {
                 AppLog.info("AI used token :" + resJson.optJSONObject(USAGE_KEY).toString(1), g);
