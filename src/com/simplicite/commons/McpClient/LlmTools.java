@@ -833,21 +833,21 @@ public class LlmTools implements java.io.Serializable {
         connection.disconnect();
         return "";
     }
-    
+
     private static String logToken(JSONObject json){
         StringBuilder log = new StringBuilder();
         if(json.has("input_tokens")){ 
             log.append("input tokens: ");
-            log.append(json.getString("input_tokens"));
+            log.append(String.valueOf(json.get("input_tokens")));
             log.append(", ");
             log.append("output tokens: ");
-            log.append(json.getString("output_tokens"));
+            log.append(String.valueOf(json.get("output_tokens")));
         }else if(json.has("prompt_tokens")){ 
             log.append("input tokens: ");
-            log.append(json.getString("prompt_tokens"));
+            log.append(String.valueOf(json.get("prompt_tokens")));
             log.append(", ");
             log.append("output tokens: ");
-            log.append(json.getString("completion_tokens"));
+            log.append(String.valueOf(json.get("completion_tokens")));
         }
         return log.toString();
     }
