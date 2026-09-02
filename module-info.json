@@ -3,7 +3,7 @@
     "name": "McpClient",
     "format": "json",
     "files": ["McpClient.json"],
-    "repository": {},
+    "repository": {"origin": {"uri": "https://github.com/simplicitesoftware/MCPClient"}},
     "version": "7",
     "branch": "master",
     "platform": "7.0.0-alpha"
