@@ -29,10 +29,7 @@ import org.json.JSONObject;
  */
 public class McpClientManager implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
-    /**
-     * Singleton instance of the McpClientManager.
-     */
-    private static McpClientManager instance;
+
     /**
      * Singleton instance of the McpClient.
      */
@@ -43,22 +40,11 @@ public class McpClientManager implements java.io.Serializable {
      * 
      * @param g The grant object.
      */
-    private McpClientManager(Grant g) {
+    public McpClientManager(Grant g) {
         initHttpClientUi(g);
     }
 
-    /**
-     * Get the singleton instance of the McpClientManager.
-     * 
-     * @param g The grant object.
-     * @return The singleton instance of the McpClientManager.
-     */
-    public static synchronized McpClientManager getInstance(Grant g) {
-        if (instance == null) {
-            instance = new McpClientManager(g);
-        }
-        return instance;
-    }
+    
 
     /**
      * Get the singleton instance of the McpClient.
@@ -98,7 +84,7 @@ public class McpClientManager implements java.io.Serializable {
         }else{
             return mcpToolsToOpenAIFormat(listTools().tools());
         }
-        
+
     }
     /**
      * List the tools available on the MCP server in OpenAI format.
@@ -116,7 +102,7 @@ public class McpClientManager implements java.io.Serializable {
      * @param mcpTools The list of tools.
      * @return The list of tools in OpenAI format.
      */
-    private static JSONArray mcpToolsToOpenAIFormat(List<io.modelcontextprotocol.spec.McpSchema.Tool> mcpTools) {
+    private JSONArray mcpToolsToOpenAIFormat(List<io.modelcontextprotocol.spec.McpSchema.Tool> mcpTools) {
         JSONArray tools = new JSONArray();
         for (io.modelcontextprotocol.spec.McpSchema.Tool mcpTool : mcpTools) {
             JSONObject tool = new JSONObject();

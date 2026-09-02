@@ -21,9 +21,9 @@ import com.simplicite.commons.McpClient.McpClientManager;
 /** REST service external object AiMcpClientApi */
 public class AiMcpClientApi extends com.simplicite.webapp.services.RESTServiceExternalObject {
     private static final long serialVersionUID = 1L;
-    private static McpClientManager
+    private  McpClientManager
             manager; // = McpClientManager.getInstance(Grant.getSystemAdmin());
-    private static JSONArray tools; // = manager.listToolsAsOpenAIFormat();
+    private  JSONArray tools; // = manager.listToolsAsOpenAIFormat();
     private static String serverInstructions;
 
     private static final String PARAMS_PROMPT_KEY = "prompt";
@@ -36,7 +36,7 @@ public class AiMcpClientApi extends com.simplicite.webapp.services.RESTServiceEx
         Grant g = getGrant();
 
         if (LlmTools.AI_DEBUG_LOGS) AppLog.info("init API with GRANT " + g.getLogin());
-        manager = McpClientManager.getInstance(g);
+        manager = new McpClientManager(g);
         tools = manager.listToolsAsLlmFormat();
         serverInstructions = manager.getServerInstructions();
         String param = getGrant().getUserSystemParam("MCP_MUTE_TOOLS");
@@ -495,5 +495,9 @@ public class AiMcpClientApi extends com.simplicite.webapp.services.RESTServiceEx
             p = req.optString(name, "");
         }
         return p;
+    }
+    @Override
+    public void destroy(){
+        manager.close();
     }
 }

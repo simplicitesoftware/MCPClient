@@ -471,7 +471,7 @@ public class LlmTools implements java.io.Serializable {
                  if(begin >= 0){
                     for (int i = begin; i < len; i++)
                         newHistoric.put(historic.getJSONObject(i));
-                   
+
                     return newHistoric;
                 }
             }
@@ -824,7 +824,7 @@ public class LlmTools implements java.io.Serializable {
             String res = response.toString();
             JSONObject resJson = refactorAiResponseInGPT(res);
             if (resJson.has(USAGE_KEY)) {
-                AppLog.info("AI used token :" + resJson.optJSONObject(USAGE_KEY).toString(1), g);
+                AppLog.info("AI used token :"+logToken(resJson.optJSONObject(USAGE_KEY)), g);
             }
             return resJson.toString();
         } catch (IOException e) {
@@ -832,6 +832,24 @@ public class LlmTools implements java.io.Serializable {
         }
         connection.disconnect();
         return "";
+    }
+    
+    private static String logToken(JSONObject json){
+        StringBuilder log = new StringBuilder();
+        if(json.has("input_tokens")){ 
+            log.append("input tokens: ");
+            log.append(json.getString("input_tokens"));
+            log.append(", ");
+            log.append("output tokens: ");
+            log.append(json.getString("output_tokens"));
+        }else if(json.has("prompt_tokens")){ 
+            log.append("input tokens: ");
+            log.append(json.getString("prompt_tokens"));
+            log.append(", ");
+            log.append("output tokens: ");
+            log.append(json.getString("completion_tokens"));
+        }
+        return log.toString();
     }
 
     private static void addSpecificHeaders(HttpURLConnection connection, String apiKey) {
