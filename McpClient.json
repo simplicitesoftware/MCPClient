@@ -8,7 +8,7 @@
   "mdl_type": "X",
   "mdl_icon": null,
   "mdl_url": null,
-  "mdl_comment": null,
+  "mdl_comment": "Client module for internal use of Simplicité MCP server\n\nSet AI_API_PARAM mistral exemple:\n```json\n{\n \"completion_url\": \"https://api.mistral.ai/v1/chat/completions\",\n \"bot_name\": \"George\",\n \"code_max_token\": \"2000\",\n \"provider\": \"Mistral AI\",\n \"api_key\": \"[ENV:api_key]\",\n \"default_max_token\": \"5000\",\n \"showDataDisclaimer\": true,\n \"data_number\": \"3\",\n \"hist_depth\": \"3\",\n \"model\": \"mistral-medium-3-5\",\n \"stt_url\": \"\",\n \"ping_url\": \"https://api.mistral.ai/v1/models\"\n}\n```\n\nClaude:\n```json\n{\n  \"completion_url\": \"https://api.anthropic.com/v1/messages\",\n  \"bot_name\": \"George\",\n  \"code_max_token\": \"2000\",\n  \"provider\": \"anthropic\",\n  \"api_key\": \"[ENV:api_key]\",\n  \"anthropic-workspace-id\":\"[ENV:workspace_id]\",\n  \"default_max_token\": \"5000\",\n  \"showDataDisclaimer\": true,\n  \"data_number\": \"3\",\n  \"hist_depth\": \"3\",\n  \"model\": \"claude-sonnet-4-5-20250929\",\n  \"stt_url\": \"\",\n  \"ping_url\": \"https://api.anthropic.com/v1/models\",\n  \"ClaudeAPI\":true\n}\n```",
   "mdl_lib": {
    "path": "build/module-mcpclient.jar",
    "mime": "application/java-archive",
@@ -151,7 +151,7 @@
       "lov_name": "TEXT",
       "lov_code": "AI_ERROR",
       "lov_lang": "ENU",
-      "lov_value": "The AI has encountered an error, we apologise for any inconvenience caused.",
+      "lov_value": "We're having trouble processing your request. Please try again later or contact support",
       "lov_order_by": 1,
       "lov_event_id__lev_code": null,
       "row_module_id__mdl_name": "McpClient"
@@ -216,7 +216,7 @@
       "lov_name": "TEXT",
       "lov_code": "AI_ERROR",
       "lov_lang": "FRA",
-      "lov_value": "L'IA a rencontré une erreur , nous vous prions de nous excuser pour la gêne occasionnée.",
+      "lov_value": "Je rencontre un problème pour traiter votre requête. Veuillez réessayer plus tard ou contacter notre support.",
       "lov_order_by": 1,
       "lov_event_id__lev_code": null,
       "row_module_id__mdl_name": "McpClient"

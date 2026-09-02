@@ -37,7 +37,7 @@ public class AiMcpClientApi extends com.simplicite.webapp.services.RESTServiceEx
 
         if (LlmTools.AI_DEBUG_LOGS) AppLog.info("init API with GRANT " + g.getLogin());
         manager = McpClientManager.getInstance(g);
-        tools = manager.listToolsAsOpenAIFormat();
+        tools = manager.listToolsAsLlmFormat();
         serverInstructions = manager.getServerInstructions();
         String param = getGrant().getUserSystemParam("MCP_MUTE_TOOLS");
         if(Tool.isEmpty(param)) param = Grant.getSystemAdmin().getParameter("MCP_MUTE_TOOLS");

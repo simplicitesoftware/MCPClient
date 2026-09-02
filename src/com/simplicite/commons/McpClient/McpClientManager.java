@@ -18,12 +18,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-/** Shared code McpClientManager 
- * This class is used to manage the McpClient instance for the Simplicite MCP serveur.
- * It provides methods to list tools, get tool description, call tools with prompt, and close the client.
+/**
+ * Shared code McpClientManager
+ * This class is used to manage the McpClient instance for the Simplicite MCP
+ * serveur.
+ * It provides methods to list tools, get tool description, call tools with
+ * prompt, and close the client.
  * Used by the internal chatbot to interact with the MCP server.
  * through {@link com.simplicite.webapp.mcp.McpUiServlet} servlet.
-*/
+ */
 public class McpClientManager implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
     /**
@@ -37,13 +40,16 @@ public class McpClientManager implements java.io.Serializable {
 
     /**
      * Constructor of the McpClientManager.
+     * 
      * @param g The grant object.
      */
     private McpClientManager(Grant g) {
         initHttpClientUi(g);
     }
+
     /**
      * Get the singleton instance of the McpClientManager.
+     * 
      * @param g The grant object.
      * @return The singleton instance of the McpClientManager.
      */
@@ -56,6 +62,7 @@ public class McpClientManager implements java.io.Serializable {
 
     /**
      * Get the singleton instance of the McpClient.
+     * 
      * @return The singleton instance of the McpClient.
      */
     public McpSyncClient getClient() {
@@ -64,6 +71,7 @@ public class McpClientManager implements java.io.Serializable {
 
     /**
      * List the tools available on the MCP server.
+     * 
      * @return The list of tools.
      */
     public ListToolsResult listTools() {
@@ -72,6 +80,7 @@ public class McpClientManager implements java.io.Serializable {
 
     /**
      * Get the server instructions.
+     * 
      * @return The server instructions.
      */
     public String getServerInstructions() {
@@ -79,15 +88,31 @@ public class McpClientManager implements java.io.Serializable {
     }
 
     /**
+     * List the tools available on the MCP server in llm format.
+     * 
+     * @return The list of tools in OpenAI format.
+     */
+    public JSONArray listToolsAsLlmFormat() {
+        if(LlmTools.CLAUDE_LLM.equals(LlmTools.llm)) {
+            return mcpToolsToClaudeFormat(listTools().tools());
+        }else{
+            return mcpToolsToOpenAIFormat(listTools().tools());
+        }
+        
+    }
+    /**
      * List the tools available on the MCP server in OpenAI format.
+     * 
      * @return The list of tools in OpenAI format.
      */
     public JSONArray listToolsAsOpenAIFormat() {
         return mcpToolsToOpenAIFormat(listTools().tools());
     }
 
+
     /**
      * Convert the list of tools to OpenAI format.
+     * 
      * @param mcpTools The list of tools.
      * @return The list of tools in OpenAI format.
      */
@@ -129,8 +154,46 @@ public class McpClientManager implements java.io.Serializable {
     }
 
     /**
+     * Convert the list of tools to Claude (Anthropic) format.
+     * 
+     * @param mcpTools The list of tools.
+     * @return The list of tools in Claude format.
+     */
+    private static JSONArray mcpToolsToClaudeFormat(List<io.modelcontextprotocol.spec.McpSchema.Tool> mcpTools) {
+        JSONArray tools = new JSONArray();
+        for (io.modelcontextprotocol.spec.McpSchema.Tool mcpTool : mcpTools) {
+            JSONObject tool = new JSONObject();
+            tool.put("name", mcpTool.name());
+            tool.put("description", mcpTool.description() != null ? mcpTool.description() : "");
+
+            JSONObject inputSchema;
+            if (mcpTool.inputSchema() != null) {
+                try {
+                    ObjectMapper mapper = new ObjectMapper();
+                    String schemaJson = mapper.writeValueAsString(mcpTool.inputSchema());
+                    inputSchema = new JSONObject(schemaJson);
+                } catch (Exception e) {
+                    AppLog.warning("fallback : empty schema for tool " + mcpTool.name(), e);
+                    inputSchema = new JSONObject()
+                            .put("type", "object")
+                            .put("properties", new JSONObject());
+                }
+            } else {
+                inputSchema = new JSONObject()
+                        .put("type", "object")
+                        .put("properties", new JSONObject());
+            }
+            tool.put("input_schema", inputSchema);
+
+            tools.put(tool);
+        }
+        return tools;
+    }
+
+    /**
      * Call a tool with a prompt.
-     * @param toolName The name of the tool.
+     * 
+     * @param toolName  The name of the tool.
      * @param arguments The arguments of the tool.
      * @return The result of the tool call.
      */
@@ -155,6 +218,7 @@ public class McpClientManager implements java.io.Serializable {
 
     /**
      * Get the description of a tool.
+     * 
      * @param toolName The name of the tool.
      * @return The description of the tool.
      */
@@ -178,6 +242,7 @@ public class McpClientManager implements java.io.Serializable {
 
     /**
      * Initialize the McpClient.
+     * 
      * @param g The grant object.
      */
     public void initHttpClientUi(Grant g) {
