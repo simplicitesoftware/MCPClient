@@ -13,7 +13,7 @@ ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
   <description>Simplicite module: McpClient</description>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <simplicite.url>http://localhost:8080</simplicite.url>
+    <simplicite.url>https://beta.cbi.simplicite.io</simplicite.url>
     <simplicite.version>7.0-SNAPSHOT</simplicite.version>
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
@@ -71,7 +71,7 @@ ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
           <dependency>
             <groupId>com.puppycrawl.tools</groupId>
             <artifactId>checkstyle</artifactId>
-            <version>13.7.0</version>
+            <version>14.3.0</version>
           </dependency>
         </dependencies>
       </plugin>
@@ -94,5 +94,48 @@ ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
       <artifactId>simplicite-api</artifactId>
       <version>${simplicite.version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.simplicite</groupId>
+      <artifactId>simplicite-api</artifactId>
+      <version>${simplicite.version}</version>
+      <classifier>javadoc</classifier>
+    </dependency>
   </dependencies>
+  <profiles>
+    <profile>
+      <id>build-others</id>
+      <activation>
+        <file>
+          <exists>others/pom.xml</exists>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>3.6.3</version>
+            <executions>
+              <execution>
+                <?m2e ignore?>
+                <id>build-others-module</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <executable>mvn</executable>
+                  <workingDirectory>${project.basedir}/others</workingDirectory>
+                  <arguments>
+                    <argument>clean</argument>
+                    <argument>package</argument>
+                  </arguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>

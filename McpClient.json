@@ -7,8 +7,8 @@
   "mdl_version": "7",
   "mdl_type": "X",
   "mdl_icon": null,
-  "mdl_url": "{\n\t\"type\": \"git\",\n\t\"origin\": {\n\t\t\"uri\": \"https://github.com/simplicitesoftware/MCPClient\"\n\t}\n}",
-  "mdl_comment": "Client module for internal use of Simplicité MCP server\n\nSet AI_API_PARAM mistral exemple:\n```json\n{\n \"completion_url\": \"https://api.mistral.ai/v1/chat/completions\",\n \"bot_name\": \"George\",\n \"code_max_token\": \"2000\",\n \"provider\": \"Mistral AI\",\n \"api_key\": \"[ENV:api_key]\",\n \"default_max_token\": \"5000\",\n \"showDataDisclaimer\": true,\n \"data_number\": \"3\",\n \"hist_depth\": \"3\",\n \"model\": \"mistral-medium-3-5\",\n \"stt_url\": \"\",\n \"ping_url\": \"https://api.mistral.ai/v1/models\"\n}\n```\n\nClaude:\n```json\n{\n  \"completion_url\": \"https://api.anthropic.com/v1/messages\",\n  \"bot_name\": \"George\",\n  \"code_max_token\": \"2000\",\n  \"provider\": \"anthropic\",\n  \"api_key\": \"[ENV:api_key]\",\n  \"anthropic-workspace-id\":\"[ENV:workspace_id]\",\n  \"default_max_token\": \"5000\",\n  \"showDataDisclaimer\": true,\n  \"data_number\": \"3\",\n  \"hist_depth\": \"3\",\n  \"model\": \"claude-sonnet-4-5-20250929\",\n  \"stt_url\": \"\",\n  \"ping_url\": \"https://api.anthropic.com/v1/models\",\n  \"ClaudeAPI\":true\n}\n```",
+  "mdl_url": "{\n    \"type\": \"git\",\n    \"origin\": {\"uri\": \"https://github.com/simplicitesoftware/MCPClient\"}\n}",
+  "mdl_comment": "Client module for internal use of Simplicité MCP server\n\nSet AI_API_PARAM mistral exemple:\n```json\n{\n \"completion_url\": \"https://api.mistral.ai/v1/chat/completions\",\n \"bot_name\": \"George\",\n \"code_max_token\": \"2000\",\n \"provider\": \"Mistral AI\",\n \"api_key\": \"[ENV:api_key]\",\n \"default_max_token\": \"5000\",\n \"showDataDisclaimer\": true,\n \"data_number\": \"3\",\n \"hist_depth\": \"3\",\n \"model\": \"mistral-medium-3-5\",\n \"stt_url\": \"\",\n \"ping_url\": \"https://api.mistral.ai/v1/models\"\n}\n```\n\nClaude:\n```json\n{\n  \"completion_url\": \"https://api.anthropic.com/v1/messages\",\n  \"bot_name\": \"George\",\n  \"code_max_token\": \"2000\",\n  \"provider\": \"anthropic\",\n  \"api_key\": \"[ENV:api_key]\",\n  \"anthropic-workspace-id\":\"[ENV:workspace_id]\",\n  \"default_max_token\": \"5000\",\n  \"showDataDisclaimer\": true,\n  \"data_number\": \"3\",\n  \"hist_depth\": \"3\",\n  \"model\": \"claude-sonnet-4-5-20250929\",\n  \"stt_url\": \"\",\n  \"ping_url\": \"https://api.anthropic.com/v1/models\",\n  \"ClaudeAPI\":true\n}\n```\n\nGPT:\n```json\n{\n \"completion_url\": \"https://api.openai.com/v1/chat/completions\",\n \"bot_name\": \"George\",\n \"code_max_token\": \"2000\",\n \"provider\": \"Open AI\",\n \"OpenAI-Project\": \"[ENV:project_key]\",\n \"OpenAI-Organization\": \"[ENV:Organization_key]\",\n \"api_key\": \"[ENV:api_key]\",\n \"default_max_token\": \"5000\",\n \"showDataDisclaimer\": true,\n \"data_number\": \"3\",\n \"hist_depth\": \"3\",\n \"model\": \"gpt-4o\",\n \"ping_url\": \"https://api.openai.com/v1/models\",\n \"stt_url\": \"https://api.openai.com/v1/audio/transcriptions\"\n}\n```",
   "mdl_lib": {
    "path": "build/module-mcpclient.jar",
    "mime": "application/java-archive",
@@ -21,18 +21,32 @@
    "label": "System parameters",
    "icon": "img/system/system_param",
    "field": "row_module_id",
-   "list": [{
-    "object": "SystemParam",
-    "userkey": "MCP_MUTE_TOOLS",
-    "item": {
-     "sys_code": "MCP_MUTE_TOOLS",
-     "sys_value": "false",
-     "sys_type": null,
-     "sys_event": false,
-     "sys_desc": null,
-     "row_module_id__mdl_name": "McpClient"
+   "list": [
+    {
+     "object": "SystemParam",
+     "userkey": "AI_API_PARAM",
+     "item": {
+      "sys_code": "AI_API_PARAM",
+      "sys_value": "{}",
+      "sys_type": null,
+      "sys_event": false,
+      "sys_desc": "AI API configuration:\n\nExample  \nMistral:\n```json\n{\n \"completion_url\": \"https://api.mistral.ai/v1/chat/completions\",\n \"bot_name\": \"George\",\n \"code_max_token\": \"2000\",\n \"provider\": \"Mistral AI\",\n \"api_key\": \"[ENV:api_key]\",\n \"default_max_token\": \"5000\",\n \"showDataDisclaimer\": true,\n \"data_number\": \"3\",\n \"hist_depth\": \"3\",\n \"model\": \"mistral-medium-3-5\",\n \"stt_url\": \"\",\n \"ping_url\": \"https://api.mistral.ai/v1/models\"\n}\n```\nClaude:\n```json\n{\n  \"completion_url\": \"https://api.anthropic.com/v1/messages\",\n  \"bot_name\": \"George\",\n  \"code_max_token\": \"2000\",\n  \"provider\": \"anthropic\",\n  \"api_key\": \"[ENV:api_key]\",\n  \"anthropic-workspace-id\":\"[ENV:workspace_id]\",\n  \"default_max_token\": \"5000\",\n  \"showDataDisclaimer\": true,\n  \"data_number\": \"3\",\n  \"hist_depth\": \"3\",\n  \"model\": \"claude-sonnet-4-5-20250929\",\n  \"stt_url\": \"\",\n  \"ping_url\": \"https://api.anthropic.com/v1/models\",\n  \"ClaudeAPI\":true\n}\n```\nGPT:\n```json\n{\n \"completion_url\": \"https://api.openai.com/v1/chat/completions\",\n \"bot_name\": \"George\",\n \"code_max_token\": \"2000\",\n \"provider\": \"Open AI\",\n \"OpenAI-Project\": \"[ENV:project_key]\",\n \"OpenAI-Organization\": \"[ENV:Organization_key]\",\n \"api_key\": \"[ENV:api_key]\",\n \"default_max_token\": \"5000\",\n \"showDataDisclaimer\": true,\n \"data_number\": \"3\",\n \"hist_depth\": \"3\",\n \"model\": \"gpt-4o\",\n \"ping_url\": \"https://api.openai.com/v1/models\",\n \"stt_url\": \"https://api.openai.com/v1/audio/transcriptions\"\n}\n```",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "SystemParam",
+     "userkey": "MCP_MUTE_TOOLS",
+     "item": {
+      "sys_code": "MCP_MUTE_TOOLS",
+      "sys_value": "false",
+      "sys_type": null,
+      "sys_event": false,
+      "sys_desc": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
     }
-   }]
+   ]
   },
   {
    "object": "View",

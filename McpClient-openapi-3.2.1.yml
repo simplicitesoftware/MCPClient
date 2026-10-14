@@ -2,7 +2,7 @@
 # / __(_)_ __  _ __| (_)__(_) |_ /_/
 # \__ \ | '  \| '_ \ | / _| |  _/ -_)
 # |___/_|_|_|_| .__/_|_\__|_|\__\___|
-#             |_| Module: McpClient 7
+#             |_| McpClient
 components:
   schemas:
     Error404:
@@ -17,51 +17,12 @@ components:
           type: integer
           enum:
           - 404
-    ActionResult:
-      description: Action result
-      type: object
-      properties:
-        result:
-          description: Action result
-          type: string
     TreeviewData:
       type: object
       properties:
         item:
           description: Object item with lists of linked objects' items
           type: object
-    PublicationResult:
-      description: Publication result
-      type: object
-      properties:
-        mime:
-          description: MIME type
-          type: string
-        content:
-          description: Content (plain text or base64 encoded)
-          type: string
-    PlaceData:
-      description: Place data
-      type: object
-      properties:
-        coord:
-          description: Geographical coordinates
-          type: string
-        address:
-          description: Address
-          type: string
-        row_id:
-          description: Row ID
-          type: string
-        label1:
-          description: 'Label #1'
-          type: string
-        label2:
-          description: 'Label #2'
-          type: string
-        label3:
-          description: 'Label #3'
-          type: string
     Error400:
       description: Bad request
       type: object
@@ -98,18 +59,6 @@ components:
           type: integer
           enum:
           - 500
-    PlaceMapData:
-      description: Places map data
-      type: object
-      properties:
-        places:
-          description: Places
-          type: array
-          items:
-            $ref: '#/components/schemas/PlaceData'
-        name:
-          description: Name
-          type: string
     Error403:
       description: Forbidden
       type: object
@@ -132,7 +81,7 @@ components:
       type: http
 servers:
 - url: /api
-openapi: 3.2.0
+openapi: 3.2.1
 paths:
   /login:
     get:

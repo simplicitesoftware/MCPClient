@@ -41,3 +41,23 @@ Claude:
 }
 ```
 
+GPT:
+```json
+{
+ "completion_url": "https://api.openai.com/v1/chat/completions",
+ "bot_name": "George",
+ "code_max_token": "2000",
+ "provider": "Open AI",
+ "OpenAI-Project": "[ENV:project_key]",
+ "OpenAI-Organization": "[ENV:Organization_key]",
+ "api_key": "[ENV:api_key]",
+ "default_max_token": "5000",
+ "showDataDisclaimer": true,
+ "data_number": "3",
+ "hist_depth": "3",
+ "model": "gpt-4o",
+ "ping_url": "https://api.openai.com/v1/models",
+ "stt_url": "https://api.openai.com/v1/audio/transcriptions"
+}
+```
+
