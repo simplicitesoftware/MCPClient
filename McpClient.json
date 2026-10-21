@@ -4818,6 +4818,46 @@
    ]
   },
   {
+   "object": "Dataset",
+   "label": "Datasets",
+   "icon": "img/color/file",
+   "field": "row_module_id",
+   "list": [{
+    "object": "Dataset",
+    "userkey": "McpClient~Providers",
+    "item": {
+     "row_module_id__mdl_name": "McpClient",
+     "dt_name": "Providers",
+     "dt_file": {
+      "path": "data/Providers.xml",
+      "mime": "text/xml",
+      "name": "McpClient-dataOrdered-20261021184314.xml"
+     },
+     "dt_desc": null,
+     "dt_exportdate_from": null,
+     "dt_exportdate_to": null,
+     "dt_export_format": "xml",
+     "dt_export_zip": false
+    }
+   }]
+  },
+  {
+   "object": "DatasetObject",
+   "label": "Dataset objects (export order)",
+   "icon": "img/color/document",
+   "field": "row_module_id",
+   "list": [{
+    "object": "DatasetObject",
+    "userkey": "Providers~LlmProvider",
+    "item": {
+     "dto_order": 1,
+     "dto_dt_id__dt_name": "Providers",
+     "dto_obo_id__obo_name": "LlmProvider",
+     "row_module_id__mdl_name": "McpClient"
+    }
+   }]
+  },
+  {
    "object": "Permission",
    "label": "Permissions",
    "icon": "img/system/state_transition_permission",

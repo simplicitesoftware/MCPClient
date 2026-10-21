@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simplicite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.simplicite.fr/base" xsi:schemaLocation="http://www.simplicite.fr/base https://www.simplicite.io/resources/schemas/base.xsd">
+<object>
+	<name>LlmProvider</name>
+	<action>upsert</action>
+	<data>
+		<llmPrvProvider>Albert</llmPrvProvider>
+		<llmPrvDefaultUrl><![CDATA[https://albert.api.etalab.gouv.fr/v1/]]></llmPrvDefaultUrl>
+		<llmPrvDataModel><![CDATA[{}]]></llmPrvDataModel>
+		<llmPrvHelp/>
+		<llmPrvUserParameters/>
+		<llmPrvModelsUrl><![CDATA[https://albert.api.etalab.gouv.fr/v1/models]]></llmPrvModelsUrl>
+		<llmPrvCompletionUrl><![CDATA[https://albert.api.etalab.gouv.fr/v1/chat/completions]]></llmPrvCompletionUrl>
+		<llmPrvPingUrl><![CDATA[https://albert.api.etalab.gouv.fr/v1/models]]></llmPrvPingUrl>
+		<llmPrvSttUrl/>
+		<llmModel/>
+		<llmHistoryDepth/>
+		<llmMaxToken/>
+		<llmDataDisclamer/>
+	</data>
+</object>
+<object>
+	<name>LlmProvider</name>
+	<action>upsert</action>
+	<data>
+		<llmPrvProvider>claude</llmPrvProvider>
+		<llmPrvDefaultUrl><![CDATA[https://api.anthropic.com/v1/]]></llmPrvDefaultUrl>
+		<llmPrvDataModel><![CDATA[{"llmAnthropicWorkspaceId": {
+    "defaultValue": "",
+    "api_name": "anthropic-workspace-id"
+}}]]></llmPrvDataModel>
+		<llmPrvHelp/>
+		<llmPrvUserParameters/>
+		<llmPrvModelsUrl><![CDATA[https://api.anthropic.com/v1/models]]></llmPrvModelsUrl>
+		<llmPrvCompletionUrl><![CDATA[https://api.anthropic.com/v1/messages]]></llmPrvCompletionUrl>
+		<llmPrvPingUrl><![CDATA[https://api.anthropic.com/v1/models]]></llmPrvPingUrl>
+		<llmPrvSttUrl/>
+		<llmModel/>
+		<llmHistoryDepth/>
+		<llmMaxToken/>
+		<llmDataDisclamer/>
+	</data>
+</object>
+<object>
+	<name>LlmProvider</name>
+	<action>upsert</action>
+	<data>
+		<llmPrvProvider>mammouth</llmPrvProvider>
+		<llmPrvDefaultUrl><![CDATA[https://api.mammouth.ai/v1]]></llmPrvDefaultUrl>
+		<llmPrvDataModel><![CDATA[{}]]></llmPrvDataModel>
+		<llmPrvHelp/>
+		<llmPrvUserParameters/>
+		<llmPrvModelsUrl><![CDATA[https://api.mammouth.ai/v1/models]]></llmPrvModelsUrl>
+		<llmPrvCompletionUrl><![CDATA[https://api.mammouth.ai/v1/chat/completions]]></llmPrvCompletionUrl>
+		<llmPrvPingUrl><![CDATA[https://api.mammouth.ai/v1/models]]></llmPrvPingUrl>
+		<llmPrvSttUrl/>
+		<llmModel/>
+		<llmHistoryDepth/>
+		<llmMaxToken/>
+		<llmDataDisclamer/>
+	</data>
+</object>
+<object>
+	<name>LlmProvider</name>
+	<action>upsert</action>
+	<data>
+		<llmPrvProvider>mistral</llmPrvProvider>
+		<llmPrvDefaultUrl><![CDATA[https://api.mistral.ai/]]></llmPrvDefaultUrl>
+		<llmPrvDataModel><![CDATA[{}]]></llmPrvDataModel>
+		<llmPrvHelp><![CDATA[<h3><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Finding Your API Key</span></h3><p><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Sign In to Mistral AI:</strong></p><ul><li><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Go to the </span><a href="https://console.mistral.ai/" rel="noopener noreferrer" target="_blank" style="background-color: rgb(35, 35, 35); color: oklab(0.951975 0.0000433425 0.0000190934);">Mistral AI website</a><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);"> and sign in with your credentials.</span></li></ul><p><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Access API Keys:</strong></p><ul><li><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Navigate to the </span><a href="https://console.mistral.ai/api-keys/" rel="noopener noreferrer" target="_blank" style="background-color: rgb(35, 35, 35); color: oklab(0.951975 0.0000433425 0.0000190934);">API keys section</a><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);"> on your dashboard.</span></li><li><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Generate a new API key if you don&#39;t have one, or copy your existing API key.</span></li></ul><h3><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Default Endpoints</span></h3><p><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">For standard deployments, use the following endpoints:</span></p><p><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Models Endpoint:</strong></p><ul><li><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">URL:</strong><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);"> </span><code style="background-color: oklab(0.219243 0.0000100526 0.00000437865); color: rgb(102, 102, 102);">https://api.mistral.ai/v1/models</code></li><li><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Purpose:</strong><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);"> Retrieve a list of available AI models.</span></li></ul><p><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Completion Endpoint:</strong></p><ul><li><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">URL:</strong><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);"> </span><code style="background-color: oklab(0.219243 0.0000100526 0.00000437865); color: rgb(102, 102, 102);">https://api.mistral.ai/v1/chat/completions</code></li><li><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Purpose:</strong><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);"> Generate text based on a given prompt.</span></li></ul><p><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Ping Endpoint:</strong></p><ul><li><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">URL:</strong><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);"> </span><code style="background-color: oklab(0.219243 0.0000100526 0.00000437865); color: rgb(102, 102, 102);">https://api.mistral.ai/v1/models</code></li><li><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Purpose:</strong><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);"> This endpoint is used to check the availability of the Mistral AI server. Note that Mistral AI doesn&#39;t provide a specific ping endpoint. We use the models endpoint to check credentials, but it does not verify the availability of tokens or remaining usage limits. It primarily checks server availability.</span></li></ul><h3><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Security Tips</span></h3><ul><li><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Keep Your API Key Secure:</strong><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);"> Do not expose your API key in client-side code or public repositories.</span></li><li><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Rotate API Keys Regularly:</strong><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);"> Periodically change your API key to enhance security.</span></li><li><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Monitor Usage:</strong><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);"> Keep track of your </span><a href="https://console.mistral.ai/usage/" rel="noopener noreferrer" target="_blank" style="background-color: rgb(35, 35, 35); color: oklab(0.951975 0.0000433425 0.0000190934);">API usage</a><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);"> to ensure you stay within your usage limits.</span></li><li><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Set Limits for Projects:</strong><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);"> Define usage limits and quotas for using the API to prevent unexpected usage spikes and ensure budget control.</span></li></ul>]]></llmPrvHelp>
+		<llmPrvUserParameters><![CDATA[{
+    "top_p": {
+        "help": {
+            "FRA": "Utilise la méthode de filtrage par noyau. Un top_p de 0.9 signifie que le modèle choisira parmi les mots qui composent 90% de la probabilité cumulée.Il est généralement recommandé de modifier soit le top p, soit la température, mais pas les deux.",
+            "ENU": "Uses nucleus sampling. A top_p of 0.9 means the model will choose from the words that make up 90% of the cumulative probability. We generally recommend altering this or temperature but not both"
+        },
+        "default": "",
+        "min": 0,
+        "max": 1,
+        "label": {
+            "FRA": "Top p",
+            "ENU": "Top p"
+        }
+    },
+    "frequency_penalty": {
+        "help": {
+            "FRA": "Diminue la probabilité que le modèle génère des mots déjà utilisés dans la conversation.",
+            "ENU": "Decreases the likelihood that the model will generate words that have already been used in the conversation."
+        },
+        "default": 0,
+        "min": -1.5,
+        "max": 1.5,
+        "label": {
+            "FRA": "Pénalité de fréquence",
+            "ENU": "Frequency penalty"
+        }
+    },
+    "presence_penalty": {
+        "help": {
+            "FRA": "Augmente la probabilité que le modèle évite de répéter des phrases ou des concepts déjà mentionnés dans la conversation.",
+            "ENU": "Increases the likelihood that the model will avoid repeating phrases or concepts already mentioned in the conversation."
+        },
+        "default": 0,
+        "min": -1.5,
+        "max": 1.5,
+        "label": {
+            "FRA": "Pénalité de présence",
+            "ENU": "Presence penalty"
+        }
+    },
+    "temperature": {
+        "help": {
+            "FRA": "Contrôle la créativité des réponses. Une température plus élevée (ex. 1.0) rend les réponses plus variées, tandis qu'une température plus basse (ex. 0.2) les rend plus déterministes.",
+            "ENU": "Controls the creativity of the responses. A higher temperature (e.g., 1.0) makes responses more varied, while a lower temperature (e.g., 0.2) makes them more deterministic."
+        },
+        "default": 1,
+        "min": -1.5,
+        "max": 1.5,
+        "label": {
+            "FRA": "Température",
+            "ENU": "Temperature"
+        }
+    }
+}]]></llmPrvUserParameters>
+		<llmPrvModelsUrl><![CDATA[https://api.mistral.ai/v1/models]]></llmPrvModelsUrl>
+		<llmPrvCompletionUrl><![CDATA[https://api.mistral.ai/v1/chat/completions]]></llmPrvCompletionUrl>
+		<llmPrvPingUrl><![CDATA[https://api.mistral.ai/v1/models]]></llmPrvPingUrl>
+		<llmPrvSttUrl/>
+		<llmModel/>
+		<llmHistoryDepth/>
+		<llmMaxToken/>
+		<llmDataDisclamer/>
+	</data>
+</object>
+<object>
+	<name>LlmProvider</name>
+	<action>upsert</action>
+	<data>
+		<llmPrvProvider>openai</llmPrvProvider>
+		<llmPrvDefaultUrl><![CDATA[https://api.openai.com/]]></llmPrvDefaultUrl>
+		<llmPrvDataModel><![CDATA[{
+    "llmGptProjectId": {
+        "defaultValue": "",
+        "api_name": "OpenAI-Project"
+    },
+    "llmGptOrganizationId": {
+        "defaultValue": "",
+        "api_name": "OpenAI-Organization"
+    }
+}]]></llmPrvDataModel>
+		<llmPrvHelp><![CDATA[<h3><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Finding Your API Key</span></h3><p><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Sign In to OpenAI:</strong></p><ul><li><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Go to the </span><a href="https://platform.openai.com/" rel="noopener noreferrer" target="_blank" style="background-color: rgb(35, 35, 35); color: oklab(0.951975 0.0000433425 0.0000190934);">OpenAI website</a><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);"> and sign in with your credentials.</span></li></ul><p><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Access API Keys:</strong></p><ul><li><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Navigate to the </span><a href="https://platform.openai.com/account/api-keys" rel="noopener noreferrer" target="_blank" style="background-color: rgb(35, 35, 35); color: oklab(0.951975 0.0000433425 0.0000190934);">API keys section</a><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">.</span></li><li><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Generate a new API key if you don&#39;t have one, or copy your existing API key.</span></li></ul><h3><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Default Endpoints</span></h3><p><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">For standard deployments, use the following endpoints:</span></p><p><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Ping Endpoint:</strong></p><ul><li><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">URL:</strong><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);"> </span><code style="background-color: oklab(0.219243 0.0000100526 0.00000437865); color: rgb(102, 102, 102);">https://api.openai.com/v1/models</code></li><li><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Purpose:</strong><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);"> This endpoint is used to check the availability of the OpenAI server. Note that OpenAI doesn&#39;t provide a ping endpoint. We use the models endpoint to check credentials, but it does not verify the availability of tokens or remaining usage limits. It primarily checks server availability.</span></li></ul><p><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Models Endpoint:</strong></p><ul><li><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">URL:</strong><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);"> </span><code style="background-color: oklab(0.219243 0.0000100526 0.00000437865); color: rgb(102, 102, 102);">https://api.openai.com/v1/models</code></li><li><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Purpose:</strong><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);"> Retrieve a list of available AI models.</span></li></ul><p><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Completion Endpoint:</strong></p><ul><li><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">URL:</strong><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);"> </span><code style="background-color: oklab(0.219243 0.0000100526 0.00000437865); color: rgb(102, 102, 102);">https://api.openai.com/v1/completions</code></li><li><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Purpose:</strong><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);"> Generate text based on a given prompt.</span></li></ul><h3><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Security Tips</span></h3><ul><li><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Keep Your API Key Secure:</strong><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);"> Do not expose your API key in client-side code or public repositories.</span></li><li><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Rotate API Keys Regularly:</strong><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);"> Periodically change your API key to enhance security.</span></li><li><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Monitor Usage:</strong><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);"> Keep track of your API usage to ensure you stay within your usage limits on </span><a href="https://platform.openai.com/organization/usage" rel="noopener noreferrer" target="_blank" style="background-color: rgb(35, 35, 35); color: oklab(0.951975 0.0000433425 0.0000190934);">Organization usage</a><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">.</span></li><li><strong style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);">Set Limits for Projects:</strong><span style="background-color: rgb(35, 35, 35); color: rgb(231, 231, 231);"> Define usage limits and quotas for each project or application using the API to prevent unexpected usage spikes and ensure budget control.</span></li></ul><p></p>]]></llmPrvHelp>
+		<llmPrvUserParameters><![CDATA[{
+    "top_p": {
+        "help": {
+            "FRA": "Utilise la méthode de filtrage par noyau. Un top_p de 0.9 signifie que le modèle choisira parmi les mots qui composent 90% de la probabilité cumulée.Il est généralement recommandé de modifier soit le top p, soit la température, mais pas les deux.",
+            "ENU": "Uses nucleus sampling. A top_p of 0.9 means the model will choose from the words that make up 90% of the cumulative probability. We generally recommend altering this or temperature but not both"
+        },
+        "default": "",
+        "min": 0,
+        "max": 1,
+        "label": {
+            "FRA": "Top p",
+            "ENU": "Top p"
+        }
+    },
+    "frequency_penalty": {
+        "help": {
+            "FRA": "Diminue la probabilité que le modèle génère des mots déjà utilisés dans la conversation.",
+            "ENU": "Decreases the likelihood that the model will generate words that have already been used in the conversation."
+        },
+        "default": 0,
+        "min": -1.5,
+        "max": 1.5,
+        "label": {
+            "FRA": "Pénalité de fréquence",
+            "ENU": "Frequency penalty"
+        }
+    },
+    "presence_penalty": {
+        "help": {
+            "FRA": "Augmente la probabilité que le modèle évite de répéter des phrases ou des concepts déjà mentionnés dans la conversation.",
+            "ENU": "Increases the likelihood that the model will avoid repeating phrases or concepts already mentioned in the conversation."
+        },
+        "default": 0,
+        "min": -1.5,
+        "max": 1.5,
+        "label": {
+            "FRA": "Pénalité de présence",
+            "ENU": "Presence penalty"
+        }
+    },
+    "temperature": {
+        "help": {
+            "FRA": "Contrôle la créativité des réponses. Une température plus élevée (ex. 1.0) rend les réponses plus variées, tandis qu'une température plus basse (ex. 0.2) les rend plus déterministes.",
+            "ENU": "Controls the creativity of the responses. A higher temperature (e.g., 1.0) makes responses more varied, while a lower temperature (e.g., 0.2) makes them more deterministic."
+        },
+        "default": 1,
+        "min": -1.5,
+        "max": 1.5,
+        "label": {
+            "FRA": "Température",
+            "ENU": "Temperature"
+        }
+    }
+}]]></llmPrvUserParameters>
+		<llmPrvModelsUrl><![CDATA[https://api.openai.com/v1/models]]></llmPrvModelsUrl>
+		<llmPrvCompletionUrl><![CDATA[https://api.openai.com/v1/chat/completions]]></llmPrvCompletionUrl>
+		<llmPrvPingUrl><![CDATA[https://api.openai.com/v1/models]]></llmPrvPingUrl>
+		<llmPrvSttUrl><![CDATA[https://api.openai.com/v1/audio/transcriptions]]></llmPrvSttUrl>
+		<llmModel/>
+		<llmHistoryDepth/>
+		<llmMaxToken/>
+		<llmDataDisclamer/>
+	</data>
+</object>
+</simplicite>
