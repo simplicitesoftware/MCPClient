@@ -50,6 +50,301 @@ paths:
           description: Unauthorized
       tags:
       - session
+  /rest/LlmProvider/{row_id}:
+    post:
+      summary: Create a new LlmProvider business object record
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      operationId: obj-llmprovider-create
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/LlmProvider'
+          description: Success in creating a new business object record
+        '400':
+          schema:
+            $ref: '#/definitions/Error400'
+          description: Bad request
+        '401':
+          schema:
+            $ref: '#/definitions/Error401'
+          description: Unauthorized
+        '500':
+          schema:
+            $ref: '#/definitions/Error500'
+          description: Internal server error
+      parameters:
+      - in: path
+        name: row_id
+        description: Row ID (or empty or _ for all row IDs)
+        type: string
+        required: true
+      - schema:
+          $ref: '#/definitions/LlmProvider'
+        in: body
+        name: body
+      tags:
+      - LlmProvider
+      consumes:
+      - application/json
+    get:
+      summary: Get a LlmProvider business object record
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      operationId: obj-llmprovider-get
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/LlmProvider'
+          description: Success in getting a single business object record
+        '401':
+          schema:
+            $ref: '#/definitions/Error401'
+          description: Unauthorized
+        '500':
+          schema:
+            $ref: '#/definitions/Error500'
+          description: Internal server error
+        '404':
+          schema:
+            $ref: '#/definitions/Error404'
+          description: Not found
+      parameters:
+      - in: path
+        name: row_id
+        description: Row ID (or empty or _ for all row IDs)
+        type: string
+        required: true
+      - in: query
+        name: _inline_documents
+        description: Inline documents?
+        type: boolean
+        required: false
+      - in: query
+        name: _inline_thumbnails
+        description: Inline documents' thumbnails?
+        type: boolean
+        required: false
+      - in: query
+        name: _inline_objects
+        description: Inline objects?
+        type: boolean
+        required: false
+      tags:
+      - LlmProvider
+    delete:
+      summary: Delete a LlmProvider business object record
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      operationId: obj-llmprovider-delete
+      responses:
+        '200':
+          description: Success in deleting a business object record
+        '400':
+          schema:
+            $ref: '#/definitions/Error400'
+          description: Bad request
+        '401':
+          schema:
+            $ref: '#/definitions/Error401'
+          description: Unauthorized
+        '500':
+          schema:
+            $ref: '#/definitions/Error500'
+          description: Internal server error
+        '404':
+          schema:
+            $ref: '#/definitions/Error404'
+          description: Not found
+      parameters:
+      - in: path
+        name: row_id
+        description: Row ID (or empty or _ for all row IDs)
+        type: string
+        required: true
+      tags:
+      - LlmProvider
+    put:
+      summary: Update a LlmProvider business object record
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      operationId: obj-llmprovider-update
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/LlmProvider'
+          description: Success in updating a business object record
+        '400':
+          schema:
+            $ref: '#/definitions/Error400'
+          description: Bad request
+        '401':
+          schema:
+            $ref: '#/definitions/Error401'
+          description: Unauthorized
+        '500':
+          schema:
+            $ref: '#/definitions/Error500'
+          description: Internal server error
+        '404':
+          schema:
+            $ref: '#/definitions/Error404'
+          description: Not found
+      parameters:
+      - in: path
+        name: row_id
+        description: Row ID (or empty or _ for all row IDs)
+        type: string
+        required: true
+      - schema:
+          $ref: '#/definitions/LlmProvider'
+        in: body
+        name: body
+      tags:
+      - LlmProvider
+      consumes:
+      - application/json
+  /rest/LlmProvider:
+    get:
+      summary: Search LlmProvider business object records or get contextualized metadata
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      operationId: obj-llmprovider-search
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/ArrayOfLlmProvider'
+          description: Success in searching business object records (or in getting
+            contextualized business object metadata, documentation, ...)
+        '401':
+          schema:
+            $ref: '#/definitions/Error401'
+          description: Unauthorized
+        '500':
+          schema:
+            $ref: '#/definitions/Error500'
+          description: Internal server error
+      parameters:
+      - in: query
+        name: _metadata
+        description: Metadata?
+        type: boolean
+        required: false
+      - in: query
+        name: _count
+        description: Count?
+        type: boolean
+        required: false
+      - in: query
+        name: _doc
+        description: Documentation?
+        type: boolean
+        required: false
+      - in: query
+        name: llmPrvProvider
+        description: Search filter for Provider
+        type: string
+        required: false
+        enum:
+        - mistral
+        - claude
+        - openai
+        - mammouth
+        - Albert
+      - in: query
+        name: llmPrvDefaultUrl
+        description: Search filter for Default url
+        type: string
+        required: false
+      - in: query
+        name: llmPrvDataModel
+        description: Search filter for Specific parameter
+        type: string
+        required: false
+      - in: query
+        name: llmPrvHelp
+        description: Search filter for Key and endpoints help
+        type: string
+        required: false
+      - in: query
+        name: llmPrvUserParameters
+        description: Search filter for Prv user parameters
+        type: string
+        required: false
+      - in: query
+        name: llmPrvModelsUrl
+        description: Search filter for Models url
+        type: string
+        required: false
+      - in: query
+        name: llmPrvCompletionUrl
+        description: Search filter for Completion endpoint url
+        type: string
+        required: false
+      - in: query
+        name: llmPrvPingUrl
+        description: Search filter for Ping url
+        type: string
+        required: false
+      - in: query
+        name: llmPrvSttUrl
+        description: Search filter for Speech to text url
+        type: string
+        required: false
+      - in: query
+        name: llmModel
+        description: Search filter for model
+        type: string
+        required: false
+        enum:
+        - ''
+      - in: query
+        name: llmHistoryDepth
+        description: Search filter for History depth
+        type: integer
+        required: false
+      - in: query
+        name: llmMaxToken
+        description: Search filter for max token
+        type: integer
+        required: false
+      - in: query
+        name: llmDataDisclamer
+        description: Search filter for Data disclamer
+        type: boolean
+        required: false
+      - in: query
+        name: llmApiKey
+        description: Search filter for api key
+        type: string
+        required: false
+      - in: query
+        name: llmAnthropicWorkspaceId
+        description: Search filter for anthropic workspace id
+        type: string
+        required: false
+      - in: query
+        name: llmGptProjectId
+        description: Search filter for OpenAI Project ID
+        type: string
+        required: false
+      - in: query
+        name: llmGptOrganizationId
+        description: Search filter for OpenAI Organization ID
+        type: string
+        required: false
+      tags:
+      - LlmProvider
   /:
     get:
       summary: Get user session information
@@ -99,6 +394,11 @@ definitions:
       item:
         description: Object item with lists of linked objects' items
         type: object
+  ArrayOfLlmProvider:
+    description: List of Providers
+    type: array
+    items:
+      $ref: '#/definitions/LlmProvider'
   Error400:
     description: Bad request
     type: object
@@ -111,6 +411,87 @@ definitions:
         type: integer
         enum:
         - 400
+  LlmProvider:
+    description: Provider
+    type: object
+    properties:
+      llmMaxToken:
+        description: max token
+        type: integer
+      llmPrvProvider:
+        description: Provider
+        type: string
+        maxLength: 100
+        enum:
+        - mistral
+        - claude
+        - openai
+        - mammouth
+        - Albert
+      llmModel:
+        description: model
+        type: string
+        maxLength: 100
+        enum:
+        - ''
+      llmGptOrganizationId:
+        description: OpenAI Organization ID
+        type: string
+        maxLength: 100
+      llmPrvCompletionUrl:
+        description: Completion endpoint url
+        type: string
+        maxLength: 100
+      llmPrvDataModel:
+        description: Specific parameter
+        type: string
+        maxLength: 4000
+      llmPrvDefaultUrl:
+        description: Default url
+        type: string
+        maxLength: 100
+      llmGptProjectId:
+        description: OpenAI Project ID
+        type: string
+        maxLength: 100
+      llmPrvUserParameters:
+        description: Prv user parameters
+        type: string
+        maxLength: 5000
+      llmPrvSttUrl:
+        description: Speech to text url
+        type: string
+        maxLength: 100
+      llmPrvModelsUrl:
+        description: Models url
+        type: string
+        maxLength: 100
+      llmDataDisclamer:
+        description: Data disclamer
+        type: boolean
+      llmApiKey:
+        description: api key
+        type: string
+        maxLength: 500
+      llmAnthropicWorkspaceId:
+        description: anthropic workspace id
+        type: string
+        maxLength: 100
+      llmPrvPingUrl:
+        description: Ping url
+        type: string
+        maxLength: 100
+      row_id:
+        description: Unique technical row ID
+        type: string
+        maxLength: 11
+      llmHistoryDepth:
+        description: History depth
+        type: integer
+      llmPrvHelp:
+        description: Key and endpoints help
+        type: string
+        maxLength: 50000
   Error401:
     description: Unauthorized
     type: object
@@ -159,3 +540,6 @@ info:
   description: API for module McpClient
   title: McpClient
   version: '7'
+tags:
+- name: LlmProvider
+  description: Provider

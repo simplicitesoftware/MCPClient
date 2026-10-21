@@ -1,0 +1,163 @@
+/* dispo theme  Variables */
+
+@ai-button-color-bg: var(--pal-primary);
+@ai-button-color-text: var(--pal-primary-text);
+@ai-disabled-color-bg: var(--pal-base);
+@ai-disabled-color-text: var(--pal-text);
+@ai-icon-button-color-text: var(--pal-secondary-text);
+@ai-icon-button-color-border: var(--pal-secondary-dark1);
+@ai-icon-button-color-bg: var(--pal-secondary);
+@user-background-color: var(--pal-secondary);
+@user-text-color: var(--pal-secondary-text);
+@user-border-color: var(--pal-secondary-dark1);
+@bot-background-color: var(--pal-accent);
+@bot-text-color: var(--pal-accent-text);
+@bot-border-color: var(--pal-accent-dark1);
+.chat-messages{
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		padding: 15px;
+		overflow-y: scroll;
+}
+.ai-default-schema {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center; // Centrage du texte horizontalement
+	width: 300px; // Largeur fixe du carré
+	height: 300px; // Hauteur fixe du carré
+	padding: 20px; // Espace autour du texte à l'intérieur
+	/* word-wrap: break-word; // Retour à la ligne automatique pour les longs textes
+	overflow-wrap: break-word; // Support pour navigateurs plus anciens
+	font-family: Arial, sans-serif; // Police simple et claire
+	font-size: 16px; // Taille du texte adaptée
+	color: #333333; // Couleur du texte */
+}
+#chatbot_send_button{
+	margin-left: 10px;
+}
+.ai-default-schema-content{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%; // S'adapte à la largeur du parent
+	height: 100%; // S'adapte à la hauteur du parent
+}
+.user-message {
+	flex: 1;
+	padding: 5px;
+	max-height: 55vh;
+	resize: none;
+	border: @user-border-color;
+	min-height: 40px;
+} 
+.chat-button {
+	padding: 5px ;
+	color: @ai-button-color-text;
+	background-color: @ai-button-color-bg;
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
+	min-height: 40px;
+}
+.chat-button:disabled  {
+	background-color: @ai-disabled-color-bg;
+	color: @ai-disabled-color-text;
+}
+.chat-icon-button{
+	padding: 5px;
+	color: @ai-icon-button-color-text;
+	border: 1px solid @ai-icon-button-color-border;
+	background-color: @ai-icon-button-color-bg;
+	border-radius: 3px;
+	cursor: pointer;
+	min-height: 40px;
+}
+.user-messages {
+	padding: 10px;
+	border-radius: 5px;
+	width: 70%;
+	background-color: @user-background-color;
+	color: @user-text-color;
+	align-self: flex-end;
+}
+.chat-container {
+	margin: 1px auto;
+	border-radius: 5px;
+	overflow: hidden;
+}
+.bot-messages, .bot-first-messages {
+	padding: 10px;
+	border-radius: 5px;
+	width: 70%;
+	background-color: @bot-background-color;
+	color: @bot-text-color;
+
+}
+.ai-chat-img{
+	max-width: 100%;
+	max-height: 50vh;
+}
+.minified-img-chat{
+	height: 60px;
+	width: auto;
+	padding: 5px;
+	margin-bottom: 0px;
+}
+.ai-chat-input-area{
+	background-color: var(--pal-base);
+	border-radius: 3px;
+	min-height: 50px;
+}
+.ai-chat-ellipsis {
+	display: inline-block;
+	&:after {
+	  content: '...';  // Le contenu des points de suspension
+	  animation: dots 1.5s steps(4, end) infinite; // Animation répétée en boucle
+	  display: inline-block;
+	  width: 1em;
+	  text-align: left;
+	}
+}  
+@keyframes dots {
+	0% {
+		content: ''; // Pas de point au début
+	}
+	25% {
+		content: '.'; // Un seul point
+	}
+	50% {
+		content: '..'; // Deux points
+	}
+	75% {
+		content: '...'; // Trois points
+	}
+	100% {
+		content: ''; // Retour à vide pour boucler
+	}
+}
+.ai-user-input {
+	height: 40px;
+	display: flex;
+	padding: 5px;
+	min-height: 40px;
+}
+.ai-microphone-ellipsis{
+
+	display: inline-block;
+	color: red; // Couleur initiale de l'icône
+	animation: blink 1s steps(1, start) infinite; // Animation répétée en boucle
+
+	@keyframes blink {
+		0% {
+			color: red; // Icône rouge
+		}
+		50% {
+			color: black; // Icône noire
+		}
+		100% {
+			color: red; // Icône rouge
+		}
+	}
+}

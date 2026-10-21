@@ -1,4 +1,4 @@
-package com.simplicite.commons.McpClient;
+package com.simplicite.commons.McpClient; // NOSONAR - Package name imposed by module name.
 
 import java.util.List;
 import com.simplicite.util.AppLog;
@@ -29,6 +29,8 @@ import org.json.JSONObject;
  */
 public class McpClientManager implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
+    private static final String OBJECT_KEY = "object";
+    private static final String PROPERTIES_KEY = "properties";
 
     /**
      * Singleton instance of the McpClient.
@@ -44,7 +46,7 @@ public class McpClientManager implements java.io.Serializable {
         initHttpClientUi(g);
     }
 
-    
+
 
     /**
      * Get the singleton instance of the McpClient.
@@ -79,12 +81,14 @@ public class McpClientManager implements java.io.Serializable {
      * @return The list of tools in OpenAI format.
      */
     public JSONArray listToolsAsLlmFormat() {
-        if(LlmTools.CLAUDE_LLM.equals(LlmTools.llm)) {
-            return mcpToolsToClaudeFormat(listTools().tools());
+        JSONArray tools;
+        if(LlmTools.CLAUDE_LLM.equals(LlmTools.getLlm())) {
+            tools = mcpToolsToClaudeFormat(listTools().tools());
         }else{
-            return mcpToolsToOpenAIFormat(listTools().tools());
+            tools = mcpToolsToOpenAIFormat(listTools().tools());
         }
-
+        AppLog.log(LlmTools.DEBUG, getClass(), "CLAUDE_LLM", "Mcp tools: " + tools.toString(1));
+        return tools;
     }
     /**
      * List the tools available on the MCP server in OpenAI format.
@@ -123,13 +127,13 @@ public class McpClientManager implements java.io.Serializable {
                     // fallback : empty schema
                     AppLog.warning("fallback : empty schema for tool " + mcpTool.name(), e);
                     parameters = new JSONObject()
-                            .put("type", "object")
-                            .put("properties", new JSONObject());
+                            .put("type", OBJECT_KEY)
+                            .put(PROPERTIES_KEY, new JSONObject());
                 }
             } else {
                 parameters = new JSONObject()
-                        .put("type", "object")
-                        .put("properties", new JSONObject());
+                        .put("type", OBJECT_KEY)
+                        .put(PROPERTIES_KEY, new JSONObject());
             }
             function.put("parameters", parameters);
 
@@ -161,13 +165,13 @@ public class McpClientManager implements java.io.Serializable {
                 } catch (Exception e) {
                     AppLog.warning("fallback : empty schema for tool " + mcpTool.name(), e);
                     inputSchema = new JSONObject()
-                            .put("type", "object")
-                            .put("properties", new JSONObject());
+                            .put("type", OBJECT_KEY)
+                            .put(PROPERTIES_KEY, new JSONObject());
                 }
             } else {
                 inputSchema = new JSONObject()
-                        .put("type", "object")
-                        .put("properties", new JSONObject());
+                        .put("type", OBJECT_KEY)
+                        .put(PROPERTIES_KEY, new JSONObject());
             }
             tool.put("input_schema", inputSchema);
 

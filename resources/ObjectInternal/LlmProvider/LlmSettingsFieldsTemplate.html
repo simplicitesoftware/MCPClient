@@ -1,0 +1,77 @@
+{{#ClasicField}}
+  <div class="form-group field-string {{#mandatory}}required{{/mandatory}} {{#NotEditable}}readonly{{/NotEditable}}{{^NotEditable}}updatable{{/NotEditable}}" data-group="{{Field}}">
+    <div class="control-group field-string"><label for="{{Field}}" class="gotodef" data-fieldid="9354" data-bs-toggle="tooltip"
+        data-bs-placement="bottom" data-bs-html="true" data-bs-container="body"
+        data-bs-original-title="llmPrvProvider">{{Label}}</label>
+      <div class="field-container">
+        {{#Help}}<div class="input-group flex-nowrap" >{{/Help}}
+        <input {{#Help}}style="width:auto;"{{/Help}} class="form-control js-focusable" type="{{Type}}" value="{{Default}}"
+          id="{{Field}}" name="{{Field}}" autocomplete="off" {{#NotEditable}}readonly{{/NotEditable}}>
+        {{#Help}}
+        <div class="input-group flex-nowrap" id="{{Field}}_help_button" style="align-items: center; width: auto;"></div>
+        </div>
+          <script>$("#{{Field}}_help_button").append($tools.buttonHelp("{{Field}}","{{{Help}}}","{{Label}}",$('<span class="btn-help"/>')));</script>
+        {{/Help}}
+      </div>
+    </div>
+
+  </div>
+{{/ClasicField}}
+{{#BoolField}}
+<div class="form-group field-string {{#mandatory}}required{{/mandatory}} {{#NotEditable}}readonly{{/NotEditable}}{{^NotEditable}}updatable{{/NotEditable}}" data-group="{{Field}}">
+  <div class="control-group"><label for="{{Field}}" class="gotodef" data-fieldid="9364"
+      data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true" data-bs-container="body"
+      data-bs-original-title="{{Field}}">{{Label}}</label>
+    <div class="field-container">
+      {{#Help}}<div class="input-group flex-nowrap" >{{/Help}}
+      <div class="form-control" id="{{Field}}_control">
+        <div class="form-check form-check-inline"><input class="form-check-input js-focusable"
+            id="{{Field}}" name="{{Field}}" value="1"
+            type="radio" autocomplete="off" data-type="8" {{#Default}}checked{{/Default}}><label class="form-check-label"
+            for="{{Field}}" {{#NotEditable}}readonly{{/NotEditable}}>Oui</label></div>
+        <div class="form-check form-check-inline"><input class="form-check-input js-focusable"
+            id="{{Field}}_no" name="{{Field}}" value="0"
+            type="radio" autocomplete="off" data-type="8" {{^Default}}checked{{/Default}}><label class="form-check-label"
+            for="{{Field}}_no" {{#NotEditable}}readonly{{/NotEditable}}>Non</label></div>
+      </div>
+      {{#Help}}
+        <div class="input-group flex-nowrap" id="{{Field}}_help_button" style="align-items: center; width: auto;"></div>
+        </div>
+          <script>$("#{{Field}}_help_button").append($tools.buttonHelp("{{Field}}","{{{Help}}}","{{Label}}",$('<span class="btn-help"/>')));</script>
+        {{/Help}}
+    </div>
+  </div>
+</div>
+{{/BoolField}}
+{{#SelectField}}
+<div class="field" data-field="{{Field}}">
+  <div class="form-group field-string {{#mandatory}}required{{/mandatory}} {{#NotEditable}}readonly{{/NotEditable}}{{^NotEditable}}updatable{{/NotEditable}}" data-group="{{Field}}">
+        <div class="control-group"><label for="{{Field}}" class="gotodef"
+                data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true" data-bs-container="body"
+                data-bs-original-title="{{Field}}">{{Label}}</label>
+            <div class="field-container" >
+              {{#Help}}<div class="input-group flex-nowrap" >{{/Help}}
+              <select
+                class="form-control form-select enum-render js-focusable" id="{{Field}}"
+                name="{{Field}}" autocomplete="off" data-type="7" tabindex="-1"
+                aria-hidden="true" {{#NotEditable}}readonly{{/NotEditable}}>
+                <option class="enum-empty" value=""></option>
+                {{#Choices}}<option value="{{item}}" {{#selected}}selected="selected"{{/selected}}>{{item}}</option>{{/Choices}}
+              </select>
+              {{#Help}}
+                <div class="input-group flex-nowrap" id="{{Field}}_help_button" style="align-items: center; width: auto;"></div>
+                </div>
+                  <script>$("#{{Field}}_help_button").append($tools.buttonHelp("{{Field}}","{{{Help}}}","{{Label}}",$('<span class="btn-help"/>')));</script>
+              {{/Help}}
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        $('.{{Field}}').select2();
+
+    });
+
+</script>
+{{/SelectField}}

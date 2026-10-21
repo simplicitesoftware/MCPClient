@@ -1,10 +1,11 @@
-package com.simplicite.extobjects.McpClient;
+package com.simplicite.extobjects.McpClient; // NOSONAR - Package name imposed by module name.
 
 import org.json.JSONObject;
 
 import com.simplicite.commons.McpClient.LlmTools;
-import com.simplicite.util.*;
-import com.simplicite.util.tools.*;
+import com.simplicite.util.AppLog;
+import com.simplicite.util.tools.Parameters;
+import com.simplicite.util.tools.HTMLTool;
 
 
 /**

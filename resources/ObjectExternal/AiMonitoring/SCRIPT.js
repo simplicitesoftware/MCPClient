@@ -1,6 +1,6 @@
+// eslint-disable-next-line no-var
 var AiMonitoring = (function() {
-	let url = Simplicite.ROOT+"/ext/AIRestAPI"; // authenticated webservice
-	let useAsync = true; // use async callback pattern
+
 	function render(params,aiParams) {
 		let templateContent = $('#AiMonitoringTemplate').html();
 		
@@ -14,20 +14,6 @@ var AiMonitoring = (function() {
 		}else{
 			$('#aimonitoring').append($T('AI_SETTING_NEED'));
 		}
-		let buttonText = $T('AI_SETTING_BUTTON');
-		if(buttonText === 'AI_SETTING_BUTTON') buttonText = "Setting AI";
-		let button = $("<button>", {
-		    id: "btn-AIStartParam",
-		    class: "btn btn-action",
-		    text:  buttonText,
-		    css: {
-        		float: "right" // Aligne le bouton à droite
-    		}
-		    
-		}).on("click", function() {
-		    $ui.displayWorkflow(null,"AiSettingsProcess","start",null,null); 
-		}).appendTo("#ctnSettings"); 
-		
 		
 	}
 	function ping(){
@@ -93,7 +79,8 @@ var AiMonitoring = (function() {
 			jsonMsg.label = $T(code)+text;
 			jsonMsg.error = level === "ERROR";
 			return jsonMsg;
-		}catch(e){ // release-compatible
+		} catch {
+			// Parsing or normalization can fail for legacy messages; use the platform converter as a compatibility fallback.
 			return $ui.getApp().messageToJson(msg);
 		}
 	}

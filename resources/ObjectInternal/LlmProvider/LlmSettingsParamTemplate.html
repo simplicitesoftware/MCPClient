@@ -1,0 +1,57 @@
+<div>
+  <div class="row" style=" padding: 20px;" >
+    <div class="col-sm-4">
+        {{#DefFields}}{{{.}}}{{/DefFields}}
+    </div>
+    <div class="col-sm-4">
+        {{#DetailsFields}}{{{.}}}{{/DetailsFields}}
+
+    </div>
+    <div class="col-sm-4">
+      {{#tokenCard}}
+      <div class="card">
+        <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target=".collapse_panel_work_0">
+          <span>{{tokenCard.Title}}</span>
+        </div>
+        <div class="collapse collapse_panel_work_0">
+          <div class="card-body">
+            <div class="area-body" data-area="2">
+              <div>
+                {{#tokenCard.cardFields}}
+                {{{.}}}
+                {{/tokenCard.cardFields}}
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="collapse collapse_panel_work_0"></div>
+      </div>
+      {{/tokenCard}}
+    </div>
+  </div>
+  <div class="area" data-area="providerSpe">{{#speCard}}
+    <div class="card">
+        <div class="card-header" >
+          <span>{{speCard.Title}}</span>
+        </div>
+        <div class="">
+          <div class="card-body">
+            <div class="area-body" data-area="2">
+              <div>
+                {{#speCard.cardFields}}
+                {{{.}}}
+                {{/speCard.cardFields}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class=""></div>
+      </div>
+    {{/speCard}}</div>
+
+</div>
+<script>
+$tools.initTooltips();
+
+</script>

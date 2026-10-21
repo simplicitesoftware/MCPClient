@@ -1,15 +1,23 @@
-package com.simplicite.commons.McpClient;
+package com.simplicite.commons.McpClient; // NOSONAR - name of module
 
 import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONException;
-
-import com.simplicite.util.*;
 import com.simplicite.util.exceptions.DeleteException;
-
 import com.simplicite.util.exceptions.ValidateException;
 import com.simplicite.util.exceptions.SaveException;
+import com.simplicite.util.exceptions.GetException;
+import com.simplicite.util.exceptions.SearchException;
+
+import com.simplicite.util.Tool;
+import com.simplicite.util.AppLog;
+import com.simplicite.util.Grant;
+import com.simplicite.util.BusinessObject ;
+import com.simplicite.util.ModuleDB;
+import com.simplicite.util.ObjectDB;
+import com.simplicite.util.Message;
+import com.simplicite.util.SystemParameters;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -21,7 +29,7 @@ import java.net.URISyntaxException;
 import java.text.Normalizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+import java.util.ArrayList;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -30,31 +38,38 @@ import java.nio.charset.StandardCharsets;
 public class LlmTools implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
 
-    public static final boolean AI_DEBUG_LOGS = "true".equals(Grant.getSystemAdmin().getParameter("AI_DEBUG_LOGS"));
     private static final String AI_PING_ERROR = "AI_PING_ERROR";
     private static final String SYSPARAM_AI_API_PARAM = "AI_API_PARAM";
     private static final String SYSPARAM_AI_CHAT_BOT_NAME = "AI_CHAT_BOT_NAME";
     private static final String SYSPARAM_AI_API_KEY = "AI_API_KEY";
     private static final String SYSPARAM_AI_API_URL = "AI_API_URL";
-    public static final String CLAUDE_LLM = "CLAUDE";
+    public static final String CLAUDE_LLM = "claude";
     private static final String HUGGINGFACE_LLM = "HUGGINGFACE";
-    private static final String MISTRAL_LLM = "Mistral AI_";
+    private static final String MISTRAL_LLM = "mistral";
     private static final String AUTH_PREFIX = "Bearer ";
     private static final String AUTH_PROPERTY = "Authorization";
-
     public static final String CONTENT_KEY = "content";
-    private static final String MESSAGE_KEY = "message";
+    public  static final String MESSAGE_KEY = "message";
     private static final String MESSAGES_KEY = "messages";
     public static final String USAGE_KEY = "usage";
     private static final String PROVIDER_KEY = "provider";
+    public static final String CALL_ID_KEY = "tool_call_id";
+    public static final String TOOL_CALLS_KEY = "tool_calls";
+    public static final String TOOL_USE_KEY = "tool_use";
     private static final String API_KEY = "api_key";
     private static final String MODEL_KEY = "model";
+    private static final String CLAUDE_WS_KEY ="anthropic-workspace-id";
+    private static final String GPT_PROJECT_KEY = "OpenAI-Project";
+    private static final String GPT_ORGA_KEY = "OpenAI-Organization";
+    public static final String CHOICES_KEY = "choices";
+    private static final String TOOL_CHOICE_KEY = "tool_choice";
     public static final String ERROR_KEY = "error";
     private static final String BOT_NAME_KEY = "bot_name";
     private static final String COMPLETION_KEY = "completion_url";
-
+    private static final String PING_KEY = "ping_url";
     private static final String MAX_TOKEN_PARAM_KEY = "default_max_token";
-    private static final String ASSISTANT_ROLE = "assistant";
+    private static final String DEPTH_KEY = "hist_depth";
+    public static final String ASSISTANT_ROLE = "assistant";
     private static final String SYSTEM_ROLE = "system";
     private static final String CALLER_PARAM_SPE = "specialisation";
     private static final String CALLER_PARAM_HISTORIC = "historic";
@@ -65,31 +80,29 @@ public class LlmTools implements java.io.Serializable {
     private static final String MAX_TOKEN = "max_tokens";
     public static final String TYPE_TEXT = "text";
     public static final String TYPE_IMAGE_URL = "image_url";
-
     private static final String TRUSTED = "trusted";
-
     private static final String SYS_CODE = "sys_code";
     private static final String SYS_VAL2 = "sys_value2";
     private static final String DEFAULT_MODULE = "System";
     private static final String ROW_MLD_ID = "row_module_id";
-
     public static final String PING_SUCCESS = "200";
     private static final String STT_URL_ERROR = "STT url not set";
-
+    public static final String TOOL_FUNCTION_KEY = "function";
     private static JSONObject aiApiParam = getOptAiApiParam();
     private static final boolean IS_ENV_SETUP = !Tool.isEmpty(System.getenv(SYSPARAM_AI_API_PARAM))
             || !Tool.isEmpty(System.getenv("SIMPLICITE_SYSPARAM_AI_API_PARAM"));
-    private static int aiHistDepth = aiApiParam.optInt("hist_depth");
+    private static int aiHistDepth = aiApiParam.optInt(DEPTH_KEY);
     private static String aiChatBotName = getAIParam(BOT_NAME_KEY, "George");
-    public static String llm = getLLM();
-    private static String aiProvider = getProvider();
+    private static String llm = getLLMFromParams();
+    private static String aiProvider = getProviderFromParams();
     private static String apiKey = getAIParam(API_KEY);
     private static String completionUrl = getAIParam(COMPLETION_KEY);
     private static boolean showDataDisclaimer = aiApiParam.optBoolean("showDataDisclaimer", true);
     private static final String HTML_LEFT_COLUMN_ID = "left_column";
-
     private static final String LABEL_KEY = "label";
-
+    public static final String INFO = "MCP_INFO";
+    public static final String DEBUG = "MCP_DEBUG";
+    public static final String SYSPARAM_OBJ = "SystemParam";
     public static class AITypeException extends Exception {
         private static final long serialVersionUID = 1L;
 
@@ -116,7 +129,6 @@ public class LlmTools implements java.io.Serializable {
             setSpecialisation(params.optString(CALLER_PARAM_SPE), isSafeSpe);
             historic = params.optJSONArray(CALLER_PARAM_HISTORIC, new JSONArray());
             providerParams = params.optJSONObject("providerParams", new JSONObject());
-
             if (!Tool.isEmpty(aiApiParam)) {
                 maxToken = aiApiParam.getInt(MAX_TOKEN_PARAM_KEY);
             }
@@ -152,22 +164,23 @@ public class LlmTools implements java.io.Serializable {
         }
 
         private void setPrompt(Object promptObject, boolean isSafe, boolean codeSecure) throws AITypeException {
-            // prompt to JSONArray
-            if (promptObject instanceof String) {
-                prompt = new JSONArray();
-                if (codeSecure) {
-                    String strPrompt = normalizeCode((String) promptObject);
-                    prompt.put(getformatedContentByType(strPrompt, TYPE_TEXT, true));
-                } else {
-                    String strPrompt = normalize((String) promptObject, isSafe);
-                    prompt.put(getformatedContentByType(strPrompt, TYPE_TEXT, false));
-                }
-
-            } else if (promptObject instanceof JSONArray) {
-                prompt = (JSONArray) promptObject;
-            } else {
-                AppLog.info("Prompt must be a String or a JSONArray");
-                throw new AITypeException("prompt", promptObject.getClass().getName(), "String or JSONArray");
+            switch (promptObject) {
+                case String str:
+                    prompt = new JSONArray();
+                    if (codeSecure) {
+                        String strPrompt = normalizeCode(str);
+                        prompt.put(getformatedContentByType(strPrompt, TYPE_TEXT, true));
+                    } else {
+                        String strPrompt = normalize(str, isSafe);
+                        prompt.put(getformatedContentByType(strPrompt, TYPE_TEXT, false));
+                    }
+                    break;
+                case JSONArray arr:
+                    prompt = arr;
+                    break;
+                default:
+                    AppLog.log(INFO, LlmTools.class, "setPrompt" ,"Prompt must be a String or a JSONArray");
+                    throw new AITypeException("prompt", promptObject.getClass().getName(), "String or JSONArray");
             }
             prompt = parsedPrompts(prompt, isSafe);
         }
@@ -189,7 +202,7 @@ public class LlmTools implements java.io.Serializable {
             String model = getAIParam(MODEL_KEY);
             boolean isClaudeAPI = CLAUDE_LLM.equals(llm);
             if (Tool.isEmpty(completionUrl)) {
-                AppLog.info("completion url not set", g);
+                AppLog.warning("completion url not set");
                 return "";
             }
             try {
@@ -199,7 +212,6 @@ public class LlmTools implements java.io.Serializable {
                 connection.setRequestProperty("Content-Type", "application/json");
                 connection.setDoOutput(true);
                 addSpecificHeaders(connection, apiKey);
-
                 // format data
                 JSONObject postData = new JSONObject();
                 if (maxToken > 0)
@@ -220,7 +232,7 @@ public class LlmTools implements java.io.Serializable {
 
                 messages.put(new JSONObject().put("role", "user").put(CONTENT_KEY, prompt));
                 if (!Tool.isEmpty(assistantToolsCalls) && !Tool.isEmpty(userToolsResponse)) {
-                    messages.put(new JSONObject().put("role", "assistant").put("content", "").put("tool_calls",
+                    messages.put(new JSONObject().put("role", ASSISTANT_ROLE).put(CONTENT_KEY, "").put(TOOL_CALLS_KEY,
                             assistantToolsCalls));
                     messages.putAll(userToolsResponse);
                 }
@@ -231,7 +243,7 @@ public class LlmTools implements java.io.Serializable {
                      * Add MCP TOOLS in call to AI API
                      */
                     postData.put("tools", tools);
-                    postData.put("tool_choice", "auto");
+                    postData.put(TOOL_CHOICE_KEY, "auto");
                 }
                 if (HUGGINGFACE_LLM.equals(llm)) {
                     postData = getHuggingFormatData(postData);
@@ -239,9 +251,7 @@ public class LlmTools implements java.io.Serializable {
                 if (isClaudeAPI) {
                     postData = getClaudeFormatData(postData);
                 }
-                if (AI_DEBUG_LOGS) {
-                    AppLog.info("post data :" + postData.toString(1), g);
-                }
+                AppLog.log(DEBUG, LlmTools.class, "aiCaller", "Post data llm:" + postData.toString(1));
                 try (DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream())) {
                     byte[] bytes = postData.toString().getBytes(StandardCharsets.UTF_8);
                     outputStream.write(bytes);
@@ -251,17 +261,14 @@ public class LlmTools implements java.io.Serializable {
                 int responseCode = connection.getResponseCode();
                 if (responseCode != 200) {
                     JSONObject error = readError(connection, responseCode, g);
-                    return Tool.isEmpty(error) ? "" : error.toString();
-
+                    return Tool.isEmpty(error) ? "" : error.toString(); // NOSONAR - Tool.isEmpty is not null safe
                 }
 
                 return readResponse(connection, g);
-
             } catch (IOException | URISyntaxException e) {
                 AppLog.error(e, g);
             }
             return "";
-
         }
 
         private void addProviderParamsToPost(JSONObject postData) {
@@ -280,23 +287,23 @@ public class LlmTools implements java.io.Serializable {
         }
 
         private static float parseFloatParam(Object param) throws AITypeException {
-            if (param instanceof Number)
-                return ((Number) param).floatValue();
-            if (param instanceof String)
-                return Float.parseFloat((String) param);
-            throw new AITypeException("provider parameters", param.getClass().getName(), "number");
-
+            switch (param) {
+                case Number num:
+                    return num.floatValue();
+                case String str:
+                    return Float.parseFloat(str);
+                default:
+                    throw new AITypeException("provider parameters", param.getClass().getName(), "number");
+            }
         }
 
         private static JSONObject getClaudeFormatData(JSONObject postData) {
             JSONArray messages = postData.getJSONArray(MESSAGES_KEY);
             int toremove = -1;
             JSONArray convertedMessages = new JSONArray();
-
             for (int i = 0; i < messages.length(); i++) {
                 JSONObject message = messages.getJSONObject(i);
                 String role = message.optString("role");
-
                 if (SYSTEM_ROLE.equals(role)) {
                     String content = message.optString(CONTENT_KEY);
                     postData.put(SYSTEM_ROLE, content);
@@ -309,9 +316,8 @@ public class LlmTools implements java.io.Serializable {
                     // user message
                     JSONObject toolResultBlock = new JSONObject();
                     toolResultBlock.put("type", "tool_result");
-                    toolResultBlock.put("tool_use_id", message.optString("tool_call_id"));
-                    toolResultBlock.put("content", message.optString(CONTENT_KEY));
-
+                    toolResultBlock.put("tool_use_id", message.optString(CALL_ID_KEY));
+                    toolResultBlock.put(CONTENT_KEY, message.optString(CONTENT_KEY));
                     JSONObject userMsg = new JSONObject();
                     userMsg.put("role", "user");
                     userMsg.put(CONTENT_KEY, new JSONArray().put(toolResultBlock));
@@ -319,10 +325,9 @@ public class LlmTools implements java.io.Serializable {
                     continue;
                 }
 
-                if ("assistant".equals(role) && message.has("tool_calls")) {
+                if (ASSISTANT_ROLE.equals(role) && message.has(TOOL_CALLS_KEY)) {
                     // Convert OpenAI-style tool_calls -> Claude tool_use blocks
                     JSONArray contentBlocks = new JSONArray();
-
                     String textContent = message.optString(CONTENT_KEY, "");
                     if (!Tool.isEmpty(textContent)) {
                         JSONObject textBlock = new JSONObject();
@@ -331,22 +336,20 @@ public class LlmTools implements java.io.Serializable {
                         contentBlocks.put(textBlock);
                     }
 
-                    JSONArray toolCalls = message.getJSONArray("tool_calls");
+                    JSONArray toolCalls = message.getJSONArray(TOOL_CALLS_KEY);
                     for (int j = 0; j < toolCalls.length(); j++) {
                         JSONObject tc = toolCalls.getJSONObject(j);
-                        JSONObject function = tc.getJSONObject("function");
-
+                        JSONObject function = tc.getJSONObject(TOOL_FUNCTION_KEY);
                         JSONObject toolUseBlock = new JSONObject();
-                        toolUseBlock.put("type", "tool_use");
+                        toolUseBlock.put("type", TOOL_USE_KEY);
                         toolUseBlock.put("id", tc.getString("id"));
                         toolUseBlock.put("name", function.getString("name"));
                         toolUseBlock.put("input", new JSONObject(function.optString("arguments", "{}")));
-
                         contentBlocks.put(toolUseBlock);
                     }
 
                     JSONObject assistantMsg = new JSONObject();
-                    assistantMsg.put("role", "assistant");
+                    assistantMsg.put("role", ASSISTANT_ROLE);
                     assistantMsg.put(CONTENT_KEY, contentBlocks);
                     convertedMessages.put(assistantMsg);
                     continue;
@@ -368,7 +371,6 @@ public class LlmTools implements java.io.Serializable {
             }
 
             postData.put(MESSAGES_KEY, convertedMessages);
-
             if (toremove >= 0) {
                 // no longer needed since we rebuilt the array, but harmless if messages is
                 // still referenced elsewhere
@@ -377,8 +379,7 @@ public class LlmTools implements java.io.Serializable {
             if (!postData.has(MAX_TOKEN)) {
                 postData.put(MAX_TOKEN, aiApiParam.getInt(MAX_TOKEN_PARAM_KEY));
             }
-            postData.put("tool_choice", new JSONObject().put("type", postData.optString("tool_choice", "auto")));
-
+            postData.put(TOOL_CHOICE_KEY, new JSONObject().put("type", postData.optString(TOOL_CHOICE_KEY, "auto")));
             return postData;
         }
 
@@ -394,7 +395,6 @@ public class LlmTools implements java.io.Serializable {
                 source.put("type", matcher.group(2));
                 source.put("media_type", matcher.group(1));
                 source.put("data", matcher.group(3));
-
             }
             if (!Tool.isEmpty(source)) {
                 contentJson.put("source", source);
@@ -415,15 +415,20 @@ public class LlmTools implements java.io.Serializable {
                 String content = getContent(message.get(CONTENT_KEY));
                 switch (role) {
                     case ASSISTANT_ROLE:
-                        dialogBuilder.append("bot: " + content + "\n");
+                        dialogBuilder.append("bot: ");
+                        dialogBuilder.append(content);
+                        dialogBuilder.append("\n");
                         break;
                     case SYSTEM_ROLE:
                         if (Tool.isEmpty(content) || "\"\"".equals(content))
                             break;
-                        dialogBuilder.append("context: " + content + "\n");
+                        dialogBuilder.append("context: ");
+                        dialogBuilder.append(content);
+                        dialogBuilder.append("\n");
                         break;
                     default:
-                        dialogBuilder.append(content + "\n");
+                        dialogBuilder.append(content);
+                        dialogBuilder.append("\n");
                         break;
                 }
 
@@ -435,17 +440,17 @@ public class LlmTools implements java.io.Serializable {
 
         private static String getContent(Object contentObj) {
             StringBuilder contentBuilder = new StringBuilder("");
-            if (contentObj instanceof JSONArray) {
-                JSONArray arrayContent = (JSONArray) contentObj;
+            if (contentObj instanceof JSONArray arrayContent) {
                 for (int j = 0; j < arrayContent.length(); j++) {
                     JSONObject contentJson = arrayContent.getJSONObject(j);
                     if (contentJson.has(TYPE_TEXT)) {
-                        contentBuilder.append(contentJson.getString(TYPE_TEXT) + "\n");
+                        contentBuilder.append(contentJson.getString(TYPE_TEXT));
+                        contentBuilder.append("\n");
                     }
                 }
                 return contentBuilder.toString();
-            } else if (contentObj instanceof String) {
-                return (String) contentObj;
+            } else if (contentObj instanceof String strContent) {
+                return strContent;
             }
             return "";
         }
@@ -460,7 +465,6 @@ public class LlmTools implements java.io.Serializable {
                 int nbUsrMsg = 0;
                 int begin = -1;
                 int index = len - 1;
-
                 while (nbUsrMsg < aiHistDepth && index > 0) {
                     if ("user".equals(historic.getJSONObject(index).optString("role"))) {
                         nbUsrMsg += 1;
@@ -468,10 +472,9 @@ public class LlmTools implements java.io.Serializable {
                     }
                     index -= 1;
                 }
-                 if(begin >= 0){
+                if (begin >= 0) {
                     for (int i = begin; i < len; i++)
                         newHistoric.put(historic.getJSONObject(i));
-
                     return newHistoric;
                 }
             }
@@ -481,8 +484,7 @@ public class LlmTools implements java.io.Serializable {
         private static JSONArray parsedPrompts(JSONArray prompts, boolean secure) {
             JSONArray newPrompts = new JSONArray();
             for (Object p : prompts) {
-                if (p instanceof JSONObject) {
-                    JSONObject contentJson = (JSONObject) p;
+                if (p instanceof JSONObject contentJson) {
                     if (!contentJson.optBoolean(TRUSTED, false) && contentJson.has(TYPE_TEXT)) {
                         contentJson.put(TYPE_TEXT,
                                 JSONObject.quote(normalize(contentJson.getString(TYPE_TEXT), secure)));
@@ -527,7 +529,6 @@ public class LlmTools implements java.io.Serializable {
             text = Pattern.compile("(?u)ç", Pattern.CANON_EQ).matcher(text).replaceAll("c");
             text = Pattern.compile("(?u)ÿ", Pattern.CANON_EQ).matcher(text).replaceAll("y");
             return text;
-
         }
 
         private static String replaceSymboleBySafeHTML(String text) {
@@ -582,7 +583,6 @@ public class LlmTools implements java.io.Serializable {
         if (Tool.isEmpty(env)) {
             return getOptAiApiParamByGrant();
         }
-        // importDatasets(ModuleDB.getModuleId("AIBySimplicite"));
         return new JSONObject(env);
     }
 
@@ -593,18 +593,20 @@ public class LlmTools implements java.io.Serializable {
     public static String getAIParam(String key, String defaultValue) {
         return aiApiParam.optString(key, defaultValue);
     }
-
-    private static String getLLM() {
+    public static String getLlm(){
+        return llm;
+    }
+    private static String getLLMFromParams() {
         if (aiApiParam.optBoolean("ClaudeAPI", false))
             return CLAUDE_LLM;
         if (aiApiParam.optBoolean("HuggingAPI", false))
             return HUGGINGFACE_LLM;
         if (MISTRAL_LLM.equals(getAIParam(PROVIDER_KEY)))
             return MISTRAL_LLM;
-        return "GPT";
+        return "openai";
     }
 
-    private static String getProvider() {
+    private static String getProviderFromParams() {
         String provider = getAIParam(PROVIDER_KEY);
         if (Tool.isEmpty(provider)) {
             String regex = "\\/\\/([\\w\\.]+)";
@@ -639,25 +641,40 @@ public class LlmTools implements java.io.Serializable {
         return param;
     }
 
-    public static void setParameters(JSONObject setting) {
+     public static void setParameters(JSONObject setting) {
+        AppLog.info("test setParameters");
+        AppLog.info("setting: " + setting.toString(1));
         if (IS_ENV_SETUP) {
             return;
         }
         if (Tool.isEmpty(setting)) {
             setting = new JSONObject();
         }
+        JSONObject rawParameters = getRawParameters();
+        if((!setting.has(API_KEY) || Tool.isEmpty(setting.optString(API_KEY))) && rawParameters.has(API_KEY)){
+            setting.put(API_KEY, rawParameters.optString(API_KEY));
+        }
+        if(rawParameters.has(CLAUDE_WS_KEY) && !setting.has(CLAUDE_WS_KEY) || Tool.isEmpty(setting.optString(CLAUDE_WS_KEY))){
+            setting.put(CLAUDE_WS_KEY, rawParameters.optString(CLAUDE_WS_KEY));
+        }
+        if(rawParameters.has(GPT_PROJECT_KEY) && !setting.has(GPT_PROJECT_KEY) || Tool.isEmpty(setting.optString(GPT_PROJECT_KEY))){
+            setting.put(GPT_PROJECT_KEY, rawParameters.optString(GPT_PROJECT_KEY));
+        }
+        if(rawParameters.has(GPT_ORGA_KEY) && !setting.has(GPT_ORGA_KEY) || Tool.isEmpty(setting.optString(GPT_ORGA_KEY))){
+            setting.put(GPT_ORGA_KEY, rawParameters.optString(GPT_ORGA_KEY));
+        }
         Grant g = Grant.getSystemAdmin();
-        try (BusinessObject bo = g.getBusinessObject("SystemParam")) {
+        try (BusinessObject bo = g.getBusinessObject(SYSPARAM_OBJ)) {
             bo.getTmpObject()
                     .withAllAccess()
-                    .filter(SYS_CODE, SYSPARAM_AI_API_PARAM)
+                    .forCreateOrUpdate(SYS_CODE, SYSPARAM_AI_API_PARAM)
                     .withValue(SYS_CODE, SYSPARAM_AI_API_PARAM)
                     .withValue("sys_value", "{}")
                     .withValue("sys_type", "PRV")
                     .withValue(ROW_MLD_ID, ModuleDB.getModuleId(DEFAULT_MODULE))
                     .withValue(SYS_VAL2, setting.toString(1))
                     .validateAndSave();
-        } catch (ValidateException | SaveException e) {
+        } catch (ValidateException | SaveException | GetException e) {
             AppLog.error(e, g);
         }
 
@@ -680,12 +697,10 @@ public class LlmTools implements java.io.Serializable {
         if (!Tool.isEmpty(param)) {
             // bot name
             checkOldSysParam(SYSPARAM_AI_CHAT_BOT_NAME, BOT_NAME_KEY, param, g);
-
             // api key
             checkOldSysParam(SYSPARAM_AI_API_KEY, API_KEY, param, g);
             // api completion url
             checkOldSysParam(SYSPARAM_AI_API_URL, COMPLETION_KEY, param, g);
-
             setParameters(param);
         }
         return true;
@@ -693,9 +708,9 @@ public class LlmTools implements java.io.Serializable {
 
     private static void reloadAIParams() {
         aiApiParam = getOptAiApiParam();
-        aiHistDepth = aiApiParam.optInt("hist_depth");
+        aiHistDepth = aiApiParam.optInt(DEPTH_KEY);
         aiChatBotName = getAIParam(BOT_NAME_KEY, "George");
-        llm = getLLM();
+        llm = getLLMFromParams();
         completionUrl = getAIParam(COMPLETION_KEY);
         aiProvider = getAIParam(PROVIDER_KEY);
         apiKey = getAIParam(API_KEY);
@@ -710,24 +725,21 @@ public class LlmTools implements java.io.Serializable {
             if (!param.has(paramKey)) {
                 param.put(paramKey, tmpVal);
             }
-            try (BusinessObject bo = g.getBusinessObject("SystemParam")) {
+            try (BusinessObject bo = g.getBusinessObject(SYSPARAM_OBJ)) {
                 bo.getTmpObject()
                         .withAllAccess()
                         .filter(SYS_CODE, name)
                         .searchAndDelete();
-
             } catch (DeleteException e) {
                 AppLog.error(e, g);
                 return false;
             }
         }
         return true;
-
     }
 
-    public static String provider() {
-        if (AI_DEBUG_LOGS)
-            AppLog.info(aiProvider);
+    public static String getProvider() {
+        AppLog.log(DEBUG, LlmTools.class, "getProvider", aiProvider);
         return aiProvider;
     }
 
@@ -737,8 +749,7 @@ public class LlmTools implements java.io.Serializable {
 
     public static boolean checkSpeechRecognition() {
         if (Tool.isEmpty(getAIParam("stt_url"))) {
-            AppLog.info(STT_URL_ERROR, Grant.getSystemAdmin());
-            AppLog.info(STT_URL_ERROR);
+            AppLog.warning(STT_URL_ERROR);
             return false;
         }
         return true;
@@ -746,7 +757,7 @@ public class LlmTools implements java.io.Serializable {
 
     public static String pingAI() {
         Grant g = Grant.getSystemAdmin();
-        String apiUrl = getAIParam("ping_url");
+        String apiUrl = getAIParam(PING_KEY);
         if (Tool.isEmpty(apiUrl)) {
             AppLog.info("ping url not set", g);
             return Message.formatWarning("AI_NO_PING_URL", null, null);
@@ -762,16 +773,20 @@ public class LlmTools implements java.io.Serializable {
                 return PING_SUCCESS;
             } else {
                 JSONObject error = readError(connection, responseCode, g);
-                if (Tool.isEmpty(error))
+                if (Tool.isEmpty(error)) { 
                     return Message.formatError(AI_PING_ERROR, null, null);
-                return Message.formatError(AI_PING_ERROR, error.optString("code") + ": " + error.optString(ERROR_KEY),
-                        null);
+                }
+                return Message.formatError(AI_PING_ERROR, error.optString("code") + ": " + error.optString(ERROR_KEY), null);// NOSONAR - Tool.isEmpty check null
+
             }
         } catch (IOException | URISyntaxException e) {
             AppLog.error(e, g);
             return Message.formatError(AI_PING_ERROR, e.getMessage(), null);
         }
 
+    }
+    public static boolean isSetup(){
+        return PING_SUCCESS.equals(pingAI());
     }
 
     /**
@@ -788,16 +803,13 @@ public class LlmTools implements java.io.Serializable {
         try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getErrorStream()))) {
             String line;
             StringBuilder response = new StringBuilder();
-
             while ((line = in.readLine()) != null) {
                 response.append(line);
             }
             JSONObject errorMessage = formatErrorMsg(responseCode, response);
-            AppLog.info("AI API error :[" + responseCode + "]: " + errorMessage.getString(ERROR_KEY), g);
+            AppLog.log(INFO, LlmTools.class, "checkSpeechRecognition" ,"AI API error :[" + responseCode + "]: " + errorMessage.getString(ERROR_KEY));
             connection.disconnect();
-
             return errorMessage;
-
         } catch (IOException e) {
             AppLog.error(e, g);
         }
@@ -816,7 +828,6 @@ public class LlmTools implements java.io.Serializable {
         try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
             String line;
             StringBuilder response = new StringBuilder();
-
             while ((line = in.readLine()) != null) {
                 response.append(line);
             }
@@ -824,7 +835,7 @@ public class LlmTools implements java.io.Serializable {
             String res = response.toString();
             JSONObject resJson = refactorAiResponseInGPT(res);
             if (resJson.has(USAGE_KEY)) {
-                AppLog.info("AI used token :"+logToken(resJson.optJSONObject(USAGE_KEY)), g);
+                AppLog.log(INFO, LlmTools.class, "checkSpeechRecognition" ,"AI used token :" + logToken(resJson.optJSONObject(USAGE_KEY)));
             }
             return resJson.toString();
         } catch (IOException e) {
@@ -834,15 +845,15 @@ public class LlmTools implements java.io.Serializable {
         return "";
     }
 
-    private static String logToken(JSONObject json){
+    private static String logToken(JSONObject json) {
         StringBuilder log = new StringBuilder();
-        if(json.has("input_tokens")){ 
+        if (json.has("input_tokens")) {
             log.append("input tokens: ");
             log.append(String.valueOf(json.get("input_tokens")));
             log.append(", ");
             log.append("output tokens: ");
             log.append(String.valueOf(json.get("output_tokens")));
-        }else if(json.has("prompt_tokens")){ 
+        } else if (json.has("prompt_tokens")) {
             log.append("input tokens: ");
             log.append(String.valueOf(json.get("prompt_tokens")));
             log.append(", ");
@@ -853,13 +864,13 @@ public class LlmTools implements java.io.Serializable {
     }
 
     private static void addSpecificHeaders(HttpURLConnection connection, String apiKey) {
-        String projet = getAIParam("OpenAI-Project");
-        String org = getAIParam("OpenAI-Organization");
+        String projet = getAIParam(GPT_PROJECT_KEY);
+        String org = getAIParam(GPT_ORGA_KEY);
         switch (llm) {
             case CLAUDE_LLM:
                 connection.setRequestProperty("x-api-key", apiKey);
                 connection.setRequestProperty("anthropic-version", "2023-06-01");
-                connection.setRequestProperty("anthropic-workspace-id", getAIParam("anthropic-workspace-id"));
+                connection.setRequestProperty(CLAUDE_WS_KEY, getAIParam(CLAUDE_WS_KEY));
                 break;
             case HUGGINGFACE_LLM:
                 connection.setRequestProperty(AUTH_PROPERTY, AUTH_PREFIX + apiKey);
@@ -867,8 +878,8 @@ public class LlmTools implements java.io.Serializable {
             default:
                 connection.setRequestProperty(AUTH_PROPERTY, AUTH_PREFIX + apiKey);
                 if (!Tool.isEmpty(projet) && !Tool.isEmpty(org)) {
-                    connection.setRequestProperty("OpenAI-Project", projet);
-                    connection.setRequestProperty("OpenAI-Organization", org);
+                    connection.setRequestProperty(GPT_PROJECT_KEY, projet);
+                    connection.setRequestProperty(GPT_ORGA_KEY, org);
                 }
                 break;
         }
@@ -878,7 +889,6 @@ public class LlmTools implements java.io.Serializable {
         String errorMessage;
         try {
             JSONObject error = new JSONObject(response.toString());
-
             errorMessage = error.optJSONObject(ERROR_KEY, new JSONObject()).optString(MESSAGE_KEY, response.toString());
         } catch (@SuppressWarnings("unused") JSONException e) {
             errorMessage = response.toString();
@@ -908,13 +918,11 @@ public class LlmTools implements java.io.Serializable {
 
     public static JSONObject aiCallerWithMCP(Grant g, String specialisation, JSONArray historic, Object prompt,
             JSONArray tools, JSONArray assistantToolsCalls, JSONArray userToolsResponse) {
-
         try {
             JSONObject params = new JSONObject().put(CALLER_PARAM_SPE, specialisation).put(CALLER_PARAM_HISTORIC,
                     historic);
             AICallerParams caller = new AICallerParams(prompt, params);
             caller.setTools(tools);
-
             caller.setAssistantToolsCalls(assistantToolsCalls);
             caller.setUserToolsResponse(userToolsResponse);
             return caller.aiCall(g);
@@ -933,7 +941,6 @@ public class LlmTools implements java.io.Serializable {
                 return formatJsonOpenAIFormat(resultText);
             case CLAUDE_LLM:
                 return claudeResponseToOpenAIFormat(new JSONObject(res));
-
             default:
                 return new JSONObject(res);
         }
@@ -947,41 +954,36 @@ public class LlmTools implements java.io.Serializable {
         JSONArray content = resJson.getJSONArray(CONTENT_KEY);
         StringBuilder text = new StringBuilder();
         JSONArray toolCalls = new JSONArray();
-
         for (int i = 0; i < content.length(); i++) {
             JSONObject block = content.getJSONObject(i);
             String type = block.optString("type");
-
             if ("text".equals(type)) {
                 text.append(block.getString("text"));
-            } else if ("tool_use".equals(type)) {
+            } else if (TOOL_USE_KEY.equals(type)) {
                 JSONObject function = new JSONObject();
                 function.put("name", block.getString("name"));
                 function.put("arguments", block.getJSONObject("input").toString());
-
                 JSONObject toolCall = new JSONObject();
                 toolCall.put("id", block.getString("id"));
-                toolCall.put("type", "function");
-                toolCall.put("function", function);
-
+                toolCall.put("type", TOOL_FUNCTION_KEY);
+                toolCall.put(TOOL_FUNCTION_KEY, function);
                 toolCalls.put(toolCall);
             }
         }
 
         JSONObject message = new JSONObject();
-        message.put("role", "assistant");
-        message.put("content", text.length() > 0 ? text.toString() : JSONObject.NULL);
+        message.put("role", ASSISTANT_ROLE);
+        message.put(CONTENT_KEY, text.isEmpty() ? text.toString() : JSONObject.NULL);
         if (toolCalls.length() > 0) {
-            message.put("tool_calls", toolCalls);
+            message.put(TOOL_CALLS_KEY, toolCalls);
         }
 
         JSONObject choice = new JSONObject();
-        choice.put("message", message);
+        choice.put(MESSAGE_KEY, message);
         choice.put("finish_reason",
-                "tool_use".equals(resJson.optString("stop_reason")) ? "tool_calls" : "stop");
-
+                TOOL_USE_KEY.equals(resJson.optString("stop_reason")) ? TOOL_CALLS_KEY : "stop");
         JSONObject gptFormat = new JSONObject();
-        gptFormat.put("choices", new JSONArray().put(choice));
+        gptFormat.put(CHOICES_KEY, new JSONArray().put(choice));
         if (resJson.has(USAGE_KEY)) {
             gptFormat.put(USAGE_KEY, resJson.optJSONObject(USAGE_KEY));
         }
@@ -989,7 +991,7 @@ public class LlmTools implements java.io.Serializable {
     }
 
     public static JSONObject formatJsonOpenAIFormat(String result) {
-        return new JSONObject().put("choices",
+        return new JSONObject().put(CHOICES_KEY,
                 new JSONArray().put(new JSONObject().put(MESSAGE_KEY, new JSONObject().put(CONTENT_KEY, result))));
     }
 
@@ -1002,7 +1004,7 @@ public class LlmTools implements java.io.Serializable {
         if (checkPing)
             ping = pingAI();
         return !(Tool.isEmpty(aiApiParam) || Tool.isEmpty(completionUrl)
-                || (checkPing && (!"/".equals(aiApiParam.optString("ping_url", "/")) && !PING_SUCCESS.equals(ping))));
+                || (checkPing && (!"/".equals(aiApiParam.optString(PING_KEY, "/")) && !PING_SUCCESS.equals(ping))));
     }
 
     public static JSONObject getParameters(boolean forDisplay, String lang) {
@@ -1027,7 +1029,6 @@ public class LlmTools implements java.io.Serializable {
                     rightColumn.put(data);
                 }
             } else {
-
                 specificParam.put(new JSONObject().put("key", key).put("value", checkPrivate(params, key)));
             }
         }
@@ -1050,7 +1051,6 @@ public class LlmTools implements java.io.Serializable {
                 return "<a id=\"" + key + "\" href=\"" + value + "\">" + value + "</a>";
             default:
                 return value.toString();
-
         }
     }
 
@@ -1093,5 +1093,86 @@ public class LlmTools implements java.io.Serializable {
         }
         return "";
     }
+     public static List<String> getModels(String url,String initialApiKey,Grant g) throws IOException, URISyntaxException{
+        String regexenv = "^\\[ENV:(.*)\\]$";
+        if(initialApiKey.matches(regexenv)){
+            initialApiKey = System.getenv(initialApiKey.replaceAll(regexenv, "$1"));
+        }
+        if(Tool.isEmpty(initialApiKey) && !Tool.isEmpty(apiKey)){
+            initialApiKey = apiKey;
 
+        }
+        URI apiUrl = new URI(url);
+        HttpURLConnection connection = (HttpURLConnection) apiUrl.toURL().openConnection();
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty(AUTH_PROPERTY, AUTH_PREFIX + initialApiKey);
+        ArrayList<String> res = new ArrayList<>();
+        int responseCode = connection.getResponseCode();
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String inputLine;
+            StringBuilder response = new StringBuilder();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+            JSONObject resJson = new JSONObject(response.toString());
+            for(Object model : resJson.optJSONArray("data")){
+                JSONObject jsonModel = (JSONObject)model;
+                if(jsonModel.has("id") && MODEL_KEY.equals(jsonModel.optString("object"))){
+                    res.add(jsonModel.getString("id"));
+                }
+            }
+
+        } else {
+            JSONObject error = readError(connection,responseCode,g);
+            res.add(ERROR_KEY);
+            if(Tool.isEmpty(error)) error = new JSONObject();
+            res.add(error.optString("code"));// NOSONAR - Tool.isEmpty check null
+            res.add(error.optString(ERROR_KEY));
+
+        }
+        connection.disconnect();
+        return res;
+    }
+     public static JSONObject getCurrentSetup(){
+        JSONObject params = getOptAiApiParam();
+        JSONObject data = new JSONObject();
+        data.put("llmPrvCompletionUrl", params.optString(COMPLETION_KEY));
+        data.put("llmPrvProvider", params.optString(PROVIDER_KEY));
+        data.put("llmMaxToken", params.optString(MAX_TOKEN_PARAM_KEY));
+        data.put("llmDataDisclamer", params.optBoolean("showDataDisclaimer"));
+        data.put("llmHistoryDepth", params.optString(DEPTH_KEY));
+        data.put("llmModel", params.optString(MODEL_KEY));
+        data.put("llmPrvModelsUrl", params.optString("model_url", ""));
+        data.put("llmPrvSttUrl", params.optString("stt_url", ""));
+        data.put("llmPrvPingUrl", params.optString(PING_KEY, ""));
+        return data;
+    }
+    private static JSONObject getRawParameters(){
+        JSONObject result = new JSONObject();
+        Grant g = Grant.getSystemAdmin();
+        try (BusinessObject bo = g.getBusinessObject(SYSPARAM_OBJ)) {
+            bo.getTmpObject()
+                    .withAllAccess()
+                    .filter(SYS_CODE, SYSPARAM_AI_API_PARAM)
+                    .search((index, count, obj) -> {
+                        String sysValue = obj.getFieldValue(SYS_VAL2);
+                        if(Tool.isEmpty(sysValue)){
+                            sysValue = obj.getFieldValue("sys_value");
+                        }
+                        JSONObject param = Tool.isEmpty(sysValue) ? new JSONObject() : new JSONObject(sysValue);
+                        for(String key : param.keySet()){
+                            result.put(key, param.getString(key));
+                        }
+
+                        return false;
+                    });
+        }catch(SearchException e){
+            AppLog.error(e, g);
+            return new JSONObject();
+        }
+        return result;
+    }
 }

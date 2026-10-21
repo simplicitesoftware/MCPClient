@@ -1,0 +1,14 @@
+<div class="form-group field-string updatable" data-group="key"><label for="key">Api key</label><input type="password" class="form-control" id="key" name="key"/></div>
+<div class="card"><div class="card-header" data-bs-toggle="collapse" data-bs-target=".collapse_panel_work_0"><span>Endpoint</span></div><div class="collapse collapse_panel_work_0"><div class="card-body">
+<br> <div class="row">
+{{#fields}}
+    <div class="col-sm-3">
+		<div class="form-group field-string{{#required}} required{{/required}} updatable" data-group="{{field}}">
+  			<label for="{{field}}">{{label}}</label>
+  			<input type="url" class="form-control" id="{{field}}" name="{{field}}" value="{{value}}" />
+		</div>
+	</div>
+{{/fields}}
+</div>
+</div></div></div><div class="collapse collapse_panel_work_0 show"></div></div>
+<div class="text" data-text="Help">{{{help}}}</div>

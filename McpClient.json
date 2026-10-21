@@ -3,12 +3,12 @@
  "userkey": "McpClient",
  "item": {
   "mdl_name": "McpClient",
-  "mdl_prefix": "mcpclt",
+  "mdl_prefix": "llm",
   "mdl_version": "7",
-  "mdl_type": "X",
+  "mdl_type": "T",
   "mdl_icon": null,
-  "mdl_url": "{\n    \"type\": \"git\",\n    \"origin\": {\"uri\": \"https://github.com/simplicitesoftware/MCPClient\"}\n}",
-  "mdl_comment": "Client module for internal use of Simplicité MCP server\n\nSet AI_API_PARAM mistral exemple:\n```json\n{\n \"completion_url\": \"https://api.mistral.ai/v1/chat/completions\",\n \"bot_name\": \"George\",\n \"code_max_token\": \"2000\",\n \"provider\": \"Mistral AI\",\n \"api_key\": \"[ENV:api_key]\",\n \"default_max_token\": \"5000\",\n \"showDataDisclaimer\": true,\n \"data_number\": \"3\",\n \"hist_depth\": \"3\",\n \"model\": \"mistral-medium-3-5\",\n \"stt_url\": \"\",\n \"ping_url\": \"https://api.mistral.ai/v1/models\"\n}\n```\n\nClaude:\n```json\n{\n  \"completion_url\": \"https://api.anthropic.com/v1/messages\",\n  \"bot_name\": \"George\",\n  \"code_max_token\": \"2000\",\n  \"provider\": \"anthropic\",\n  \"api_key\": \"[ENV:api_key]\",\n  \"anthropic-workspace-id\":\"[ENV:workspace_id]\",\n  \"default_max_token\": \"5000\",\n  \"showDataDisclaimer\": true,\n  \"data_number\": \"3\",\n  \"hist_depth\": \"3\",\n  \"model\": \"claude-sonnet-4-5-20250929\",\n  \"stt_url\": \"\",\n  \"ping_url\": \"https://api.anthropic.com/v1/models\",\n  \"ClaudeAPI\":true\n}\n```\n\nGPT:\n```json\n{\n \"completion_url\": \"https://api.openai.com/v1/chat/completions\",\n \"bot_name\": \"George\",\n \"code_max_token\": \"2000\",\n \"provider\": \"Open AI\",\n \"OpenAI-Project\": \"[ENV:project_key]\",\n \"OpenAI-Organization\": \"[ENV:Organization_key]\",\n \"api_key\": \"[ENV:api_key]\",\n \"default_max_token\": \"5000\",\n \"showDataDisclaimer\": true,\n \"data_number\": \"3\",\n \"hist_depth\": \"3\",\n \"model\": \"gpt-4o\",\n \"ping_url\": \"https://api.openai.com/v1/models\",\n \"stt_url\": \"https://api.openai.com/v1/audio/transcriptions\"\n}\n```",
+  "mdl_url": "{\n    \"type\": \"git\",\n    \"origin\": {\n        \"uri\": \"https://github.com/simplicitesoftware/MCPClient\",\n        \"branch\": \"chat\"\n    }\n}",
+  "mdl_comment": "Client module for internal use of Simplicité MCP server\n\nSet AI_API_PARAM mistral exemple:\n```json\n{\n \"completion_url\": \"https://api.mistral.ai/v1/chat/completions\",\n \"bot_name\": \"George\",\n \"code_max_token\": \"2000\",\n \"provider\": \"Mistral AI\",\n \"api_key\": \"[ENV:api_key]\",\n \"default_max_token\": \"5000\",\n \"showDataDisclaimer\": true,\n \"data_number\": \"3\",\n \"hist_depth\": \"3\",\n \"model\": \"mistral-medium-3-5\",\n \"stt_url\": \"\",\n \"ping_url\": \"https://api.mistral.ai/v1/models\"\n}\n```\n\nClaude:\n```json\n{\n  \"completion_url\": \"https://api.anthropic.com/v1/messages\",\n  \"bot_name\": \"George\",\n  \"code_max_token\": \"2000\",\n  \"provider\": \"anthropic\",\n  \"api_key\": \"[ENV:api_key]\",\n  \"anthropic-workspace-id\":\"[ENV:workspace_id]\",\n  \"default_max_token\": \"5000\",\n  \"showDataDisclaimer\": true,\n  \"data_number\": \"3\",\n  \"hist_depth\": \"3\",\n  \"model\": \"claude-sonnet-4-5-20250929\",\n  \"stt_url\": \"\",\n  \"ping_url\": \"https://api.anthropic.com/v1/models\",\n  \"ClaudeAPI\":true\n}\n```",
   "mdl_lib": {
    "path": "build/module-mcpclient.jar",
    "mime": "application/java-archive",
@@ -21,32 +21,18 @@
    "label": "System parameters",
    "icon": "img/system/system_param",
    "field": "row_module_id",
-   "list": [
-    {
-     "object": "SystemParam",
-     "userkey": "AI_API_PARAM",
-     "item": {
-      "sys_code": "AI_API_PARAM",
-      "sys_value": "{}",
-      "sys_type": null,
-      "sys_event": false,
-      "sys_desc": "AI API configuration:\n\nExample  \nMistral:\n```json\n{\n \"completion_url\": \"https://api.mistral.ai/v1/chat/completions\",\n \"bot_name\": \"George\",\n \"code_max_token\": \"2000\",\n \"provider\": \"Mistral AI\",\n \"api_key\": \"[ENV:api_key]\",\n \"default_max_token\": \"5000\",\n \"showDataDisclaimer\": true,\n \"data_number\": \"3\",\n \"hist_depth\": \"3\",\n \"model\": \"mistral-medium-3-5\",\n \"stt_url\": \"\",\n \"ping_url\": \"https://api.mistral.ai/v1/models\"\n}\n```\nClaude:\n```json\n{\n  \"completion_url\": \"https://api.anthropic.com/v1/messages\",\n  \"bot_name\": \"George\",\n  \"code_max_token\": \"2000\",\n  \"provider\": \"anthropic\",\n  \"api_key\": \"[ENV:api_key]\",\n  \"anthropic-workspace-id\":\"[ENV:workspace_id]\",\n  \"default_max_token\": \"5000\",\n  \"showDataDisclaimer\": true,\n  \"data_number\": \"3\",\n  \"hist_depth\": \"3\",\n  \"model\": \"claude-sonnet-4-5-20250929\",\n  \"stt_url\": \"\",\n  \"ping_url\": \"https://api.anthropic.com/v1/models\",\n  \"ClaudeAPI\":true\n}\n```\nGPT:\n```json\n{\n \"completion_url\": \"https://api.openai.com/v1/chat/completions\",\n \"bot_name\": \"George\",\n \"code_max_token\": \"2000\",\n \"provider\": \"Open AI\",\n \"OpenAI-Project\": \"[ENV:project_key]\",\n \"OpenAI-Organization\": \"[ENV:Organization_key]\",\n \"api_key\": \"[ENV:api_key]\",\n \"default_max_token\": \"5000\",\n \"showDataDisclaimer\": true,\n \"data_number\": \"3\",\n \"hist_depth\": \"3\",\n \"model\": \"gpt-4o\",\n \"ping_url\": \"https://api.openai.com/v1/models\",\n \"stt_url\": \"https://api.openai.com/v1/audio/transcriptions\"\n}\n```",
-      "row_module_id__mdl_name": "McpClient"
-     }
-    },
-    {
-     "object": "SystemParam",
-     "userkey": "MCP_MUTE_TOOLS",
-     "item": {
-      "sys_code": "MCP_MUTE_TOOLS",
-      "sys_value": "false",
-      "sys_type": null,
-      "sys_event": false,
-      "sys_desc": null,
-      "row_module_id__mdl_name": "McpClient"
-     }
+   "list": [{
+    "object": "SystemParam",
+    "userkey": "MCP_MUTE_TOOLS",
+    "item": {
+     "sys_code": "MCP_MUTE_TOOLS",
+     "sys_value": "false",
+     "sys_type": null,
+     "sys_event": false,
+     "sys_desc": null,
+     "row_module_id__mdl_name": "McpClient"
     }
-   ]
+   }]
   },
   {
    "object": "View",
@@ -108,24 +94,6 @@
    "list": [
     {
      "object": "Profile",
-     "userkey": "ADMIN~MCP_CLT_ADMIN",
-     "item": {
-      "prf_profile_id__grp_name": "ADMIN",
-      "prf_group_id__grp_name": "MCP_CLT_ADMIN",
-      "row_module_id__mdl_name": "McpClient"
-     }
-    },
-    {
-     "object": "Profile",
-     "userkey": "ADMIN~MCP_CLT_USER",
-     "item": {
-      "prf_profile_id__grp_name": "ADMIN",
-      "prf_group_id__grp_name": "MCP_CLT_USER",
-      "row_module_id__mdl_name": "McpClient"
-     }
-    },
-    {
-     "object": "Profile",
      "userkey": "MCP_CLT_ADMIN~MCP_CLT_USER",
      "item": {
       "prf_profile_id__grp_name": "MCP_CLT_ADMIN",
@@ -139,6 +107,66 @@
      "item": {
       "prf_profile_id__grp_name": "MCP_GROUP",
       "prf_group_id__grp_name": "MCP_CLT_USER",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    }
+   ]
+  },
+  {
+   "object": "ShortCut",
+   "label": "Shortcuts",
+   "icon": "img/system/shortcut",
+   "field": "row_module_id",
+   "list": [{
+    "object": "ShortCut",
+    "userkey": "openchat",
+    "item": {
+     "shc_name": "openchat",
+     "shc_url": "[EXPR:HTMLTool.getExternalObjectURL(\"AIChatBot\")]",
+     "shc_target": "work_right",
+     "shc_order": 1,
+     "shc_visible": ["B"],
+     "shc_icon": "far/comments",
+     "shc_keys": null,
+     "shc_home_style": "AB",
+     "row_module_id__mdl_name": "McpClient",
+     "shc_width": "40%",
+     "shc_height": "100%",
+     "shc_in_sitemap": true
+    }
+   }]
+  },
+  {
+   "object": "LogEvent",
+   "label": "Log event",
+   "icon": "img/system/logs",
+   "field": "row_module_id",
+   "list": [
+    {
+     "object": "LogEvent",
+     "userkey": "MCP_DEBUG",
+     "item": {
+      "lev_code": "MCP_DEBUG",
+      "lev_type": "M",
+      "lev_level": "I",
+      "lev_canal": ["L"],
+      "lev_label": "MCP",
+      "lev_enabled": true,
+      "lev_depth": 100,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "LogEvent",
+     "userkey": "MCP_INFO",
+     "item": {
+      "lev_code": "MCP_INFO",
+      "lev_type": "M",
+      "lev_level": "I",
+      "lev_canal": ["L"],
+      "lev_label": "MCP",
+      "lev_enabled": true,
+      "lev_depth": 100,
       "row_module_id__mdl_name": "McpClient"
      }
     }
@@ -165,6 +193,71 @@
     },
     {
      "object": "ListOfValue",
+     "userkey": "TEXT~ChatBot~ANY",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "ChatBot",
+      "lov_lang": "ANY",
+      "lov_value": "<div id=\"AiTestingChatbot\"><\/div>",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~MCP_DEBUG~ANY",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "MCP_DEBUG",
+      "lov_lang": "ANY",
+      "lov_value": "MCP debug: [1]",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": "MCP_DEBUG",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~MCP_INFO~ANY",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "MCP_INFO",
+      "lov_lang": "ANY",
+      "lov_value": "MCP info: [1]",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": "MCP_INFO",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~ACCEPT_ALL~ENU",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "ACCEPT_ALL",
+      "lov_lang": "ENU",
+      "lov_value": "Accept all",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~AI_BUTTON_SEND~ENU",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "AI_BUTTON_SEND",
+      "lov_lang": "ENU",
+      "lov_value": "Send",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
      "userkey": "TEXT~AI_DEFAULT_PROVIDER_NAME~ENU",
      "item": {
       "lov_name": "TEXT",
@@ -178,12 +271,64 @@
     },
     {
      "object": "ListOfValue",
+     "userkey": "TEXT~AI_DISCLAIMER_DATA~ENU",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "AI_DISCLAIMER_DATA",
+      "lov_lang": "ENU",
+      "lov_value": "By using this chatbot, you agree that your data will be sent to [PROVIDER].",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
      "userkey": "TEXT~AI_ERROR~ENU",
      "item": {
       "lov_name": "TEXT",
       "lov_code": "AI_ERROR",
       "lov_lang": "ENU",
       "lov_value": "We're having trouble processing your request. Please try again later or contact support",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~AI_ICON_ADD_IMG~ENU",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "AI_ICON_ADD_IMG",
+      "lov_lang": "ENU",
+      "lov_value": "Add an image.",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~AI_ICON_SPEECH~ENU",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "AI_ICON_SPEECH",
+      "lov_lang": "ENU",
+      "lov_value": "Dictate",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~AI_ICON_TAKE_IMG~ENU",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "AI_ICON_TAKE_IMG",
+      "lov_lang": "ENU",
+      "lov_value": "Take a photo.",
       "lov_order_by": 1,
       "lov_event_id__lev_code": null,
       "row_module_id__mdl_name": "McpClient"
@@ -217,12 +362,116 @@
     },
     {
      "object": "ListOfValue",
+     "userkey": "TEXT~AI_RECORDING_TITLE~ENU",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "AI_RECORDING_TITLE",
+      "lov_lang": "ENU",
+      "lov_value": "Recording in progress",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~AI_SETTING_NEED~ENU",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "AI_SETTING_NEED",
+      "lov_lang": "ENU",
+      "lov_value": "Your AI assistant has not been configured yet, or is not configured correctly.",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
      "userkey": "TEXT~AI_SUCCESS_PING~ENU",
      "item": {
       "lov_name": "TEXT",
       "lov_code": "AI_SUCCESS_PING",
       "lov_lang": "ENU",
       "lov_value": "Successful ping",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~AI_THINKING~ENU",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "AI_THINKING",
+      "lov_lang": "ENU",
+      "lov_value": "Processing your request, please hold on",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~AI_TOOL_ASK~ENU",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "AI_TOOL_ASK",
+      "lov_lang": "ENU",
+      "lov_value": "Use [TOOL] [PARAMS?:on [PARAMS]]?",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~MCP_FETCH_MLD~ENU",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "MCP_FETCH_MLD",
+      "lov_lang": "ENU",
+      "lov_value": "Fetch models",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~MCP_VALIDATE_SETUP~ENU",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "MCP_VALIDATE_SETUP",
+      "lov_lang": "ENU",
+      "lov_value": "Confirm",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~ACCEPT_ALL~FRA",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "ACCEPT_ALL",
+      "lov_lang": "FRA",
+      "lov_value": "Accepter tous",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~AI_BUTTON_SEND~FRA",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "AI_BUTTON_SEND",
+      "lov_lang": "FRA",
+      "lov_value": "Envoyer",
       "lov_order_by": 1,
       "lov_event_id__lev_code": null,
       "row_module_id__mdl_name": "McpClient"
@@ -243,12 +492,64 @@
     },
     {
      "object": "ListOfValue",
+     "userkey": "TEXT~AI_DISCLAIMER_DATA~FRA",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "AI_DISCLAIMER_DATA",
+      "lov_lang": "FRA",
+      "lov_value": "En utilisant ce chatbot, vous acceptez que vos données soient envoyées à  [PROVIDER].",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
      "userkey": "TEXT~AI_ERROR~FRA",
      "item": {
       "lov_name": "TEXT",
       "lov_code": "AI_ERROR",
       "lov_lang": "FRA",
       "lov_value": "Je rencontre un problème pour traiter votre requête. Veuillez réessayer plus tard ou contacter notre support.",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~AI_ICON_ADD_IMG~FRA",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "AI_ICON_ADD_IMG",
+      "lov_lang": "FRA",
+      "lov_value": "Ajouter une image.",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~AI_ICON_SPEECH~FRA",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "AI_ICON_SPEECH",
+      "lov_lang": "FRA",
+      "lov_value": "Dicter",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~AI_ICON_TAKE_IMG~FRA",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "AI_ICON_TAKE_IMG",
+      "lov_lang": "FRA",
+      "lov_value": "Prendre une photo.",
       "lov_order_by": 1,
       "lov_event_id__lev_code": null,
       "row_module_id__mdl_name": "McpClient"
@@ -282,6 +583,32 @@
     },
     {
      "object": "ListOfValue",
+     "userkey": "TEXT~AI_RECORDING_TITLE~FRA",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "AI_RECORDING_TITLE",
+      "lov_lang": "FRA",
+      "lov_value": "Enregistrement en cours",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~AI_SETTING_NEED~FRA",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "AI_SETTING_NEED",
+      "lov_lang": "FRA",
+      "lov_value": "Votre assistant IA n'a pas encore été configuré ou est mal configuré.",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
      "userkey": "TEXT~AI_SUCCESS_PING~FRA",
      "item": {
       "lov_name": "TEXT",
@@ -290,6 +617,1387 @@
       "lov_value": "Ping réussi",
       "lov_order_by": 1,
       "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~AI_THINKING~FRA",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "AI_THINKING",
+      "lov_lang": "FRA",
+      "lov_value": "Analyse en cours, merci de patienter un instant",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~AI_TOOL_ASK~FRA",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "AI_TOOL_ASK",
+      "lov_lang": "FRA",
+      "lov_value": "Utiliser [TOOL] [PARAMS?:sur [PARAMS]]?",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~MCP_FETCH_MLD~FRA",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "MCP_FETCH_MLD",
+      "lov_lang": "FRA",
+      "lov_value": "Obtenir les modèles disponibles",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ListOfValue",
+     "userkey": "TEXT~MCP_VALIDATE_SETUP~FRA",
+     "item": {
+      "lov_name": "TEXT",
+      "lov_code": "MCP_VALIDATE_SETUP",
+      "lov_lang": "FRA",
+      "lov_value": "Valider",
+      "lov_order_by": 1,
+      "lov_event_id__lev_code": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    }
+   ]
+  },
+  {
+   "object": "FieldList",
+   "label": "List of values",
+   "icon": "img/system/list_of_values",
+   "field": "row_module_id",
+   "list": [
+    {
+     "object": "FieldList",
+     "userkey": "LLM_MODEL_SERVICE",
+     "item": {
+      "lov_name": "LLM_MODEL_SERVICE",
+      "lov_navbar": null,
+      "lov_navbar_opt": null,
+      "row_module_id__mdl_name": "McpClient",
+      "lov_model_id__mod_name": null,
+      "lov_selectall_opt": false
+     }
+    },
+    {
+     "object": "FieldList",
+     "userkey": "LLM_PROVIDER",
+     "item": {
+      "lov_name": "LLM_PROVIDER",
+      "lov_navbar": null,
+      "lov_navbar_opt": null,
+      "row_module_id__mdl_name": "McpClient",
+      "lov_model_id__mod_name": null,
+      "lov_selectall_opt": false
+     }
+    }
+   ]
+  },
+  {
+   "object": "FieldListCode",
+   "label": "List code",
+   "icon": "img/system/list_of_values",
+   "field": "row_module_id",
+   "list": [
+    {
+     "object": "FieldListCode",
+     "userkey": "LLM_PROVIDER~mistral",
+     "item": {
+      "lov_list_id__lov_name": "LLM_PROVIDER",
+      "lov_code": "mistral",
+      "lov_order_by": 10,
+      "lov_label": "Mistral AI",
+      "row_module_id__mdl_name": "McpClient",
+      "lov_color": null,
+      "lov_color_bg": null,
+      "lov_icon": null,
+      "lov_display": ["L"]
+     }
+    },
+    {
+     "object": "FieldListCode",
+     "userkey": "LLM_PROVIDER~claude",
+     "item": {
+      "lov_list_id__lov_name": "LLM_PROVIDER",
+      "lov_code": "claude",
+      "lov_order_by": 20,
+      "lov_label": "Anthropic Claude",
+      "row_module_id__mdl_name": "McpClient",
+      "lov_color": null,
+      "lov_color_bg": null,
+      "lov_icon": null,
+      "lov_display": ["L"]
+     }
+    },
+    {
+     "object": "FieldListCode",
+     "userkey": "LLM_PROVIDER~openai",
+     "item": {
+      "lov_list_id__lov_name": "LLM_PROVIDER",
+      "lov_code": "openai",
+      "lov_order_by": 30,
+      "lov_label": "Open Ai",
+      "row_module_id__mdl_name": "McpClient",
+      "lov_color": null,
+      "lov_color_bg": null,
+      "lov_icon": null,
+      "lov_display": ["L"]
+     }
+    },
+    {
+     "object": "FieldListCode",
+     "userkey": "LLM_PROVIDER~mammouth",
+     "item": {
+      "lov_list_id__lov_name": "LLM_PROVIDER",
+      "lov_code": "mammouth",
+      "lov_order_by": 40,
+      "lov_label": "Mammouth AI",
+      "row_module_id__mdl_name": "McpClient",
+      "lov_color": null,
+      "lov_color_bg": null,
+      "lov_icon": null,
+      "lov_display": ["L"]
+     }
+    },
+    {
+     "object": "FieldListCode",
+     "userkey": "LLM_PROVIDER~Albert",
+     "item": {
+      "lov_list_id__lov_name": "LLM_PROVIDER",
+      "lov_code": "Albert",
+      "lov_order_by": 50,
+      "lov_label": "Albert API",
+      "row_module_id__mdl_name": "McpClient",
+      "lov_color": null,
+      "lov_color_bg": null,
+      "lov_icon": null,
+      "lov_display": ["L"]
+     }
+    }
+   ]
+  },
+  {
+   "object": "FieldListValue",
+   "label": "Translated list value",
+   "icon": "img/system/translation",
+   "field": "row_module_id",
+   "list": [
+    {
+     "object": "FieldListValue",
+     "userkey": "LLM_PROVIDER~mistral~ENU",
+     "item": {
+      "lov_code_id__lov_list_id__lov_name": "LLM_PROVIDER",
+      "lov_code_id__lov_code": "mistral",
+      "lov_lang": "ENU",
+      "lov_value": "Mistral AI",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "FieldListValue",
+     "userkey": "LLM_PROVIDER~claude~ENU",
+     "item": {
+      "lov_code_id__lov_list_id__lov_name": "LLM_PROVIDER",
+      "lov_code_id__lov_code": "claude",
+      "lov_lang": "ENU",
+      "lov_value": "Anthropic Claude",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "FieldListValue",
+     "userkey": "LLM_PROVIDER~openai~ENU",
+     "item": {
+      "lov_code_id__lov_list_id__lov_name": "LLM_PROVIDER",
+      "lov_code_id__lov_code": "openai",
+      "lov_lang": "ENU",
+      "lov_value": "Open Ai",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "FieldListValue",
+     "userkey": "LLM_PROVIDER~mammouth~ENU",
+     "item": {
+      "lov_code_id__lov_list_id__lov_name": "LLM_PROVIDER",
+      "lov_code_id__lov_code": "mammouth",
+      "lov_lang": "ENU",
+      "lov_value": "Mammouth AI",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "FieldListValue",
+     "userkey": "LLM_PROVIDER~Albert~ENU",
+     "item": {
+      "lov_code_id__lov_list_id__lov_name": "LLM_PROVIDER",
+      "lov_code_id__lov_code": "Albert",
+      "lov_lang": "ENU",
+      "lov_value": "Albert API",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "FieldListValue",
+     "userkey": "LLM_PROVIDER~mistral~FRA",
+     "item": {
+      "lov_code_id__lov_list_id__lov_name": "LLM_PROVIDER",
+      "lov_code_id__lov_code": "mistral",
+      "lov_lang": "FRA",
+      "lov_value": "Mistral",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "FieldListValue",
+     "userkey": "LLM_PROVIDER~claude~FRA",
+     "item": {
+      "lov_code_id__lov_list_id__lov_name": "LLM_PROVIDER",
+      "lov_code_id__lov_code": "claude",
+      "lov_lang": "FRA",
+      "lov_value": "Claude",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "FieldListValue",
+     "userkey": "LLM_PROVIDER~openai~FRA",
+     "item": {
+      "lov_code_id__lov_list_id__lov_name": "LLM_PROVIDER",
+      "lov_code_id__lov_code": "openai",
+      "lov_lang": "FRA",
+      "lov_value": "Openai",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "FieldListValue",
+     "userkey": "LLM_PROVIDER~mammouth~FRA",
+     "item": {
+      "lov_code_id__lov_list_id__lov_name": "LLM_PROVIDER",
+      "lov_code_id__lov_code": "mammouth",
+      "lov_lang": "FRA",
+      "lov_value": "Mammouth",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "FieldListValue",
+     "userkey": "LLM_PROVIDER~Albert~FRA",
+     "item": {
+      "lov_code_id__lov_list_id__lov_name": "LLM_PROVIDER",
+      "lov_code_id__lov_code": "Albert",
+      "lov_lang": "FRA",
+      "lov_value": "Albert",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    }
+   ]
+  },
+  {
+   "object": "Field",
+   "label": "Fields",
+   "icon": "img/system/field",
+   "field": "row_module_id",
+   "list": [
+    {
+     "object": "Field",
+     "userkey": "llmAnthropicWorkspaceId",
+     "item": {
+      "fld_name": {
+       "value": "llmAnthropicWorkspaceId",
+       "oldvalue": "llmAnthropicWorkspaceId",
+       "oldvalue1": "llmAnthropicWorkspaceId",
+       "oldvalue2": "llmAnthropicWorkspaceId",
+       "oldvalue3": "llmAnthropicWorkspaceId"
+      },
+      "fld_dbname": null,
+      "fld_visible": "2",
+      "fld_updatable": [
+       "3",
+       "2"
+      ],
+      "fld_required": false,
+      "fld_fonctid": false,
+      "fld_research": null,
+      "fld_researchreq": null,
+      "fld_sort": "C",
+      "fld_sort_nulls": null,
+      "fld_more": false,
+      "fld_listmore": false,
+      "fld_listsum": null,
+      "fld_exportable": true,
+      "fld_tray": null,
+      "fld_type": "9",
+      "fld_clipboard": false,
+      "fld_type_id__flt_code": null,
+      "fld_list_id__lov_name": null,
+      "fld_copy": true,
+      "fld_size": 100,
+      "fld_minsize": null,
+      "fld_precision": null,
+      "fld_fromdate_id__fld_name": null,
+      "fld_dfault": null,
+      "fld_indexable": false,
+      "fld_autocomp": "0",
+      "fld_groupby": false,
+      "fld_updall": true,
+      "fld_case": null,
+      "fld_righttoleft": false,
+      "fld_rendering": null,
+      "fld_speech": null,
+      "fld_calc": null,
+      "fld_objlist": null,
+      "fld_settings": null,
+      "fld_comment": null,
+      "fld_classification": null,
+      "fld_anon": null,
+      "row_module_id__mdl_name": "McpClient",
+      "fld_incrementsyntax": null,
+      "fld_deprecated": null,
+      "fld_compliance": "NE"
+     }
+    },
+    {
+     "object": "Field",
+     "userkey": "llmApiKey",
+     "item": {
+      "fld_name": {
+       "value": "llmApiKey",
+       "oldvalue": "llmApiKey",
+       "oldvalue1": "llmApiKey",
+       "oldvalue2": "llmApiKey",
+       "oldvalue3": "llmApyKey",
+       "oldvalue4": "llmApyKey",
+       "oldvalue5": "mcpcltLlmApyKey"
+      },
+      "fld_dbname": null,
+      "fld_visible": "2",
+      "fld_updatable": [
+       "3",
+       "2"
+      ],
+      "fld_required": false,
+      "fld_fonctid": false,
+      "fld_research": null,
+      "fld_researchreq": null,
+      "fld_sort": "C",
+      "fld_sort_nulls": null,
+      "fld_more": false,
+      "fld_listmore": false,
+      "fld_listsum": null,
+      "fld_exportable": true,
+      "fld_tray": null,
+      "fld_type": "9",
+      "fld_clipboard": false,
+      "fld_type_id__flt_code": null,
+      "fld_list_id__lov_name": null,
+      "fld_copy": true,
+      "fld_size": 500,
+      "fld_minsize": null,
+      "fld_precision": null,
+      "fld_fromdate_id__fld_name": null,
+      "fld_dfault": null,
+      "fld_indexable": false,
+      "fld_autocomp": "0",
+      "fld_groupby": false,
+      "fld_updall": true,
+      "fld_case": null,
+      "fld_righttoleft": false,
+      "fld_rendering": null,
+      "fld_speech": null,
+      "fld_calc": null,
+      "fld_objlist": null,
+      "fld_settings": null,
+      "fld_comment": null,
+      "fld_classification": null,
+      "fld_anon": null,
+      "row_module_id__mdl_name": "McpClient",
+      "fld_incrementsyntax": null,
+      "fld_deprecated": null,
+      "fld_compliance": "NE"
+     }
+    },
+    {
+     "object": "Field",
+     "userkey": "llmDataDisclamer",
+     "item": {
+      "fld_name": {
+       "value": "llmDataDisclamer",
+       "oldvalue": "llmDataDisclamer",
+       "oldvalue1": "llmDataDisclamer",
+       "oldvalue2": "llmDataDisclamer",
+       "oldvalue3": "llmDataDisclamer",
+       "oldvalue4": "mcpcltLlmDataDisclamer"
+      },
+      "fld_dbname": null,
+      "fld_visible": "2",
+      "fld_updatable": [
+       "3",
+       "2"
+      ],
+      "fld_required": false,
+      "fld_fonctid": false,
+      "fld_research": "1",
+      "fld_researchreq": "0",
+      "fld_sort": "C",
+      "fld_sort_nulls": null,
+      "fld_more": false,
+      "fld_listmore": false,
+      "fld_listsum": null,
+      "fld_exportable": true,
+      "fld_tray": null,
+      "fld_type": "8",
+      "fld_clipboard": false,
+      "fld_type_id__flt_code": null,
+      "fld_list_id__lov_name": null,
+      "fld_copy": true,
+      "fld_size": 1,
+      "fld_minsize": null,
+      "fld_precision": null,
+      "fld_fromdate_id__fld_name": null,
+      "fld_dfault": "true",
+      "fld_indexable": false,
+      "fld_autocomp": "0",
+      "fld_groupby": false,
+      "fld_updall": true,
+      "fld_case": null,
+      "fld_righttoleft": false,
+      "fld_rendering": null,
+      "fld_speech": null,
+      "fld_calc": null,
+      "fld_objlist": null,
+      "fld_settings": null,
+      "fld_comment": null,
+      "fld_classification": null,
+      "fld_anon": null,
+      "row_module_id__mdl_name": "McpClient",
+      "fld_incrementsyntax": null,
+      "fld_deprecated": null,
+      "fld_compliance": "NE"
+     }
+    },
+    {
+     "object": "Field",
+     "userkey": "llmGptOrganizationId",
+     "item": {
+      "fld_name": {
+       "value": "llmGptOrganizationId",
+       "oldvalue": "llmGptOrganizationId",
+       "oldvalue1": "llmGptOrganizationId",
+       "oldvalue2": "llmGptOrganizationId",
+       "oldvalue3": "llmGptOrganizationId",
+       "oldvalue4": "LlmGptOrganizationId"
+      },
+      "fld_dbname": null,
+      "fld_visible": "2",
+      "fld_updatable": [
+       "3",
+       "2"
+      ],
+      "fld_required": false,
+      "fld_fonctid": false,
+      "fld_research": null,
+      "fld_researchreq": null,
+      "fld_sort": "C",
+      "fld_sort_nulls": null,
+      "fld_more": false,
+      "fld_listmore": false,
+      "fld_listsum": null,
+      "fld_exportable": true,
+      "fld_tray": null,
+      "fld_type": "9",
+      "fld_clipboard": false,
+      "fld_type_id__flt_code": null,
+      "fld_list_id__lov_name": null,
+      "fld_copy": true,
+      "fld_size": 100,
+      "fld_minsize": null,
+      "fld_precision": null,
+      "fld_fromdate_id__fld_name": null,
+      "fld_dfault": null,
+      "fld_indexable": false,
+      "fld_autocomp": "0",
+      "fld_groupby": false,
+      "fld_updall": true,
+      "fld_case": null,
+      "fld_righttoleft": false,
+      "fld_rendering": null,
+      "fld_speech": null,
+      "fld_calc": null,
+      "fld_objlist": null,
+      "fld_settings": null,
+      "fld_comment": null,
+      "fld_classification": null,
+      "fld_anon": null,
+      "row_module_id__mdl_name": "McpClient",
+      "fld_incrementsyntax": null,
+      "fld_deprecated": null,
+      "fld_compliance": "NE"
+     }
+    },
+    {
+     "object": "Field",
+     "userkey": "llmGptProjectId",
+     "item": {
+      "fld_name": {
+       "value": "llmGptProjectId",
+       "oldvalue": "llmGptProjectId",
+       "oldvalue1": "llmGptProjectId",
+       "oldvalue2": "llmGptProjectId",
+       "oldvalue3": "llmGptProjectId",
+       "oldvalue4": "LlmGptProjectId"
+      },
+      "fld_dbname": null,
+      "fld_visible": "2",
+      "fld_updatable": [
+       "3",
+       "2"
+      ],
+      "fld_required": false,
+      "fld_fonctid": false,
+      "fld_research": null,
+      "fld_researchreq": null,
+      "fld_sort": "C",
+      "fld_sort_nulls": null,
+      "fld_more": false,
+      "fld_listmore": false,
+      "fld_listsum": null,
+      "fld_exportable": true,
+      "fld_tray": null,
+      "fld_type": "9",
+      "fld_clipboard": false,
+      "fld_type_id__flt_code": null,
+      "fld_list_id__lov_name": null,
+      "fld_copy": true,
+      "fld_size": 100,
+      "fld_minsize": null,
+      "fld_precision": null,
+      "fld_fromdate_id__fld_name": null,
+      "fld_dfault": null,
+      "fld_indexable": false,
+      "fld_autocomp": "0",
+      "fld_groupby": false,
+      "fld_updall": true,
+      "fld_case": null,
+      "fld_righttoleft": false,
+      "fld_rendering": null,
+      "fld_speech": null,
+      "fld_calc": null,
+      "fld_objlist": null,
+      "fld_settings": null,
+      "fld_comment": null,
+      "fld_classification": null,
+      "fld_anon": null,
+      "row_module_id__mdl_name": "McpClient",
+      "fld_incrementsyntax": null,
+      "fld_deprecated": null,
+      "fld_compliance": "NE"
+     }
+    },
+    {
+     "object": "Field",
+     "userkey": "llmHistoryDepth",
+     "item": {
+      "fld_name": {
+       "value": "llmHistoryDepth",
+       "oldvalue": "llmHistoryDepth",
+       "oldvalue1": "llmHistoryDepth",
+       "oldvalue2": "llmHistoryDepth",
+       "oldvalue3": "llmHistoryDepth",
+       "oldvalue4": "mcpcltLlmHistoryDepth"
+      },
+      "fld_dbname": null,
+      "fld_visible": "2",
+      "fld_updatable": [
+       "3",
+       "2"
+      ],
+      "fld_required": false,
+      "fld_fonctid": false,
+      "fld_research": "1",
+      "fld_researchreq": "0",
+      "fld_sort": "C",
+      "fld_sort_nulls": null,
+      "fld_more": false,
+      "fld_listmore": false,
+      "fld_listsum": null,
+      "fld_exportable": true,
+      "fld_tray": null,
+      "fld_type": "1",
+      "fld_clipboard": false,
+      "fld_type_id__flt_code": null,
+      "fld_list_id__lov_name": null,
+      "fld_copy": true,
+      "fld_size": 100,
+      "fld_minsize": null,
+      "fld_precision": null,
+      "fld_fromdate_id__fld_name": null,
+      "fld_dfault": "3",
+      "fld_indexable": false,
+      "fld_autocomp": "0",
+      "fld_groupby": false,
+      "fld_updall": true,
+      "fld_case": null,
+      "fld_righttoleft": false,
+      "fld_rendering": null,
+      "fld_speech": null,
+      "fld_calc": null,
+      "fld_objlist": null,
+      "fld_settings": null,
+      "fld_comment": null,
+      "fld_classification": null,
+      "fld_anon": null,
+      "row_module_id__mdl_name": "McpClient",
+      "fld_incrementsyntax": null,
+      "fld_deprecated": null,
+      "fld_compliance": "NE"
+     }
+    },
+    {
+     "object": "Field",
+     "userkey": "llmMaxToken",
+     "item": {
+      "fld_name": {
+       "value": "llmMaxToken",
+       "oldvalue": "llmMaxToken",
+       "oldvalue1": "llmMaxToken",
+       "oldvalue2": "llmMaxToken",
+       "oldvalue3": "llmMaxToken",
+       "oldvalue4": "mcpcltLlmMaxToken",
+       "oldvalue5": "mcpcltLlmMaxToken"
+      },
+      "fld_dbname": null,
+      "fld_visible": "2",
+      "fld_updatable": [
+       "3",
+       "2"
+      ],
+      "fld_required": false,
+      "fld_fonctid": false,
+      "fld_research": "1",
+      "fld_researchreq": "0",
+      "fld_sort": "C",
+      "fld_sort_nulls": null,
+      "fld_more": false,
+      "fld_listmore": false,
+      "fld_listsum": null,
+      "fld_exportable": true,
+      "fld_tray": null,
+      "fld_type": "1",
+      "fld_clipboard": false,
+      "fld_type_id__flt_code": null,
+      "fld_list_id__lov_name": null,
+      "fld_copy": true,
+      "fld_size": 100,
+      "fld_minsize": null,
+      "fld_precision": null,
+      "fld_fromdate_id__fld_name": null,
+      "fld_dfault": "5000",
+      "fld_indexable": false,
+      "fld_autocomp": "0",
+      "fld_groupby": false,
+      "fld_updall": true,
+      "fld_case": null,
+      "fld_righttoleft": false,
+      "fld_rendering": null,
+      "fld_speech": null,
+      "fld_calc": null,
+      "fld_objlist": null,
+      "fld_settings": null,
+      "fld_comment": null,
+      "fld_classification": null,
+      "fld_anon": null,
+      "row_module_id__mdl_name": "McpClient",
+      "fld_incrementsyntax": null,
+      "fld_deprecated": null,
+      "fld_compliance": "NE"
+     }
+    },
+    {
+     "object": "Field",
+     "userkey": "llmModel",
+     "item": {
+      "fld_name": {
+       "value": "llmModel",
+       "oldvalue": "llmModel",
+       "oldvalue1": "llmModel",
+       "oldvalue2": "llmModel",
+       "oldvalue3": "mcpcltLlmModel"
+      },
+      "fld_dbname": null,
+      "fld_visible": "2",
+      "fld_updatable": [
+       "3",
+       "2"
+      ],
+      "fld_required": false,
+      "fld_fonctid": false,
+      "fld_research": "1",
+      "fld_researchreq": "0",
+      "fld_sort": "C",
+      "fld_sort_nulls": null,
+      "fld_more": false,
+      "fld_listmore": false,
+      "fld_listsum": null,
+      "fld_exportable": true,
+      "fld_tray": null,
+      "fld_type": "7",
+      "fld_clipboard": false,
+      "fld_type_id__flt_code": null,
+      "fld_list_id__lov_name": "LLM_MODEL_SERVICE",
+      "fld_copy": true,
+      "fld_size": 100,
+      "fld_minsize": null,
+      "fld_precision": null,
+      "fld_fromdate_id__fld_name": null,
+      "fld_dfault": null,
+      "fld_indexable": false,
+      "fld_autocomp": "0",
+      "fld_groupby": false,
+      "fld_updall": true,
+      "fld_case": null,
+      "fld_righttoleft": false,
+      "fld_rendering": null,
+      "fld_speech": null,
+      "fld_calc": null,
+      "fld_objlist": null,
+      "fld_settings": null,
+      "fld_comment": null,
+      "fld_classification": null,
+      "fld_anon": null,
+      "row_module_id__mdl_name": "McpClient",
+      "fld_incrementsyntax": null,
+      "fld_deprecated": null,
+      "fld_compliance": "NE"
+     }
+    },
+    {
+     "object": "Field",
+     "userkey": "llmPrvCompletionUrl",
+     "item": {
+      "fld_name": {
+       "value": "llmPrvCompletionUrl",
+       "oldvalue": "mcpcltPrvCompletionUrl"
+      },
+      "fld_dbname": "llm_prv_completion_url",
+      "fld_visible": "3",
+      "fld_updatable": [
+       "3",
+       "2"
+      ],
+      "fld_required": false,
+      "fld_fonctid": false,
+      "fld_research": "1",
+      "fld_researchreq": "0",
+      "fld_sort": "C",
+      "fld_sort_nulls": null,
+      "fld_more": false,
+      "fld_listmore": false,
+      "fld_listsum": null,
+      "fld_exportable": true,
+      "fld_tray": null,
+      "fld_type": "10",
+      "fld_clipboard": false,
+      "fld_type_id__flt_code": null,
+      "fld_list_id__lov_name": null,
+      "fld_copy": true,
+      "fld_size": 100,
+      "fld_minsize": null,
+      "fld_precision": null,
+      "fld_fromdate_id__fld_name": null,
+      "fld_dfault": null,
+      "fld_indexable": false,
+      "fld_autocomp": "0",
+      "fld_groupby": false,
+      "fld_updall": true,
+      "fld_case": null,
+      "fld_righttoleft": false,
+      "fld_rendering": null,
+      "fld_speech": null,
+      "fld_calc": null,
+      "fld_objlist": null,
+      "fld_settings": null,
+      "fld_comment": null,
+      "fld_classification": null,
+      "fld_anon": null,
+      "row_module_id__mdl_name": "McpClient",
+      "fld_incrementsyntax": null,
+      "fld_deprecated": null,
+      "fld_compliance": "NE"
+     }
+    },
+    {
+     "object": "Field",
+     "userkey": "llmPrvDataModel",
+     "item": {
+      "fld_name": "llmPrvDataModel",
+      "fld_dbname": "llm_prv_data_model",
+      "fld_visible": "2",
+      "fld_updatable": [
+       "3",
+       "2"
+      ],
+      "fld_required": true,
+      "fld_fonctid": false,
+      "fld_research": "1",
+      "fld_researchreq": "0",
+      "fld_sort": "C",
+      "fld_sort_nulls": null,
+      "fld_more": false,
+      "fld_listmore": false,
+      "fld_listsum": null,
+      "fld_exportable": true,
+      "fld_tray": null,
+      "fld_type": "13",
+      "fld_clipboard": false,
+      "fld_type_id__flt_code": null,
+      "fld_list_id__lov_name": null,
+      "fld_copy": true,
+      "fld_size": 4000,
+      "fld_minsize": null,
+      "fld_precision": null,
+      "fld_fromdate_id__fld_name": null,
+      "fld_dfault": "{}",
+      "fld_indexable": false,
+      "fld_autocomp": "0",
+      "fld_groupby": false,
+      "fld_updall": true,
+      "fld_case": null,
+      "fld_righttoleft": false,
+      "fld_rendering": "JSON",
+      "fld_speech": null,
+      "fld_calc": null,
+      "fld_objlist": null,
+      "fld_settings": null,
+      "fld_comment": null,
+      "fld_classification": null,
+      "fld_anon": null,
+      "row_module_id__mdl_name": "McpClient",
+      "fld_incrementsyntax": null,
+      "fld_deprecated": null,
+      "fld_compliance": "NE"
+     }
+    },
+    {
+     "object": "Field",
+     "userkey": "llmPrvDefaultUrl",
+     "item": {
+      "fld_name": "llmPrvDefaultUrl",
+      "fld_dbname": "llm_prv_default_url",
+      "fld_visible": "2",
+      "fld_updatable": [
+       "2",
+       "3"
+      ],
+      "fld_required": true,
+      "fld_fonctid": false,
+      "fld_research": "1",
+      "fld_researchreq": "0",
+      "fld_sort": "C",
+      "fld_sort_nulls": null,
+      "fld_more": false,
+      "fld_listmore": false,
+      "fld_listsum": null,
+      "fld_exportable": true,
+      "fld_tray": null,
+      "fld_type": "10",
+      "fld_clipboard": false,
+      "fld_type_id__flt_code": null,
+      "fld_list_id__lov_name": null,
+      "fld_copy": true,
+      "fld_size": 100,
+      "fld_minsize": null,
+      "fld_precision": null,
+      "fld_fromdate_id__fld_name": null,
+      "fld_dfault": null,
+      "fld_indexable": false,
+      "fld_autocomp": "0",
+      "fld_groupby": false,
+      "fld_updall": true,
+      "fld_case": null,
+      "fld_righttoleft": false,
+      "fld_rendering": null,
+      "fld_speech": null,
+      "fld_calc": null,
+      "fld_objlist": null,
+      "fld_settings": null,
+      "fld_comment": null,
+      "fld_classification": null,
+      "fld_anon": null,
+      "row_module_id__mdl_name": "McpClient",
+      "fld_incrementsyntax": null,
+      "fld_deprecated": null,
+      "fld_compliance": "NE"
+     }
+    },
+    {
+     "object": "Field",
+     "userkey": "llmPrvHelp",
+     "item": {
+      "fld_name": "llmPrvHelp",
+      "fld_dbname": "llm_prv_help",
+      "fld_visible": "2",
+      "fld_updatable": [
+       "2",
+       "3"
+      ],
+      "fld_required": false,
+      "fld_fonctid": false,
+      "fld_research": null,
+      "fld_researchreq": null,
+      "fld_sort": "C",
+      "fld_sort_nulls": null,
+      "fld_more": false,
+      "fld_listmore": false,
+      "fld_listsum": null,
+      "fld_exportable": true,
+      "fld_tray": null,
+      "fld_type": "11",
+      "fld_clipboard": false,
+      "fld_type_id__flt_code": null,
+      "fld_list_id__lov_name": null,
+      "fld_copy": true,
+      "fld_size": 50000,
+      "fld_minsize": null,
+      "fld_precision": null,
+      "fld_fromdate_id__fld_name": null,
+      "fld_dfault": null,
+      "fld_indexable": false,
+      "fld_autocomp": "0",
+      "fld_groupby": false,
+      "fld_updall": true,
+      "fld_case": null,
+      "fld_righttoleft": false,
+      "fld_rendering": null,
+      "fld_speech": null,
+      "fld_calc": null,
+      "fld_objlist": null,
+      "fld_settings": null,
+      "fld_comment": null,
+      "fld_classification": null,
+      "fld_anon": null,
+      "row_module_id__mdl_name": "McpClient",
+      "fld_incrementsyntax": null,
+      "fld_deprecated": null,
+      "fld_compliance": "NE"
+     }
+    },
+    {
+     "object": "Field",
+     "userkey": "llmPrvModelsUrl",
+     "item": {
+      "fld_name": {
+       "value": "llmPrvModelsUrl",
+       "oldvalue": "mcpcltPrvModelsUrl"
+      },
+      "fld_dbname": "llm_prv_models_url",
+      "fld_visible": "2",
+      "fld_updatable": [
+       "3",
+       "2"
+      ],
+      "fld_required": false,
+      "fld_fonctid": false,
+      "fld_research": "1",
+      "fld_researchreq": "0",
+      "fld_sort": "C",
+      "fld_sort_nulls": null,
+      "fld_more": false,
+      "fld_listmore": false,
+      "fld_listsum": null,
+      "fld_exportable": true,
+      "fld_tray": null,
+      "fld_type": "10",
+      "fld_clipboard": false,
+      "fld_type_id__flt_code": null,
+      "fld_list_id__lov_name": null,
+      "fld_copy": true,
+      "fld_size": 100,
+      "fld_minsize": null,
+      "fld_precision": null,
+      "fld_fromdate_id__fld_name": null,
+      "fld_dfault": null,
+      "fld_indexable": false,
+      "fld_autocomp": "0",
+      "fld_groupby": false,
+      "fld_updall": true,
+      "fld_case": null,
+      "fld_righttoleft": false,
+      "fld_rendering": null,
+      "fld_speech": null,
+      "fld_calc": null,
+      "fld_objlist": null,
+      "fld_settings": null,
+      "fld_comment": null,
+      "fld_classification": null,
+      "fld_anon": null,
+      "row_module_id__mdl_name": "McpClient",
+      "fld_incrementsyntax": null,
+      "fld_deprecated": null,
+      "fld_compliance": "NE"
+     }
+    },
+    {
+     "object": "Field",
+     "userkey": "llmPrvPingUrl",
+     "item": {
+      "fld_name": {
+       "value": "llmPrvPingUrl",
+       "oldvalue": "mcpcltPrvPingUrl"
+      },
+      "fld_dbname": "llm_prv_ping_url",
+      "fld_visible": "2",
+      "fld_updatable": [
+       "3",
+       "2"
+      ],
+      "fld_required": false,
+      "fld_fonctid": false,
+      "fld_research": "1",
+      "fld_researchreq": "0",
+      "fld_sort": "C",
+      "fld_sort_nulls": null,
+      "fld_more": false,
+      "fld_listmore": false,
+      "fld_listsum": null,
+      "fld_exportable": true,
+      "fld_tray": null,
+      "fld_type": "10",
+      "fld_clipboard": false,
+      "fld_type_id__flt_code": null,
+      "fld_list_id__lov_name": null,
+      "fld_copy": true,
+      "fld_size": 100,
+      "fld_minsize": null,
+      "fld_precision": null,
+      "fld_fromdate_id__fld_name": null,
+      "fld_dfault": null,
+      "fld_indexable": false,
+      "fld_autocomp": "0",
+      "fld_groupby": false,
+      "fld_updall": true,
+      "fld_case": null,
+      "fld_righttoleft": false,
+      "fld_rendering": null,
+      "fld_speech": null,
+      "fld_calc": null,
+      "fld_objlist": null,
+      "fld_settings": null,
+      "fld_comment": null,
+      "fld_classification": null,
+      "fld_anon": null,
+      "row_module_id__mdl_name": "McpClient",
+      "fld_incrementsyntax": null,
+      "fld_deprecated": null,
+      "fld_compliance": "NE"
+     }
+    },
+    {
+     "object": "Field",
+     "userkey": "llmPrvProvider",
+     "item": {
+      "fld_name": "llmPrvProvider",
+      "fld_dbname": "llm_prv_provider",
+      "fld_visible": "3",
+      "fld_updatable": [
+       "2",
+       "3"
+      ],
+      "fld_required": true,
+      "fld_fonctid": true,
+      "fld_research": "1",
+      "fld_researchreq": "0",
+      "fld_sort": "C",
+      "fld_sort_nulls": null,
+      "fld_more": false,
+      "fld_listmore": false,
+      "fld_listsum": null,
+      "fld_exportable": true,
+      "fld_tray": null,
+      "fld_type": "7",
+      "fld_clipboard": false,
+      "fld_type_id__flt_code": null,
+      "fld_list_id__lov_name": "LLM_PROVIDER",
+      "fld_copy": true,
+      "fld_size": 100,
+      "fld_minsize": null,
+      "fld_precision": null,
+      "fld_fromdate_id__fld_name": null,
+      "fld_dfault": null,
+      "fld_indexable": false,
+      "fld_autocomp": "0",
+      "fld_groupby": false,
+      "fld_updall": true,
+      "fld_case": null,
+      "fld_righttoleft": false,
+      "fld_rendering": null,
+      "fld_speech": null,
+      "fld_calc": null,
+      "fld_objlist": null,
+      "fld_settings": null,
+      "fld_comment": null,
+      "fld_classification": null,
+      "fld_anon": null,
+      "row_module_id__mdl_name": "McpClient",
+      "fld_incrementsyntax": null,
+      "fld_deprecated": null,
+      "fld_compliance": "NE"
+     }
+    },
+    {
+     "object": "Field",
+     "userkey": "llmPrvSttUrl",
+     "item": {
+      "fld_name": {
+       "value": "llmPrvSttUrl",
+       "oldvalue": "mcpcltPrvSttUrl"
+      },
+      "fld_dbname": "llm_prv_stt_url",
+      "fld_visible": "2",
+      "fld_updatable": [
+       "3",
+       "2"
+      ],
+      "fld_required": false,
+      "fld_fonctid": false,
+      "fld_research": "1",
+      "fld_researchreq": "0",
+      "fld_sort": "C",
+      "fld_sort_nulls": null,
+      "fld_more": false,
+      "fld_listmore": false,
+      "fld_listsum": null,
+      "fld_exportable": true,
+      "fld_tray": null,
+      "fld_type": "10",
+      "fld_clipboard": false,
+      "fld_type_id__flt_code": null,
+      "fld_list_id__lov_name": null,
+      "fld_copy": true,
+      "fld_size": 100,
+      "fld_minsize": null,
+      "fld_precision": null,
+      "fld_fromdate_id__fld_name": null,
+      "fld_dfault": null,
+      "fld_indexable": false,
+      "fld_autocomp": "0",
+      "fld_groupby": false,
+      "fld_updall": true,
+      "fld_case": null,
+      "fld_righttoleft": false,
+      "fld_rendering": null,
+      "fld_speech": null,
+      "fld_calc": null,
+      "fld_objlist": null,
+      "fld_settings": null,
+      "fld_comment": null,
+      "fld_classification": null,
+      "fld_anon": null,
+      "row_module_id__mdl_name": "McpClient",
+      "fld_incrementsyntax": null,
+      "fld_deprecated": null,
+      "fld_compliance": "NE"
+     }
+    },
+    {
+     "object": "Field",
+     "userkey": "llmPrvUserParameters",
+     "item": {
+      "fld_name": "llmPrvUserParameters",
+      "fld_dbname": "llm_prv_user_parameters",
+      "fld_visible": "2",
+      "fld_updatable": ["2"],
+      "fld_required": false,
+      "fld_fonctid": false,
+      "fld_research": "1",
+      "fld_researchreq": "0",
+      "fld_sort": "C",
+      "fld_sort_nulls": null,
+      "fld_more": false,
+      "fld_listmore": true,
+      "fld_listsum": null,
+      "fld_exportable": true,
+      "fld_tray": null,
+      "fld_type": "13",
+      "fld_clipboard": false,
+      "fld_type_id__flt_code": null,
+      "fld_list_id__lov_name": null,
+      "fld_copy": true,
+      "fld_size": 5000,
+      "fld_minsize": null,
+      "fld_precision": null,
+      "fld_fromdate_id__fld_name": null,
+      "fld_dfault": null,
+      "fld_indexable": false,
+      "fld_autocomp": "0",
+      "fld_groupby": false,
+      "fld_updall": true,
+      "fld_case": null,
+      "fld_righttoleft": false,
+      "fld_rendering": "JSON",
+      "fld_speech": null,
+      "fld_calc": null,
+      "fld_objlist": null,
+      "fld_settings": null,
+      "fld_comment": null,
+      "fld_classification": null,
+      "fld_anon": null,
+      "row_module_id__mdl_name": "McpClient",
+      "fld_incrementsyntax": null,
+      "fld_deprecated": null,
+      "fld_compliance": "NE"
+     }
+    }
+   ]
+  },
+  {
+   "object": "Template",
+   "label": "Templates",
+   "icon": "img/system/template",
+   "field": "row_module_id",
+   "list": [
+    {
+     "object": "Template",
+     "userkey": "LlmProvider",
+     "item": {
+      "tpl_name": "LlmProvider",
+      "tpl_ui": "<div class=\"area\" data-area=\"1\"><\/div>",
+      "tpl_min": null,
+      "tpl_image": null,
+      "tpl_grid": null,
+      "tpl_context": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "Template",
+     "userkey": "llmSetupTest",
+     "item": {
+      "tpl_name": "llmSetupTest",
+      "tpl_ui": "<div class=\"area\" data-area=\"1\"><\/div>",
+      "tpl_min": null,
+      "tpl_image": null,
+      "tpl_grid": null,
+      "tpl_context": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "Template",
+     "userkey": "McpcltLlmSettings",
+     "item": {
+      "tpl_name": "McpcltLlmSettings",
+      "tpl_ui": "<div class=\"area\" data-area=\"1\"><\/div>",
+      "tpl_min": null,
+      "tpl_image": null,
+      "tpl_grid": null,
+      "tpl_context": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    }
+   ]
+  },
+  {
+   "object": "ObjectFieldArea",
+   "label": "Fields areas",
+   "icon": "img/system/field_area",
+   "field": "row_module_id",
+   "list": [
+    {
+     "object": "ObjectFieldArea",
+     "userkey": "LlmProvider-1",
+     "item": {
+      "ofa_name": "LlmProvider-1",
+      "ofa_position": 1,
+      "ofa_title": false,
+      "ofa_ui": "<div>\n  <div class=\"field\" data-field=\"llmPrvProvider\"><\/div>\n  <div class=\"row\">\n    <div class=\"col-sm-8\">\n      <div class=\"field\" data-field=\"llmPrvDataModel\"><\/div>\n    <\/div>\n    <div class=\"col-sm-4\">\n      <div class=\"field\" data-field=\"llmPrvDefaultUrl\"><\/div>\n      <div class=\"area\" data-area=\"3:-\"><\/div>\n      <div class=\"area\" data-area=\"2:-\"><\/div>\n    <\/div>\n  <\/div>\n  <div class=\"field\" data-field=\"llmPrvHelp\"><\/div>\n  <div class=\"area hidden\" data-area=\"4\"><\/div>\n<\/div>",
+      "ofa_icon": "star",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ObjectFieldArea",
+     "userkey": "LlmProvider-2",
+     "item": {
+      "ofa_name": "LlmProvider-2",
+      "ofa_position": 2,
+      "ofa_title": true,
+      "ofa_ui": "<div>\n  <div class=\"field\" data-field=\"llmPrvModelsUrl\"><\/div>\n  <div class=\"field\" data-field=\"llmPrvCompletionUrl\"><\/div>\n  <div class=\"field\" data-field=\"llmPrvPingUrl\"><\/div>\n  <div class=\"field\" data-field=\"llmPrvSttUrl\"><\/div>\n<\/div>",
+      "ofa_icon": "icon/color/url",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ObjectFieldArea",
+     "userkey": "LlmProvider-3",
+     "item": {
+      "ofa_name": "LlmProvider-3",
+      "ofa_position": 3,
+      "ofa_title": true,
+      "ofa_ui": "<div class=\"field\" data-display=\"input\" data-field=\"llmPrvUserParameters\"><\/div>",
+      "ofa_icon": "user",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ObjectFieldArea",
+     "userkey": "LlmProvider-4",
+     "item": {
+      "ofa_name": "LlmProvider-4",
+      "ofa_position": 4,
+      "ofa_title": true,
+      "ofa_ui": "<div>\n  <div class=\"field\" data-field=\"llmModel\"><\/div>\n  <div class=\"field\" data-field=\"llmHistoryDepth\"><\/div>\n  <div class=\"field\" data-field=\"llmMaxToken\"><\/div>\n  <div class=\"field\" data-field=\"llmDataDisclamer\"><\/div>\n  <div class=\"field\" data-field=\"llmApiKey\"><\/div>\n  <div class=\"field\" data-field=\"llmAnthropicWorkspaceId\"><\/div>\n  <div class=\"field\" data-field=\"llmGptProjectId\"><\/div>\n  <div class=\"field\" data-field=\"llmGptOrganizationId\"><\/div>\n<\/div>",
+      "ofa_icon": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ObjectFieldArea",
+     "userkey": "llmSetupTest-1",
+     "item": {
+      "ofa_name": "llmSetupTest-1",
+      "ofa_position": 1,
+      "ofa_title": true,
+      "ofa_ui": "<div class=\"row\">\n  <div class=\"col-sm-6\">\n    <div class=\"row\">\n      <div class=\"col-sm-6\">\n        <div class=\"field\" data-field=\"llmProvider\"><\/div>\n      <\/div>\n      <div class=\"col-sm-6\">\n        <div class=\"field\" data-field=\"llmModel\"><\/div>\n      <\/div>\n    <\/div>\n    <div class=\"row\">\n      <div class=\"col-sm-4\">\n        <div class=\"field\" data-field=\"llmDataDisclamer\"><\/div>\n      <\/div>\n      <div class=\"col-sm-4\">\n        <div class=\"field\" data-field=\"llmMaxToken\"><\/div>\n      <\/div>\n      <div class=\"col-sm-4\">\n        <div class=\"field\" data-field=\"llmHistoryDepth\"><\/div>\n      <\/div>\n    <\/div>\n    <div class=\"field\" data-field=\"llmApiKey\"><\/div>\n    <div class=\"field\" data-field=\"llmAnthropicWorkspaceId\"><\/div>\n    <div class=\"field\" data-field=\"llmGptOrganizationId\"><\/div>\n    <div class=\"field\" data-field=\"llmGptProjectId\"><\/div>\n  <\/div>\n  <div class=\"col-sm-6\">\n    <div class=\"field\" data-field=\"llmCompletionUrl\"><\/div>\n    <div class=\"field\" data-field=\"llmModelUrl\"><\/div>\n    <div class=\"field\" data-field=\"llmStt\"><\/div>\n    <div class=\"field\" data-field=\"llmPingUrl\"><\/div>\n  <\/div>\n<\/div>",
+      "ofa_icon": "star",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ObjectFieldArea",
+     "userkey": "McpcltLlmSettings-1",
+     "item": {
+      "ofa_name": "McpcltLlmSettings-1",
+      "ofa_position": 1,
+      "ofa_title": true,
+      "ofa_ui": "<div class=\"row\">\n  <div class=\"col-sm-6\">\n    <div class=\"row\">\n      <div class=\"col-sm-5\">\n        <div class=\"field\" data-field=\"llmProvider\"><\/div>\n        <div class=\"field\" data-field=\"llmDataDisclamer\"><\/div>\n      <\/div>\n      <div class=\"col-sm-7\">\n        <div class=\"field\" data-field=\"llmModel\"><\/div>\n        <div class=\"field\" data-field=\"llmMaxToken\"><\/div>\n        <div class=\"field\" data-field=\"llmHistoryDepth\"><\/div>\n      <\/div>\n    <\/div>\n    <div class=\"field\" data-field=\"llmApyKey\"><\/div>\n    <div class=\"field\" data-field=\"llmGptProjectId\"><\/div>\n    <div class=\"field\" data-field=\"LlmGptOrganizationId\"><\/div>\n    <div class=\"field\" data-field=\"llmAnthropicWorkspaceId\"><\/div>\n  <\/div>\n  <div class=\"col-sm-6\">\n    <div class=\"area\" data-area=\"2:-\"><\/div>\n  <\/div>\n<\/div>",
+      "ofa_icon": "star",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "ObjectFieldArea",
+     "userkey": "McpcltLlmSettings-2",
+     "item": {
+      "ofa_name": "McpcltLlmSettings-2",
+      "ofa_position": 2,
+      "ofa_title": true,
+      "ofa_ui": "<div>\n  <div class=\"field\" data-field=\"llmCompletionUrl\"><\/div>\n  <div class=\"field\" data-field=\"llmPingUrl\"><\/div>\n  <div class=\"field\" data-field=\"llmStt\"><\/div>\n<\/div>",
+      "ofa_icon": "icon/color/url",
       "row_module_id__mdl_name": "McpClient"
      }
     }
@@ -320,9 +2028,34 @@
   {
    "object": "ObjectExternal",
    "label": "External objects",
-   "icon": "img/system/external_object",
+   "icon": "object",
    "field": "row_module_id",
    "list": [
+    {
+     "object": "ObjectExternal",
+     "userkey": "AIChatBot",
+     "item": {
+      "obe_name": "AIChatBot",
+      "obe_type": "E",
+      "obe_nature": "com_simplicite_util_ExternalObject",
+      "obe_url": null,
+      "obe_settings": null,
+      "obe_comment": "Chat interface",
+      "obe_help": null,
+      "obe_class": null,
+      "obe_script_id": {
+       "path": "src/com/simplicite/extobjects/McpClient/AIChatBot.java",
+       "mime": "text/plain",
+       "name": "AIChatBot.java"
+      },
+      "obe_icon": "fas/robot",
+      "obe_permalink": null,
+      "obe_widget": null,
+      "row_module_id__mdl_name": "McpClient",
+      "obe_width": null,
+      "obe_height": null
+     }
+    },
     {
      "object": "ObjectExternal",
      "userkey": "AiMcpClientApi",
@@ -371,6 +2104,869 @@
       "row_module_id__mdl_name": "McpClient",
       "obe_width": null,
       "obe_height": null
+     }
+    },
+    {
+     "object": "ObjectExternal",
+     "userkey": "LlmSetup",
+     "item": {
+      "obe_name": "LlmSetup",
+      "obe_type": "E",
+      "obe_nature": "com_simplicite_webapp_web_ResponsiveExternalObject",
+      "obe_url": null,
+      "obe_settings": null,
+      "obe_comment": null,
+      "obe_help": null,
+      "obe_class": null,
+      "obe_script_id": {
+       "path": "src/com/simplicite/extobjects/McpClient/LlmSetup.java",
+       "mime": "text/plain",
+       "name": "LlmSetup.java"
+      },
+      "obe_icon": "fas/cogs",
+      "obe_permalink": null,
+      "obe_widget": null,
+      "row_module_id__mdl_name": "McpClient",
+      "obe_width": null,
+      "obe_height": null
+     }
+    }
+   ]
+  },
+  {
+   "object": "ObjectInternal",
+   "label": "Business objects",
+   "icon": "img/system/business_object",
+   "field": "row_module_id",
+   "list": [{
+    "object": "ObjectInternal",
+    "userkey": "LlmProvider",
+    "item": {
+     "obo_name": "LlmProvider",
+     "obo_dbtable": "llm_provider",
+     "obo_role": "OBJ",
+     "obo_class": null,
+     "obo_script_id": {
+      "path": "src/com/simplicite/objects/McpClient/LlmProvider.java",
+      "mime": "text/plain",
+      "name": "LlmProvider.java"
+     },
+     "obo_usets": "1",
+     "obo_nosearch": "1",
+     "obo_comment": null,
+     "obo_type": "O",
+     "obo_searchspec": null,
+     "obo_exportorder": 1,
+     "obo_distinct": false,
+     "obo_indexable": false,
+     "obo_groupby": false,
+     "obo_dfltref": null,
+     "obo_template_id__tpl_name": "LlmProvider",
+     "obo_tpl_list_id__tpl_name": null,
+     "obo_copy": true,
+     "obo_export": ["1"],
+     "obo_pagine": true,
+     "obo_srh_predef": ["1"],
+     "obo_selrow": true,
+     "obo_updall": true,
+     "obo_delall": true,
+     "obo_listsearch": true,
+     "obo_list_edit": [
+      "N",
+      "L",
+      "E"
+     ],
+     "obo_useform": true,
+     "obo_title": null,
+     "obo_icon": "img/color/cog_wheel",
+     "obo_refcount": false,
+     "obo_tree": false,
+     "obo_viewmode": "T",
+     "obo_historic": null,
+     "obo_printable": true,
+     "obo_followlink": true,
+     "obo_mergeable": false,
+     "obo_social": ["1"],
+     "obo_rowid_id__fld_name": null,
+     "obo_extend_id__obj_name": null,
+     "row_module_id__mdl_name": "McpClient",
+     "obo_btn_reload": "P",
+     "obo_btn_prefs": "P",
+     "obo_btn_bookmark": "1",
+     "obo_btn_del": "P",
+     "obo_btn_copy": "P",
+     "obo_btn_export": "P",
+     "obo_btn_listadd": "1",
+     "obo_btn_listedit": "1",
+     "obo_btn_listupsert": "1",
+     "obo_btn_updall": "P",
+     "obo_btn_delall": "P",
+     "obo_btn_merge": "P",
+     "obo_btn_save": true,
+     "obo_btn_saveclose": true,
+     "obo_btn_savenew": true,
+     "obo_btn_savecopy": true,
+     "obo_btn_close": true,
+     "obo_tray": true,
+     "obo_dashboard": ["1"],
+     "obo_prefix": "prv",
+     "obo_search_ts": null,
+     "obo_minrows": null,
+     "obo_maxrows": null,
+     "obo_sortable": true,
+     "obo_list_areas": null,
+     "obo_minifiable": "M",
+     "obo_minified": false,
+     "obo_permalink": null,
+     "obo_btn_searchform": true,
+     "obo_search_index": null,
+     "obo_search_column": "C",
+     "obo_search_dialog": true,
+     "obo_search_docked": false,
+     "obo_tpl_search_id__tpl_name": null,
+     "obo_tpl_search_pos": null
+    }
+   }]
+  },
+  {
+   "object": "ObjectFieldSystem",
+   "label": "Object fields",
+   "icon": "img/system/object_field",
+   "field": "row_module_id",
+   "list": [
+    {
+     "object": "ObjectFieldSystem",
+     "userkey": "LlmProvider~llmPrvProvider~10",
+     "item": {
+      "obf_object_id__obo_name": "LlmProvider",
+      "obf_field_id__fld_name": "llmPrvProvider",
+      "obf_order": 10,
+      "obf_group_by": null,
+      "obf_dfault_order": 1,
+      "obf_reorder": null,
+      "obf_input": null,
+      "obf_ref_field_id__fld_name": null,
+      "obf_ref_object_id__obo_name": null,
+      "obf_cascad": null,
+      "obf_card": null,
+      "obf_visible": null,
+      "obf_ref_export": true,
+      "obf_copy": null,
+      "obf_ref_order": null,
+      "obf_fld_uk": null,
+      "obf_fld_visible": null,
+      "obf_fld_required": null,
+      "obf_fld_updatable": null,
+      "obf_fld_research": null,
+      "obf_fld_more": null,
+      "obf_fld_listmore": null,
+      "obf_fld_researchreq": null,
+      "obf_fld_dfault": null,
+      "obf_fld_exportable": null,
+      "obf_fld_compliance": null,
+      "obf_area_id__ofa_name": "LlmProvider-1",
+      "row_module_id__mdl_name": "McpClient",
+      "obf_joined_id__obf_object_id__obo_name": null,
+      "obf_joined_id__obf_field_id__fld_name": null,
+      "obf_joined_id__obf_order": null
+     }
+    },
+    {
+     "object": "ObjectFieldSystem",
+     "userkey": "LlmProvider~llmPrvDefaultUrl~20",
+     "item": {
+      "obf_object_id__obo_name": "LlmProvider",
+      "obf_field_id__fld_name": "llmPrvDefaultUrl",
+      "obf_order": 20,
+      "obf_group_by": null,
+      "obf_dfault_order": null,
+      "obf_reorder": null,
+      "obf_input": null,
+      "obf_ref_field_id__fld_name": null,
+      "obf_ref_object_id__obo_name": null,
+      "obf_cascad": null,
+      "obf_card": null,
+      "obf_visible": null,
+      "obf_ref_export": true,
+      "obf_copy": null,
+      "obf_ref_order": null,
+      "obf_fld_uk": null,
+      "obf_fld_visible": null,
+      "obf_fld_required": null,
+      "obf_fld_updatable": null,
+      "obf_fld_research": null,
+      "obf_fld_more": null,
+      "obf_fld_listmore": null,
+      "obf_fld_researchreq": null,
+      "obf_fld_dfault": null,
+      "obf_fld_exportable": null,
+      "obf_fld_compliance": null,
+      "obf_area_id__ofa_name": "LlmProvider-1",
+      "row_module_id__mdl_name": "McpClient",
+      "obf_joined_id__obf_object_id__obo_name": null,
+      "obf_joined_id__obf_field_id__fld_name": null,
+      "obf_joined_id__obf_order": null
+     }
+    },
+    {
+     "object": "ObjectFieldSystem",
+     "userkey": "LlmProvider~llmPrvDataModel~30",
+     "item": {
+      "obf_object_id__obo_name": "LlmProvider",
+      "obf_field_id__fld_name": "llmPrvDataModel",
+      "obf_order": 30,
+      "obf_group_by": null,
+      "obf_dfault_order": null,
+      "obf_reorder": null,
+      "obf_input": null,
+      "obf_ref_field_id__fld_name": null,
+      "obf_ref_object_id__obo_name": null,
+      "obf_cascad": null,
+      "obf_card": null,
+      "obf_visible": null,
+      "obf_ref_export": true,
+      "obf_copy": null,
+      "obf_ref_order": null,
+      "obf_fld_uk": null,
+      "obf_fld_visible": null,
+      "obf_fld_required": null,
+      "obf_fld_updatable": null,
+      "obf_fld_research": null,
+      "obf_fld_more": null,
+      "obf_fld_listmore": null,
+      "obf_fld_researchreq": null,
+      "obf_fld_dfault": null,
+      "obf_fld_exportable": null,
+      "obf_fld_compliance": null,
+      "obf_area_id__ofa_name": "LlmProvider-1",
+      "row_module_id__mdl_name": "McpClient",
+      "obf_joined_id__obf_object_id__obo_name": null,
+      "obf_joined_id__obf_field_id__fld_name": null,
+      "obf_joined_id__obf_order": null
+     }
+    },
+    {
+     "object": "ObjectFieldSystem",
+     "userkey": "LlmProvider~llmPrvHelp~50",
+     "item": {
+      "obf_object_id__obo_name": "LlmProvider",
+      "obf_field_id__fld_name": "llmPrvHelp",
+      "obf_order": 50,
+      "obf_group_by": null,
+      "obf_dfault_order": null,
+      "obf_reorder": null,
+      "obf_input": null,
+      "obf_ref_field_id__fld_name": null,
+      "obf_ref_object_id__obo_name": null,
+      "obf_cascad": null,
+      "obf_card": null,
+      "obf_visible": null,
+      "obf_ref_export": true,
+      "obf_copy": null,
+      "obf_ref_order": null,
+      "obf_fld_uk": null,
+      "obf_fld_visible": null,
+      "obf_fld_required": null,
+      "obf_fld_updatable": null,
+      "obf_fld_research": null,
+      "obf_fld_more": null,
+      "obf_fld_listmore": null,
+      "obf_fld_researchreq": null,
+      "obf_fld_dfault": null,
+      "obf_fld_exportable": null,
+      "obf_fld_compliance": null,
+      "obf_area_id__ofa_name": "LlmProvider-1",
+      "row_module_id__mdl_name": "McpClient",
+      "obf_joined_id__obf_object_id__obo_name": null,
+      "obf_joined_id__obf_field_id__fld_name": null,
+      "obf_joined_id__obf_order": null
+     }
+    },
+    {
+     "object": "ObjectFieldSystem",
+     "userkey": "LlmProvider~llmPrvUserParameters~90",
+     "item": {
+      "obf_object_id__obo_name": "LlmProvider",
+      "obf_field_id__fld_name": "llmPrvUserParameters",
+      "obf_order": 90,
+      "obf_group_by": null,
+      "obf_dfault_order": null,
+      "obf_reorder": null,
+      "obf_input": null,
+      "obf_ref_field_id__fld_name": null,
+      "obf_ref_object_id__obo_name": null,
+      "obf_cascad": null,
+      "obf_card": null,
+      "obf_visible": null,
+      "obf_ref_export": true,
+      "obf_copy": null,
+      "obf_ref_order": null,
+      "obf_fld_uk": null,
+      "obf_fld_visible": null,
+      "obf_fld_required": null,
+      "obf_fld_updatable": null,
+      "obf_fld_research": null,
+      "obf_fld_more": null,
+      "obf_fld_listmore": null,
+      "obf_fld_researchreq": null,
+      "obf_fld_dfault": null,
+      "obf_fld_exportable": null,
+      "obf_fld_compliance": null,
+      "obf_area_id__ofa_name": "LlmProvider-3",
+      "row_module_id__mdl_name": "McpClient",
+      "obf_joined_id__obf_object_id__obo_name": null,
+      "obf_joined_id__obf_field_id__fld_name": null,
+      "obf_joined_id__obf_order": null
+     }
+    },
+    {
+     "object": "ObjectFieldSystem",
+     "userkey": "LlmProvider~llmPrvModelsUrl~100",
+     "item": {
+      "obf_object_id__obo_name": "LlmProvider",
+      "obf_field_id__fld_name": "llmPrvModelsUrl",
+      "obf_order": 100,
+      "obf_group_by": null,
+      "obf_dfault_order": null,
+      "obf_reorder": null,
+      "obf_input": null,
+      "obf_ref_field_id__fld_name": null,
+      "obf_ref_object_id__obo_name": null,
+      "obf_cascad": null,
+      "obf_card": null,
+      "obf_visible": null,
+      "obf_ref_export": true,
+      "obf_copy": null,
+      "obf_ref_order": null,
+      "obf_fld_uk": null,
+      "obf_fld_visible": null,
+      "obf_fld_required": null,
+      "obf_fld_updatable": null,
+      "obf_fld_research": null,
+      "obf_fld_more": null,
+      "obf_fld_listmore": null,
+      "obf_fld_researchreq": null,
+      "obf_fld_dfault": null,
+      "obf_fld_exportable": null,
+      "obf_fld_compliance": null,
+      "obf_area_id__ofa_name": "LlmProvider-2",
+      "row_module_id__mdl_name": "McpClient",
+      "obf_joined_id__obf_object_id__obo_name": null,
+      "obf_joined_id__obf_field_id__fld_name": null,
+      "obf_joined_id__obf_order": null
+     }
+    },
+    {
+     "object": "ObjectFieldSystem",
+     "userkey": "LlmProvider~llmPrvCompletionUrl~110",
+     "item": {
+      "obf_object_id__obo_name": "LlmProvider",
+      "obf_field_id__fld_name": "llmPrvCompletionUrl",
+      "obf_order": 110,
+      "obf_group_by": null,
+      "obf_dfault_order": null,
+      "obf_reorder": null,
+      "obf_input": null,
+      "obf_ref_field_id__fld_name": null,
+      "obf_ref_object_id__obo_name": null,
+      "obf_cascad": null,
+      "obf_card": null,
+      "obf_visible": null,
+      "obf_ref_export": true,
+      "obf_copy": null,
+      "obf_ref_order": null,
+      "obf_fld_uk": null,
+      "obf_fld_visible": "2",
+      "obf_fld_required": null,
+      "obf_fld_updatable": null,
+      "obf_fld_research": null,
+      "obf_fld_more": null,
+      "obf_fld_listmore": null,
+      "obf_fld_researchreq": null,
+      "obf_fld_dfault": null,
+      "obf_fld_exportable": null,
+      "obf_fld_compliance": null,
+      "obf_area_id__ofa_name": "LlmProvider-2",
+      "row_module_id__mdl_name": "McpClient",
+      "obf_joined_id__obf_object_id__obo_name": null,
+      "obf_joined_id__obf_field_id__fld_name": null,
+      "obf_joined_id__obf_order": null
+     }
+    },
+    {
+     "object": "ObjectFieldSystem",
+     "userkey": "LlmProvider~llmPrvPingUrl~120",
+     "item": {
+      "obf_object_id__obo_name": "LlmProvider",
+      "obf_field_id__fld_name": "llmPrvPingUrl",
+      "obf_order": 120,
+      "obf_group_by": null,
+      "obf_dfault_order": null,
+      "obf_reorder": null,
+      "obf_input": null,
+      "obf_ref_field_id__fld_name": null,
+      "obf_ref_object_id__obo_name": null,
+      "obf_cascad": null,
+      "obf_card": null,
+      "obf_visible": null,
+      "obf_ref_export": true,
+      "obf_copy": null,
+      "obf_ref_order": null,
+      "obf_fld_uk": null,
+      "obf_fld_visible": null,
+      "obf_fld_required": null,
+      "obf_fld_updatable": null,
+      "obf_fld_research": null,
+      "obf_fld_more": null,
+      "obf_fld_listmore": null,
+      "obf_fld_researchreq": null,
+      "obf_fld_dfault": null,
+      "obf_fld_exportable": null,
+      "obf_fld_compliance": null,
+      "obf_area_id__ofa_name": "LlmProvider-2",
+      "row_module_id__mdl_name": "McpClient",
+      "obf_joined_id__obf_object_id__obo_name": null,
+      "obf_joined_id__obf_field_id__fld_name": null,
+      "obf_joined_id__obf_order": null
+     }
+    },
+    {
+     "object": "ObjectFieldSystem",
+     "userkey": "LlmProvider~llmPrvSttUrl~130",
+     "item": {
+      "obf_object_id__obo_name": "LlmProvider",
+      "obf_field_id__fld_name": "llmPrvSttUrl",
+      "obf_order": 130,
+      "obf_group_by": null,
+      "obf_dfault_order": null,
+      "obf_reorder": null,
+      "obf_input": null,
+      "obf_ref_field_id__fld_name": null,
+      "obf_ref_object_id__obo_name": null,
+      "obf_cascad": null,
+      "obf_card": null,
+      "obf_visible": null,
+      "obf_ref_export": true,
+      "obf_copy": null,
+      "obf_ref_order": null,
+      "obf_fld_uk": null,
+      "obf_fld_visible": null,
+      "obf_fld_required": null,
+      "obf_fld_updatable": null,
+      "obf_fld_research": null,
+      "obf_fld_more": null,
+      "obf_fld_listmore": null,
+      "obf_fld_researchreq": null,
+      "obf_fld_dfault": null,
+      "obf_fld_exportable": null,
+      "obf_fld_compliance": null,
+      "obf_area_id__ofa_name": "LlmProvider-2",
+      "row_module_id__mdl_name": "McpClient",
+      "obf_joined_id__obf_object_id__obo_name": null,
+      "obf_joined_id__obf_field_id__fld_name": null,
+      "obf_joined_id__obf_order": null
+     }
+    },
+    {
+     "object": "ObjectFieldSystem",
+     "userkey": "LlmProvider~llmModel~140",
+     "item": {
+      "obf_object_id__obo_name": "LlmProvider",
+      "obf_field_id__fld_name": "llmModel",
+      "obf_order": 140,
+      "obf_group_by": null,
+      "obf_dfault_order": null,
+      "obf_reorder": null,
+      "obf_input": null,
+      "obf_ref_field_id__fld_name": null,
+      "obf_ref_object_id__obo_name": null,
+      "obf_cascad": null,
+      "obf_card": null,
+      "obf_visible": null,
+      "obf_ref_export": true,
+      "obf_copy": null,
+      "obf_ref_order": null,
+      "obf_fld_uk": null,
+      "obf_fld_visible": null,
+      "obf_fld_required": null,
+      "obf_fld_updatable": null,
+      "obf_fld_research": null,
+      "obf_fld_more": null,
+      "obf_fld_listmore": null,
+      "obf_fld_researchreq": null,
+      "obf_fld_dfault": null,
+      "obf_fld_exportable": null,
+      "obf_fld_compliance": null,
+      "obf_area_id__ofa_name": "LlmProvider-4",
+      "row_module_id__mdl_name": "McpClient",
+      "obf_joined_id__obf_object_id__obo_name": null,
+      "obf_joined_id__obf_field_id__fld_name": null,
+      "obf_joined_id__obf_order": null
+     }
+    },
+    {
+     "object": "ObjectFieldSystem",
+     "userkey": "LlmProvider~llmHistoryDepth~150",
+     "item": {
+      "obf_object_id__obo_name": "LlmProvider",
+      "obf_field_id__fld_name": "llmHistoryDepth",
+      "obf_order": 150,
+      "obf_group_by": null,
+      "obf_dfault_order": null,
+      "obf_reorder": null,
+      "obf_input": null,
+      "obf_ref_field_id__fld_name": null,
+      "obf_ref_object_id__obo_name": null,
+      "obf_cascad": null,
+      "obf_card": null,
+      "obf_visible": null,
+      "obf_ref_export": true,
+      "obf_copy": null,
+      "obf_ref_order": null,
+      "obf_fld_uk": null,
+      "obf_fld_visible": null,
+      "obf_fld_required": null,
+      "obf_fld_updatable": null,
+      "obf_fld_research": null,
+      "obf_fld_more": null,
+      "obf_fld_listmore": null,
+      "obf_fld_researchreq": null,
+      "obf_fld_dfault": null,
+      "obf_fld_exportable": null,
+      "obf_fld_compliance": null,
+      "obf_area_id__ofa_name": "LlmProvider-4",
+      "row_module_id__mdl_name": "McpClient",
+      "obf_joined_id__obf_object_id__obo_name": null,
+      "obf_joined_id__obf_field_id__fld_name": null,
+      "obf_joined_id__obf_order": null
+     }
+    },
+    {
+     "object": "ObjectFieldSystem",
+     "userkey": "LlmProvider~llmMaxToken~160",
+     "item": {
+      "obf_object_id__obo_name": "LlmProvider",
+      "obf_field_id__fld_name": "llmMaxToken",
+      "obf_order": 160,
+      "obf_group_by": null,
+      "obf_dfault_order": null,
+      "obf_reorder": null,
+      "obf_input": null,
+      "obf_ref_field_id__fld_name": null,
+      "obf_ref_object_id__obo_name": null,
+      "obf_cascad": null,
+      "obf_card": null,
+      "obf_visible": null,
+      "obf_ref_export": true,
+      "obf_copy": null,
+      "obf_ref_order": null,
+      "obf_fld_uk": null,
+      "obf_fld_visible": null,
+      "obf_fld_required": null,
+      "obf_fld_updatable": null,
+      "obf_fld_research": null,
+      "obf_fld_more": null,
+      "obf_fld_listmore": null,
+      "obf_fld_researchreq": null,
+      "obf_fld_dfault": null,
+      "obf_fld_exportable": null,
+      "obf_fld_compliance": null,
+      "obf_area_id__ofa_name": "LlmProvider-4",
+      "row_module_id__mdl_name": "McpClient",
+      "obf_joined_id__obf_object_id__obo_name": null,
+      "obf_joined_id__obf_field_id__fld_name": null,
+      "obf_joined_id__obf_order": null
+     }
+    },
+    {
+     "object": "ObjectFieldSystem",
+     "userkey": "LlmProvider~llmDataDisclamer~170",
+     "item": {
+      "obf_object_id__obo_name": "LlmProvider",
+      "obf_field_id__fld_name": "llmDataDisclamer",
+      "obf_order": 170,
+      "obf_group_by": null,
+      "obf_dfault_order": null,
+      "obf_reorder": null,
+      "obf_input": null,
+      "obf_ref_field_id__fld_name": null,
+      "obf_ref_object_id__obo_name": null,
+      "obf_cascad": null,
+      "obf_card": null,
+      "obf_visible": null,
+      "obf_ref_export": true,
+      "obf_copy": null,
+      "obf_ref_order": null,
+      "obf_fld_uk": null,
+      "obf_fld_visible": null,
+      "obf_fld_required": null,
+      "obf_fld_updatable": null,
+      "obf_fld_research": null,
+      "obf_fld_more": null,
+      "obf_fld_listmore": null,
+      "obf_fld_researchreq": null,
+      "obf_fld_dfault": null,
+      "obf_fld_exportable": null,
+      "obf_fld_compliance": null,
+      "obf_area_id__ofa_name": "LlmProvider-4",
+      "row_module_id__mdl_name": "McpClient",
+      "obf_joined_id__obf_object_id__obo_name": null,
+      "obf_joined_id__obf_field_id__fld_name": null,
+      "obf_joined_id__obf_order": null
+     }
+    },
+    {
+     "object": "ObjectFieldSystem",
+     "userkey": "LlmProvider~llmApiKey~180",
+     "item": {
+      "obf_object_id__obo_name": "LlmProvider",
+      "obf_field_id__fld_name": "llmApiKey",
+      "obf_order": 180,
+      "obf_group_by": null,
+      "obf_dfault_order": null,
+      "obf_reorder": null,
+      "obf_input": null,
+      "obf_ref_field_id__fld_name": null,
+      "obf_ref_object_id__obo_name": null,
+      "obf_cascad": null,
+      "obf_card": null,
+      "obf_visible": null,
+      "obf_ref_export": true,
+      "obf_copy": null,
+      "obf_ref_order": null,
+      "obf_fld_uk": null,
+      "obf_fld_visible": null,
+      "obf_fld_required": null,
+      "obf_fld_updatable": null,
+      "obf_fld_research": null,
+      "obf_fld_more": null,
+      "obf_fld_listmore": null,
+      "obf_fld_researchreq": null,
+      "obf_fld_dfault": null,
+      "obf_fld_exportable": null,
+      "obf_fld_compliance": null,
+      "obf_area_id__ofa_name": "LlmProvider-4",
+      "row_module_id__mdl_name": "McpClient",
+      "obf_joined_id__obf_object_id__obo_name": null,
+      "obf_joined_id__obf_field_id__fld_name": null,
+      "obf_joined_id__obf_order": null
+     }
+    },
+    {
+     "object": "ObjectFieldSystem",
+     "userkey": "LlmProvider~llmAnthropicWorkspaceId~190",
+     "item": {
+      "obf_object_id__obo_name": "LlmProvider",
+      "obf_field_id__fld_name": "llmAnthropicWorkspaceId",
+      "obf_order": 190,
+      "obf_group_by": null,
+      "obf_dfault_order": null,
+      "obf_reorder": null,
+      "obf_input": null,
+      "obf_ref_field_id__fld_name": null,
+      "obf_ref_object_id__obo_name": null,
+      "obf_cascad": null,
+      "obf_card": null,
+      "obf_visible": null,
+      "obf_ref_export": true,
+      "obf_copy": null,
+      "obf_ref_order": null,
+      "obf_fld_uk": null,
+      "obf_fld_visible": null,
+      "obf_fld_required": null,
+      "obf_fld_updatable": null,
+      "obf_fld_research": null,
+      "obf_fld_more": null,
+      "obf_fld_listmore": null,
+      "obf_fld_researchreq": null,
+      "obf_fld_dfault": null,
+      "obf_fld_exportable": null,
+      "obf_fld_compliance": null,
+      "obf_area_id__ofa_name": "LlmProvider-4",
+      "row_module_id__mdl_name": "McpClient",
+      "obf_joined_id__obf_object_id__obo_name": null,
+      "obf_joined_id__obf_field_id__fld_name": null,
+      "obf_joined_id__obf_order": null
+     }
+    },
+    {
+     "object": "ObjectFieldSystem",
+     "userkey": "LlmProvider~llmGptProjectId~200",
+     "item": {
+      "obf_object_id__obo_name": "LlmProvider",
+      "obf_field_id__fld_name": "llmGptProjectId",
+      "obf_order": 200,
+      "obf_group_by": null,
+      "obf_dfault_order": null,
+      "obf_reorder": null,
+      "obf_input": null,
+      "obf_ref_field_id__fld_name": null,
+      "obf_ref_object_id__obo_name": null,
+      "obf_cascad": null,
+      "obf_card": null,
+      "obf_visible": null,
+      "obf_ref_export": true,
+      "obf_copy": null,
+      "obf_ref_order": null,
+      "obf_fld_uk": null,
+      "obf_fld_visible": null,
+      "obf_fld_required": null,
+      "obf_fld_updatable": null,
+      "obf_fld_research": null,
+      "obf_fld_more": null,
+      "obf_fld_listmore": null,
+      "obf_fld_researchreq": null,
+      "obf_fld_dfault": null,
+      "obf_fld_exportable": null,
+      "obf_fld_compliance": null,
+      "obf_area_id__ofa_name": "LlmProvider-4",
+      "row_module_id__mdl_name": "McpClient",
+      "obf_joined_id__obf_object_id__obo_name": null,
+      "obf_joined_id__obf_field_id__fld_name": null,
+      "obf_joined_id__obf_order": null
+     }
+    },
+    {
+     "object": "ObjectFieldSystem",
+     "userkey": "LlmProvider~llmGptOrganizationId~210",
+     "item": {
+      "obf_object_id__obo_name": "LlmProvider",
+      "obf_field_id__fld_name": "llmGptOrganizationId",
+      "obf_order": 210,
+      "obf_group_by": null,
+      "obf_dfault_order": null,
+      "obf_reorder": null,
+      "obf_input": null,
+      "obf_ref_field_id__fld_name": null,
+      "obf_ref_object_id__obo_name": null,
+      "obf_cascad": null,
+      "obf_card": null,
+      "obf_visible": null,
+      "obf_ref_export": true,
+      "obf_copy": null,
+      "obf_ref_order": null,
+      "obf_fld_uk": null,
+      "obf_fld_visible": null,
+      "obf_fld_required": null,
+      "obf_fld_updatable": null,
+      "obf_fld_research": null,
+      "obf_fld_more": null,
+      "obf_fld_listmore": null,
+      "obf_fld_researchreq": null,
+      "obf_fld_dfault": null,
+      "obf_fld_exportable": null,
+      "obf_fld_compliance": null,
+      "obf_area_id__ofa_name": "LlmProvider-4",
+      "row_module_id__mdl_name": "McpClient",
+      "obf_joined_id__obf_object_id__obo_name": null,
+      "obf_joined_id__obf_field_id__fld_name": null,
+      "obf_joined_id__obf_order": null
+     }
+    }
+   ]
+  },
+  {
+   "object": "Function",
+   "label": "Functions",
+   "icon": "img/system/function",
+   "field": "row_module_id",
+   "list": [
+    {
+     "object": "Function",
+     "userkey": "MCP_PRV_CRUD",
+     "item": {
+      "fct_name": "MCP_PRV_CRUD",
+      "fct_object_id__obo_name": "LlmProvider",
+      "fct_function": "CMS",
+      "fct_action_id__act_name": null,
+      "fct_view_id__viw_name": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "Function",
+     "userkey": "MCP_PRV_R",
+     "item": {
+      "fct_name": "MCP_PRV_R",
+      "fct_object_id__obo_name": "LlmProvider",
+      "fct_function": "L",
+      "fct_action_id__act_name": null,
+      "fct_view_id__viw_name": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    }
+   ]
+  },
+  {
+   "object": "Grant",
+   "label": "Grant",
+   "icon": "img/system/grant",
+   "field": "row_module_id",
+   "list": [
+    {
+     "object": "Grant",
+     "userkey": "MCP_CLT_ADMIN~MCP_PRV_CRUD~LlmProvider~",
+     "item": {
+      "grt_group_id__grp_name": "MCP_CLT_ADMIN",
+      "grt_function_id__fct_name": "MCP_PRV_CRUD",
+      "grt_function_id__fct_object_id__obo_name": "LlmProvider",
+      "grt_function_id__fct_action_id__act_name": null,
+      "grt_activ": true,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "Grant",
+     "userkey": "MCP_CLT_USER~MCP_PRV_R~LlmProvider~",
+     "item": {
+      "grt_group_id__grp_name": "MCP_CLT_USER",
+      "grt_function_id__fct_name": "MCP_PRV_R",
+      "grt_function_id__fct_object_id__obo_name": "LlmProvider",
+      "grt_function_id__fct_action_id__act_name": null,
+      "grt_activ": true,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    }
+   ]
+  },
+  {
+   "object": "Map",
+   "label": "Main menu",
+   "icon": "img/system/main_menu",
+   "field": "row_module_id",
+   "list": [
+    {
+     "object": "Map",
+     "userkey": "McpDomain~ObjectInternal(LlmProvider)~30",
+     "item": {
+      "map_domain_id__obd_name": "McpDomain",
+      "map_object": {
+       "object": "ObjectInternal",
+       "label": "Business object",
+       "userkeylabel": "LlmProvider",
+       "icon": "img/system/business_object",
+       "item": {"obo_name": "LlmProvider"}
+      },
+      "map_order": 30,
+      "map_ext": false,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "Map",
+     "userkey": "McpDomain~ObjectExternal(LlmSetup)~1000",
+     "item": {
+      "map_domain_id__obd_name": "McpDomain",
+      "map_object": {
+       "object": "ObjectExternal",
+       "label": "External object",
+       "userkeylabel": "LlmSetup",
+       "icon": "object",
+       "item": {"obe_name": "LlmSetup"}
+      },
+      "map_order": 1000,
+      "map_ext": false,
+      "row_module_id__mdl_name": "McpClient"
      }
     }
    ]
@@ -441,13 +3037,71 @@
    "list": [
     {
      "object": "Resource",
+     "userkey": "Disposition(default)~ANY~AI_STYLE",
+     "item": {
+      "res_object": {
+       "object": "Disposition",
+       "label": "Disposition",
+       "userkeylabel": "default",
+       "icon": "img/system/disposition",
+       "item": {"dis_code": "default"}
+      },
+      "res_type": "CSS",
+      "res_lang": "ANY",
+      "res_code": "AI_STYLE",
+      "res_cached": false,
+      "res_file": {
+       "path": "resources/Disposition/default/AI_STYLE.less",
+       "mime": "text/x-less",
+       "name": "AI_STYLE.less"
+      },
+      "res_file_compiled": {
+       "path": "resources/Disposition/default/AI_STYLE.min.css",
+       "mime": "text/css",
+       "name": "AI_STYLE.min.css"
+      },
+      "res_image": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "Resource",
+     "userkey": "Disposition(default)~ANY~AiJsTools",
+     "item": {
+      "res_object": {
+       "object": "Disposition",
+       "label": "Disposition",
+       "userkeylabel": "default",
+       "icon": "img/system/disposition",
+       "item": {"dis_code": "default"}
+      },
+      "res_type": "JS",
+      "res_lang": "ANY",
+      "res_code": "AiJsTools",
+      "res_cached": true,
+      "res_file": {
+       "path": "resources/Disposition/default/AiJsTools.js",
+       "mime": "text/javascript",
+       "name": "AiJsTools.js"
+      },
+      "res_file_compiled": {
+       "path": "resources/Disposition/default/AiJsTools.min.js",
+       "mime": "text/javascript",
+       "name": "AiJsTools.min.js"
+      },
+      "res_image": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "Resource",
      "userkey": "ObjectExternal(AiMonitoring)~ANY~STYLES",
      "item": {
       "res_object": {
        "object": "ObjectExternal",
        "label": "External object",
        "userkeylabel": "AiMonitoring",
-       "icon": "img/system/external_object",
+       "icon": "object",
        "item": {"obe_name": "AiMonitoring"}
       },
       "res_type": "CSS",
@@ -476,7 +3130,7 @@
        "object": "ObjectExternal",
        "label": "External object",
        "userkeylabel": "AiMonitoring",
-       "icon": "img/system/external_object",
+       "icon": "object",
        "item": {"obe_name": "AiMonitoring"}
       },
       "res_type": "HTML",
@@ -501,7 +3155,7 @@
        "object": "ObjectExternal",
        "label": "External object",
        "userkeylabel": "AiMonitoring",
-       "icon": "img/system/external_object",
+       "icon": "object",
        "item": {"obe_name": "AiMonitoring"}
       },
       "res_type": "HTML",
@@ -526,7 +3180,7 @@
        "object": "ObjectExternal",
        "label": "External object",
        "userkeylabel": "AiMonitoring",
-       "icon": "img/system/external_object",
+       "icon": "object",
        "item": {"obe_name": "AiMonitoring"}
       },
       "res_type": "JS",
@@ -542,6 +3196,276 @@
        "path": "resources/ObjectExternal/AiMonitoring/SCRIPT.min.js",
        "mime": "text/javascript",
        "name": "SCRIPT.min.js"
+      },
+      "res_image": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "Resource",
+     "userkey": "ObjectExternal(LlmSetup)~ANY~STYLES",
+     "item": {
+      "res_object": {
+       "object": "ObjectExternal",
+       "label": "External object",
+       "userkeylabel": "LlmSetup",
+       "icon": "object",
+       "item": {"obe_name": "LlmSetup"}
+      },
+      "res_type": "CSS",
+      "res_lang": "ANY",
+      "res_code": "STYLES",
+      "res_cached": false,
+      "res_file": {
+       "path": "resources/ObjectExternal/LlmSetup/STYLES.less",
+       "mime": "text/x-less",
+       "name": "STYLES.less"
+      },
+      "res_file_compiled": {
+       "path": "resources/ObjectExternal/LlmSetup/STYLES.min.css",
+       "mime": "text/css",
+       "name": "STYLES.min.css"
+      },
+      "res_image": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "Resource",
+     "userkey": "ObjectExternal(LlmSetup)~ANY~HTML",
+     "item": {
+      "res_object": {
+       "object": "ObjectExternal",
+       "label": "External object",
+       "userkeylabel": "LlmSetup",
+       "icon": "object",
+       "item": {"obe_name": "LlmSetup"}
+      },
+      "res_type": "HTML",
+      "res_lang": "ANY",
+      "res_code": "HTML",
+      "res_cached": false,
+      "res_file": {
+       "path": "resources/ObjectExternal/LlmSetup/HTML.html",
+       "mime": "text/html",
+       "name": "HTML.html"
+      },
+      "res_file_compiled": null,
+      "res_image": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "Resource",
+     "userkey": "ObjectExternal(LlmSetup)~ANY~CLASS",
+     "item": {
+      "res_object": {
+       "object": "ObjectExternal",
+       "label": "External object",
+       "userkeylabel": "LlmSetup",
+       "icon": "object",
+       "item": {"obe_name": "LlmSetup"}
+      },
+      "res_type": "JS",
+      "res_lang": "ANY",
+      "res_code": "CLASS",
+      "res_cached": false,
+      "res_file": {
+       "path": "resources/ObjectExternal/LlmSetup/CLASS.js",
+       "mime": "text/javascript",
+       "name": "CLASS.js"
+      },
+      "res_file_compiled": {
+       "path": "resources/ObjectExternal/LlmSetup/CLASS.min.js",
+       "mime": "text/javascript",
+       "name": "CLASS.min.js"
+      },
+      "res_image": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "Resource",
+     "userkey": "ObjectExternal(AIChatBot)~ANY~STYLES",
+     "item": {
+      "res_object": {
+       "object": "ObjectExternal",
+       "label": "External object",
+       "userkeylabel": "AIChatBot",
+       "icon": "object",
+       "item": {"obe_name": "AIChatBot"}
+      },
+      "res_type": "CSS",
+      "res_lang": "ANY",
+      "res_code": "STYLES",
+      "res_cached": false,
+      "res_file": {
+       "path": "resources/ObjectExternal/AIChatBot/STYLES.less",
+       "mime": "text/x-less",
+       "name": "STYLES.less"
+      },
+      "res_file_compiled": {
+       "path": "resources/ObjectExternal/AIChatBot/STYLES.min.css",
+       "mime": "text/css",
+       "name": "STYLES.min.css"
+      },
+      "res_image": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "Resource",
+     "userkey": "ObjectExternal(AIChatBot)~ANY~HTML",
+     "item": {
+      "res_object": {
+       "object": "ObjectExternal",
+       "label": "External object",
+       "userkeylabel": "AIChatBot",
+       "icon": "object",
+       "item": {"obe_name": "AIChatBot"}
+      },
+      "res_type": "HTML",
+      "res_lang": "ANY",
+      "res_code": "HTML",
+      "res_cached": false,
+      "res_file": {
+       "path": "resources/ObjectExternal/AIChatBot/HTML.html",
+       "mime": "text/html",
+       "name": "HTML.html"
+      },
+      "res_file_compiled": null,
+      "res_image": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "Resource",
+     "userkey": "ObjectExternal(AIChatBot)~ANY~SCRIPT",
+     "item": {
+      "res_object": {
+       "object": "ObjectExternal",
+       "label": "External object",
+       "userkeylabel": "AIChatBot",
+       "icon": "object",
+       "item": {"obe_name": "AIChatBot"}
+      },
+      "res_type": "JS",
+      "res_lang": "ANY",
+      "res_code": "SCRIPT",
+      "res_cached": false,
+      "res_file": {
+       "path": "resources/ObjectExternal/AIChatBot/SCRIPT.js",
+       "mime": "text/javascript",
+       "name": "SCRIPT.js"
+      },
+      "res_file_compiled": {
+       "path": "resources/ObjectExternal/AIChatBot/SCRIPT.min.js",
+       "mime": "text/javascript",
+       "name": "SCRIPT.min.js"
+      },
+      "res_image": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "Resource",
+     "userkey": "ObjectInternal(LlmProvider)~ANY~LlmSettingsFieldsTemplate",
+     "item": {
+      "res_object": {
+       "object": "ObjectInternal",
+       "label": "Business object",
+       "userkeylabel": "LlmProvider",
+       "icon": "img/system/business_object",
+       "item": {"obo_name": "LlmProvider"}
+      },
+      "res_type": "HTML",
+      "res_lang": "ANY",
+      "res_code": "LlmSettingsFieldsTemplate",
+      "res_cached": false,
+      "res_file": {
+       "path": "resources/ObjectInternal/LlmProvider/LlmSettingsFieldsTemplate.html",
+       "mime": "text/html",
+       "name": "LlmSettingsFieldsTemplate.html"
+      },
+      "res_file_compiled": null,
+      "res_image": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "Resource",
+     "userkey": "ObjectInternal(LlmProvider)~ANY~LlmSettingsKeyAndEPTemplate",
+     "item": {
+      "res_object": {
+       "object": "ObjectInternal",
+       "label": "Business object",
+       "userkeylabel": "LlmProvider",
+       "icon": "img/system/business_object",
+       "item": {"obo_name": "LlmProvider"}
+      },
+      "res_type": "HTML",
+      "res_lang": "ANY",
+      "res_code": "LlmSettingsKeyAndEPTemplate",
+      "res_cached": false,
+      "res_file": {
+       "path": "resources/ObjectInternal/LlmProvider/LlmSettingsKeyAndEPTemplate.html",
+       "mime": "text/html",
+       "name": "LlmSettingsKeyAndEPTemplate.html"
+      },
+      "res_file_compiled": null,
+      "res_image": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "Resource",
+     "userkey": "ObjectInternal(LlmProvider)~ANY~LlmSettingsParamTemplate",
+     "item": {
+      "res_object": {
+       "object": "ObjectInternal",
+       "label": "Business object",
+       "userkeylabel": "LlmProvider",
+       "icon": "img/system/business_object",
+       "item": {"obo_name": "LlmProvider"}
+      },
+      "res_type": "HTML",
+      "res_lang": "ANY",
+      "res_code": "LlmSettingsParamTemplate",
+      "res_cached": false,
+      "res_file": {
+       "path": "resources/ObjectInternal/LlmProvider/LlmSettingsParamTemplate.html",
+       "mime": "text/html",
+       "name": "LlmSettingsParamTemplate.html"
+      },
+      "res_file_compiled": null,
+      "res_image": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "Resource",
+     "userkey": "ObjectInternal(LlmProvider)~ANY~CLASS",
+     "item": {
+      "res_object": {
+       "object": "ObjectInternal",
+       "label": "Business object",
+       "userkeylabel": "LlmProvider",
+       "icon": "img/system/business_object",
+       "item": {"obo_name": "LlmProvider"}
+      },
+      "res_type": "JS",
+      "res_lang": "ANY",
+      "res_code": "CLASS",
+      "res_cached": false,
+      "res_file": {
+       "path": "resources/ObjectInternal/LlmProvider/CLASS.js",
+       "mime": "text/javascript",
+       "name": "CLASS.js"
+      },
+      "res_file_compiled": {
+       "path": "resources/ObjectInternal/LlmProvider/CLASS.min.js",
+       "mime": "text/javascript",
+       "name": "CLASS.min.js"
       },
       "res_image": null,
       "row_module_id__mdl_name": "McpClient"
@@ -580,6 +3504,1028 @@
        "name": "LlmTools.java"
       },
       "scr_type": "JSR",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    }
+   ]
+  },
+  {
+   "object": "TranslateField",
+   "label": "Field translation",
+   "icon": "img/system/translation",
+   "field": "row_module_id",
+   "list": [
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmModel)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmModel",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmModel"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "model",
+      "tsl_simplehelp": null,
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmModel)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmModel",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmModel"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "Llm model",
+      "tsl_simplehelp": null,
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmMaxToken)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmMaxToken",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmMaxToken"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "max token",
+      "tsl_simplehelp": null,
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmMaxToken)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmMaxToken",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmMaxToken"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "Llm max token",
+      "tsl_simplehelp": null,
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmDataDisclamer)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmDataDisclamer",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmDataDisclamer"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "Data disclamer",
+      "tsl_simplehelp": "<p>Afficher une bannière d&#39;information dans le chat concernant l&#39;envoi de données au LLM. Le texte de la bannière est définie dans le texte <span style=\"color: rgb(227, 148, 220); background-color: rgb(24, 24, 24);\">AI_DISCLAIMER_DATA<\/span><\/p>",
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmDataDisclamer)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmDataDisclamer",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmDataDisclamer"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "Avertissement concernant les données",
+      "tsl_simplehelp": "<p>Afficher une bannière d&#39;information dans le chat concernant l&#39;envoi de données au LLM. Le texte de la bannière est définie dans le texte <span style=\"background-color: rgb(24, 24, 24); color: rgb(227, 148, 220);\">AI_DISCLAIMER_DATA<\/span><\/p><p><\/p>",
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmHistoryDepth)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmHistoryDepth",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmHistoryDepth"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "History depth",
+      "tsl_simplehelp": null,
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmHistoryDepth)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmHistoryDepth",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmHistoryDepth"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "Llm history depth",
+      "tsl_simplehelp": null,
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmApiKey)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmApiKey",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmApiKey"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "api key",
+      "tsl_simplehelp": "<p>You can use an environment variable: [ENV:&lt;variable&gt;]<\/p>",
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmApiKey)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmApiKey",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmApiKey"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "clé d'API",
+      "tsl_simplehelp": "<p>Vous pouvez utiliser une variable d&#39;environnement : [ENV:&lt;variable&gt;]<\/p>",
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmGptProjectId)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmGptProjectId",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmGptProjectId"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "OpenAI Project ID",
+      "tsl_simplehelp": "<p>Unique identifier for your OpenAI project. You can find it in your OpenAI projects dashboard: <a href=\"https://platform.openai.com/settings/organization/general\" rel=\"noopener noreferrer\" target=\"_blank\">OpenAI Projects Dashboard<\/a>, under the Project =&gt; General tab.<\/p>",
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmGptProjectId)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmGptProjectId",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmGptProjectId"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "Identifiant du projet OpenAI",
+      "tsl_simplehelp": "<p>Identifiant unique de votre projet OpenAI. Vous le trouverez dans le tableau de bord de vos projets OpenAI : <a href=\"https://platform.openai.com/settings/organization/general\" rel=\"noopener noreferrer\" target=\"_blank\">Tableau de bord des projets OpenAI<\/a>, sous l&#39;onglet Projet =&gt; Général.<\/p>",
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmGptOrganizationId)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmGptOrganizationId",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmGptOrganizationId"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "OpenAI Organization ID",
+      "tsl_simplehelp": "<p>Unique identifier for your OpenAI organization. You can find it in your OpenAI organization dashboard:&nbsp; <a href=\"https://platform.openai.com/settings/organization/general\" rel=\"noopener noreferrer\" target=\"_blank\">OpenAI Organization Dashboard<\/a><\/p>",
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmGptOrganizationId)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmGptOrganizationId",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmGptOrganizationId"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "Identifiant de l'Organisation OpenAI",
+      "tsl_simplehelp": "<p>Identifiant unique de votre organisation OpenAI. Vous le trouverez dans le tableau de bord de votre organisation OpenAI :&nbsp; <a href=\"https://platform.openai.com/settings/organization/general\" rel=\"noopener noreferrer\" target=\"_blank\">Tableau de bord de l&#39;organisation OpenAI<\/a><\/p>",
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmAnthropicWorkspaceId)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmAnthropicWorkspaceId",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmAnthropicWorkspaceId"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "anthropic workspace id",
+      "tsl_simplehelp": "<p>Unique identifier for your anthropic workspace. You can find it in your claude dashboard: <a href=\"https://platform.claude.com/settings/workspaces\" rel=\"noopener noreferrer\" target=\"_blank\">Anthropic workspace Dashboard<\/a><\/p>",
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmAnthropicWorkspaceId)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmAnthropicWorkspaceId",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmAnthropicWorkspaceId"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "Identifiant de l'espace de travail anthropique",
+      "tsl_simplehelp": "<p>Identifiant unique de votre espace de travail Anthropic. Vous le trouverez dans votre tableau de bord Claude : <a href=\"https://platform.claude.com/settings/workspaces\" rel=\"noopener noreferrer\" target=\"_blank\">Tableau de bord de l&#39;espace de travail Anthropic<\/a><\/p>",
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmPrvDataModel)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmPrvDataModel",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmPrvDataModel"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "Specific parameter",
+      "tsl_simplehelp": null,
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmPrvDataModel)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmPrvDataModel",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmPrvDataModel"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "Paramètre spécifique",
+      "tsl_simplehelp": null,
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmPrvDefaultUrl)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmPrvDefaultUrl",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmPrvDefaultUrl"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "Default url",
+      "tsl_simplehelp": null,
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmPrvDefaultUrl)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmPrvDefaultUrl",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmPrvDefaultUrl"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "Default Url",
+      "tsl_simplehelp": null,
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmPrvHelp)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmPrvHelp",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmPrvHelp"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "Key and endpoints help",
+      "tsl_simplehelp": null,
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmPrvHelp)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmPrvHelp",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmPrvHelp"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "Aide sur les clés et les endpoints",
+      "tsl_simplehelp": null,
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmPrvProvider)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmPrvProvider",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmPrvProvider"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "Provider",
+      "tsl_simplehelp": null,
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmPrvProvider)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmPrvProvider",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmPrvProvider"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "Provider",
+      "tsl_simplehelp": null,
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmPrvUserParameters)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmPrvUserParameters",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmPrvUserParameters"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "Prv user parameters",
+      "tsl_simplehelp": null,
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmPrvUserParameters)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmPrvUserParameters",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmPrvUserParameters"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "User Parameters",
+      "tsl_simplehelp": null,
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmPrvModelsUrl)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmPrvModelsUrl",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmPrvModelsUrl"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "Models url",
+      "tsl_simplehelp": null,
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmPrvModelsUrl)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmPrvModelsUrl",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmPrvModelsUrl"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "Models Url",
+      "tsl_simplehelp": null,
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmPrvCompletionUrl)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmPrvCompletionUrl",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmPrvCompletionUrl"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "Completion endpoint url",
+      "tsl_simplehelp": null,
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmPrvCompletionUrl)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmPrvCompletionUrl",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmPrvCompletionUrl"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "Completion Url",
+      "tsl_simplehelp": null,
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmPrvPingUrl)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmPrvPingUrl",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmPrvPingUrl"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "Ping url",
+      "tsl_simplehelp": null,
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmPrvPingUrl)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmPrvPingUrl",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmPrvPingUrl"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "Ping url",
+      "tsl_simplehelp": null,
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmPrvSttUrl)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmPrvSttUrl",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmPrvSttUrl"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "Speech to text url",
+      "tsl_simplehelp": null,
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateField",
+     "userkey": "Field(llmPrvSttUrl)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "Field",
+       "label": "Field",
+       "userkeylabel": "llmPrvSttUrl",
+       "icon": "img/system/field",
+       "item": {"fld_name": "llmPrvSttUrl"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "URL  de la synthèse vocale",
+      "tsl_simplehelp": null,
+      "tsl_plural_value": null,
+      "tsl_short_value": null,
+      "tsl_placeholder": null,
+      "tsl_listhelp": null,
+      "tsl_tooltip": null,
+      "tsl_compliance": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    }
+   ]
+  },
+  {
+   "object": "TranslateFieldArea",
+   "label": "Field area translation",
+   "icon": "img/system/translation",
+   "field": "row_module_id",
+   "list": [
+    {
+     "object": "TranslateFieldArea",
+     "userkey": "ObjectFieldArea(McpcltLlmSettings-1)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "ObjectFieldArea",
+       "label": "Fields area",
+       "userkeylabel": "McpcltLlmSettings-1",
+       "icon": "img/system/field_area",
+       "item": {"ofa_name": "McpcltLlmSettings-1"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "McpcltLlmSettings-1",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateFieldArea",
+     "userkey": "ObjectFieldArea(McpcltLlmSettings-1)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "ObjectFieldArea",
+       "label": "Fields area",
+       "userkeylabel": "McpcltLlmSettings-1",
+       "icon": "img/system/field_area",
+       "item": {"ofa_name": "McpcltLlmSettings-1"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "Llm settings -1",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateFieldArea",
+     "userkey": "ObjectFieldArea(McpcltLlmSettings-2)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "ObjectFieldArea",
+       "label": "Fields area",
+       "userkeylabel": "McpcltLlmSettings-2",
+       "icon": "img/system/field_area",
+       "item": {"ofa_name": "McpcltLlmSettings-2"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "customise URLs",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateFieldArea",
+     "userkey": "ObjectFieldArea(McpcltLlmSettings-2)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "ObjectFieldArea",
+       "label": "Fields area",
+       "userkeylabel": "McpcltLlmSettings-2",
+       "icon": "img/system/field_area",
+       "item": {"ofa_name": "McpcltLlmSettings-2"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "Llm settings -2",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateFieldArea",
+     "userkey": "ObjectFieldArea(llmSetupTest-1)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "ObjectFieldArea",
+       "label": "Fields area",
+       "userkeylabel": "llmSetupTest-1",
+       "icon": "img/system/field_area",
+       "item": {"ofa_name": "llmSetupTest-1"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "llmSetupTest-1",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateFieldArea",
+     "userkey": "ObjectFieldArea(llmSetupTest-1)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "ObjectFieldArea",
+       "label": "Fields area",
+       "userkeylabel": "llmSetupTest-1",
+       "icon": "img/system/field_area",
+       "item": {"ofa_name": "llmSetupTest-1"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "Llm setup test -1",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateFieldArea",
+     "userkey": "ObjectFieldArea(LlmProvider-1)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "ObjectFieldArea",
+       "label": "Fields area",
+       "userkeylabel": "LlmProvider-1",
+       "icon": "img/system/field_area",
+       "item": {"ofa_name": "LlmProvider-1"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "Provider -1",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateFieldArea",
+     "userkey": "ObjectFieldArea(LlmProvider-1)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "ObjectFieldArea",
+       "label": "Fields area",
+       "userkeylabel": "LlmProvider-1",
+       "icon": "img/system/field_area",
+       "item": {"ofa_name": "LlmProvider-1"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "LlmProvider-1",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateFieldArea",
+     "userkey": "ObjectFieldArea(LlmProvider-2)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "ObjectFieldArea",
+       "label": "Fields area",
+       "userkeylabel": "LlmProvider-2",
+       "icon": "img/system/field_area",
+       "item": {"ofa_name": "LlmProvider-2"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "Endpoints",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateFieldArea",
+     "userkey": "ObjectFieldArea(LlmProvider-2)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "ObjectFieldArea",
+       "label": "Fields area",
+       "userkeylabel": "LlmProvider-2",
+       "icon": "img/system/field_area",
+       "item": {"ofa_name": "LlmProvider-2"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "Endpoint",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateFieldArea",
+     "userkey": "ObjectFieldArea(LlmProvider-3)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "ObjectFieldArea",
+       "label": "Fields area",
+       "userkeylabel": "LlmProvider-3",
+       "icon": "img/system/field_area",
+       "item": {"ofa_name": "LlmProvider-3"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "User parameters",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateFieldArea",
+     "userkey": "ObjectFieldArea(LlmProvider-3)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "ObjectFieldArea",
+       "label": "Fields area",
+       "userkeylabel": "LlmProvider-3",
+       "icon": "img/system/field_area",
+       "item": {"ofa_name": "LlmProvider-3"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "Paramètres de l'utilisateur",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateFieldArea",
+     "userkey": "ObjectFieldArea(LlmProvider-4)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "ObjectFieldArea",
+       "label": "Fields area",
+       "userkeylabel": "LlmProvider-4",
+       "icon": "img/system/field_area",
+       "item": {"ofa_name": "LlmProvider-4"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "setups fields",
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateFieldArea",
+     "userkey": "ObjectFieldArea(LlmProvider-4)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "ObjectFieldArea",
+       "label": "Fields area",
+       "userkeylabel": "LlmProvider-4",
+       "icon": "img/system/field_area",
+       "item": {"ofa_name": "LlmProvider-4"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "Llm provider -4",
       "row_module_id__mdl_name": "McpClient"
      }
     }
@@ -628,6 +4574,50 @@
    ]
   },
   {
+   "object": "TranslateObject",
+   "label": "Object translation",
+   "icon": "img/system/translation",
+   "field": "row_module_id",
+   "list": [
+    {
+     "object": "TranslateObject",
+     "userkey": "ObjectInternal(LlmProvider)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "ObjectInternal",
+       "label": "Business object",
+       "userkeylabel": "LlmProvider",
+       "icon": "img/system/business_object",
+       "item": {"obo_name": "LlmProvider"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "Provider",
+      "tsl_plural_value": "Providers",
+      "tsl_help": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateObject",
+     "userkey": "ObjectInternal(LlmProvider)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "ObjectInternal",
+       "label": "Business object",
+       "userkeylabel": "LlmProvider",
+       "icon": "img/system/business_object",
+       "item": {"obo_name": "LlmProvider"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "Editeur",
+      "tsl_plural_value": "Editeurs",
+      "tsl_help": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    }
+   ]
+  },
+  {
    "object": "TranslateExternal",
    "label": "External object translate",
    "icon": "img/system/translation",
@@ -641,7 +4631,7 @@
        "object": "ObjectExternal",
        "label": "External object",
        "userkeylabel": "AiMonitoring",
-       "icon": "img/system/external_object",
+       "icon": "object",
        "item": {"obe_name": "AiMonitoring"}
       },
       "tsl_lang": "ENU",
@@ -659,13 +4649,127 @@
        "object": "ObjectExternal",
        "label": "External object",
        "userkeylabel": "AiMonitoring",
-       "icon": "img/system/external_object",
+       "icon": "object",
        "item": {"obe_name": "AiMonitoring"}
       },
       "tsl_lang": "FRA",
       "tsl_value": "Monitoring",
       "tsl_plural_value": null,
       "tsl_help": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateExternal",
+     "userkey": "ObjectExternal(LlmSetup)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "ObjectExternal",
+       "label": "External object",
+       "userkeylabel": "LlmSetup",
+       "icon": "object",
+       "item": {"obe_name": "LlmSetup"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "LLM Configuration",
+      "tsl_plural_value": null,
+      "tsl_help": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateExternal",
+     "userkey": "ObjectExternal(LlmSetup)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "ObjectExternal",
+       "label": "External object",
+       "userkeylabel": "LlmSetup",
+       "icon": "object",
+       "item": {"obe_name": "LlmSetup"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "Configuration du LLM",
+      "tsl_plural_value": null,
+      "tsl_help": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateExternal",
+     "userkey": "ObjectExternal(AIChatBot)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "ObjectExternal",
+       "label": "External object",
+       "userkeylabel": "AIChatBot",
+       "icon": "object",
+       "item": {"obe_name": "AIChatBot"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "Chatbot",
+      "tsl_plural_value": null,
+      "tsl_help": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateExternal",
+     "userkey": "ObjectExternal(AIChatBot)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "ObjectExternal",
+       "label": "External object",
+       "userkeylabel": "AIChatBot",
+       "icon": "object",
+       "item": {"obe_name": "AIChatBot"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "Chatbot",
+      "tsl_plural_value": null,
+      "tsl_help": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    }
+   ]
+  },
+  {
+   "object": "TranslateShortcut",
+   "label": "Shortcut translation",
+   "icon": "img/system/translation",
+   "field": "row_module_id",
+   "list": [
+    {
+     "object": "TranslateShortcut",
+     "userkey": "ShortCut(openchat)~ENU",
+     "item": {
+      "tsl_object": {
+       "object": "ShortCut",
+       "label": "Shortcut",
+       "userkeylabel": "openchat",
+       "icon": "img/system/shortcut",
+       "item": {"shc_name": "openchat"}
+      },
+      "tsl_lang": "ENU",
+      "tsl_value": "Chat",
+      "tsl_tooltip": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "TranslateShortcut",
+     "userkey": "ShortCut(openchat)~FRA",
+     "item": {
+      "tsl_object": {
+       "object": "ShortCut",
+       "label": "Shortcut",
+       "userkeylabel": "openchat",
+       "icon": "img/system/shortcut",
+       "item": {"shc_name": "openchat"}
+      },
+      "tsl_lang": "FRA",
+      "tsl_value": "Chat",
+      "tsl_tooltip": null,
       "row_module_id__mdl_name": "McpClient"
      }
     }
@@ -728,8 +4832,28 @@
        "object": "ObjectExternal",
        "label": "External object",
        "userkeylabel": "AiMonitoring",
-       "icon": "img/system/external_object",
+       "icon": "object",
        "item": {"obe_name": "AiMonitoring"}
+      },
+      "prm_perm": true,
+      "prm_upd": false,
+      "prm_req": false,
+      "prm_prop": null,
+      "prm_value": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "Permission",
+     "userkey": "MCP_CLT_ADMIN~ObjectExternal(LlmSetup)~",
+     "item": {
+      "prm_group_id__grp_name": "MCP_CLT_ADMIN",
+      "prm_object": {
+       "object": "ObjectExternal",
+       "label": "External object",
+       "userkeylabel": "LlmSetup",
+       "icon": "object",
+       "item": {"obe_name": "LlmSetup"}
       },
       "prm_perm": true,
       "prm_upd": false,
@@ -768,8 +4892,28 @@
        "object": "ObjectExternal",
        "label": "External object",
        "userkeylabel": "AiMcpClientApi",
-       "icon": "img/system/external_object",
+       "icon": "object",
        "item": {"obe_name": "AiMcpClientApi"}
+      },
+      "prm_perm": true,
+      "prm_upd": false,
+      "prm_req": false,
+      "prm_prop": null,
+      "prm_value": null,
+      "row_module_id__mdl_name": "McpClient"
+     }
+    },
+    {
+     "object": "Permission",
+     "userkey": "MCP_CLT_USER~ObjectExternal(AIChatBot)~",
+     "item": {
+      "prm_group_id__grp_name": "MCP_CLT_USER",
+      "prm_object": {
+       "object": "ObjectExternal",
+       "label": "External object",
+       "userkeylabel": "AIChatBot",
+       "icon": "object",
+       "item": {"obe_name": "AIChatBot"}
       },
       "prm_perm": true,
       "prm_upd": false,

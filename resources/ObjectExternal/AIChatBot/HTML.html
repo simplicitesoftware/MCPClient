@@ -1,0 +1,18 @@
+<template id="botTemplate"><div class="bot-messages"><strong>{{botName}}: </strong><span class="msg"><div class="ai-chat-ellipsis">Chargement</div>
+</span></div></template>
+<template id="userTemplate" ><div class="user-messages"><strong>{{user}}: </strong>{{{img}}} <span class="msg">{{msg}}</span></div></template>
+<div id="AIchatbot">
+    <div class="chat-container">
+        <div id ="chatbot_messages" class="chat-messages"><div id="data_warn" class="warning"></div></div>
+        <div class="ai-chat-input-area">
+            <div id="input-img" style="display: none;">
+                <img class="minified-img-chat" alt="" />
+                <button class="fa fa-times chat-icon-button" onclick="AiJsTools.removeimg(this)"></button>
+            </div>
+            <div class="ai-user-input ">
+                <input type="text" id="chatbot_input_message" class ="user-message" placeholder="Type your message...">
+                <button id="chatbot_send_button" class="chat-button" onclick="">Send</button>
+            </div>
+        </div>
+    </div>
+</div>

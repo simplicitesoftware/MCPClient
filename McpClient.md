@@ -51,26 +51,6 @@ Claude:
 }
 ```
 
-GPT:
-```json
-{
- "completion_url": "https://api.openai.com/v1/chat/completions",
- "bot_name": "George",
- "code_max_token": "2000",
- "provider": "Open AI",
- "OpenAI-Project": "[ENV:project_key]",
- "OpenAI-Organization": "[ENV:Organization_key]",
- "api_key": "[ENV:api_key]",
- "default_max_token": "5000",
- "showDataDisclaimer": true,
- "data_number": "3",
- "hist_depth": "3",
- "model": "gpt-4o",
- "ping_url": "https://api.openai.com/v1/models",
- "stt_url": "https://api.openai.com/v1/audio/transcriptions"
-}
-```
-
 Domains
 -------
 
@@ -83,14 +63,62 @@ System parameters
 
 | Code | Value | Type | Description |
 |---|---|---|---|
-| `AI_API_PARAM` | `{}` |  | AI API configuration: Example   Mistral: ```json {  "completion_url": "https://api.mistral.ai/v1/chat/completions",  "bot_name": "George",  "code_max_token": "2000",  "provider": "Mistral AI",  "api_key": "[ENV:api_key]",  "default_max_token": "5000",  "showDataDisclaimer": true,  "data_number": "3",  "hist_depth": "3",  "model": "mistral-medium-3-5",  "stt_url": "",  "ping_url": "https://api.mistral.ai/v1/models" } ``` Claude: ```json {   "completion_url": "https://api.anthropic.com/v1/messages",   "bot_name": "George",   "code_max_token": "2000",   "provider": "anthropic",   "api_key": "[ENV:api_key]",   "anthropic-workspace-id":"[ENV:workspace_id]",   "default_max_token": "5000",   "showDataDisclaimer": true,   "data_number": "3",   "hist_depth": "3",   "model": "claude-sonnet-4-5-20250929",   "stt_url": "",   "ping_url": "https://api.anthropic.com/v1/models",   "ClaudeAPI":true } ``` GPT: ```json {  "completion_url": "https://api.openai.com/v1/chat/completions",  "bot_name": "George",  "code_max_token": "2000",  "provider": "Open AI",  "OpenAI-Project": "[ENV:project_key]",  "OpenAI-Organization": "[ENV:Organization_key]",  "api_key": "[ENV:api_key]",  "default_max_token": "5000",  "showDataDisclaimer": true,  "data_number": "3",  "hist_depth": "3",  "model": "gpt-4o",  "ping_url": "https://api.openai.com/v1/models",  "stt_url": "https://api.openai.com/v1/audio/transcriptions" } ``` |
 | `MCP_MUTE_TOOLS` | `false` |  |  |
+
+`LlmProvider` (Provider) business object definition
+---------------------------------------------------
+
+_No description._
+
+**Physical table**: `llm_provider`
+
+### Fields
+
+| Name                                                         | Type                                     | Column                         | Required | Updatable | Personal | Description                                                                      |
+|--------------------------------------------------------------|------------------------------------------|--------------------------------|----------|-----------|----------|----------------------------------------------------------------------------------|
+| `llmPrvProvider`                                             | enum(100) using LLM_PROVIDER list        | llm_prv_provider               | yes*     | yes       |          | -                                                                                |
+| `llmPrvDefaultUrl`                                           | url(100)                                 | llm_prv_default_url            | yes      | yes       |          | -                                                                                |
+| `llmPrvDataModel`                                            | text(4000)                               | llm_prv_data_model             | yes      | yes       |          | -                                                                                |
+| `llmPrvHelp`                                                 | html(50000)                              | llm_prv_help                   |          | yes       |          | -                                                                                |
+| `llmPrvUserParameters`                                       | text(5000)                               | llm_prv_user_parameters        |          | yes       |          | -                                                                                |
+| `llmPrvModelsUrl`                                            | url(100)                                 | llm_prv_models_url             |          | yes       |          | -                                                                                |
+| `llmPrvCompletionUrl`                                        | url(100)                                 | llm_prv_completion_url         |          | yes       |          | -                                                                                |
+| `llmPrvPingUrl`                                              | url(100)                                 | llm_prv_ping_url               |          | yes       |          | -                                                                                |
+| `llmPrvSttUrl`                                               | url(100)                                 | llm_prv_stt_url                |          | yes       |          | -                                                                                |
+| `llmModel`                                                   | enum(100) using LLM_MODEL_SERVICE list   |                                |          | yes       |          | -                                                                                |
+| `llmHistoryDepth`                                            | int(100)                                 |                                |          | yes       |          | -                                                                                |
+| `llmMaxToken`                                                | int(100)                                 |                                |          | yes       |          | -                                                                                |
+| `llmDataDisclamer`                                           | boolean                                  |                                |          | yes       |          | -                                                                                |
+| `llmApiKey`                                                  | password(500)                            |                                |          | yes       |          | -                                                                                |
+| `llmAnthropicWorkspaceId`                                    | password(100)                            |                                |          | yes       |          | -                                                                                |
+| `llmGptProjectId`                                            | password(100)                            |                                |          | yes       |          | -                                                                                |
+| `llmGptOrganizationId`                                       | password(100)                            |                                |          | yes       |          | -                                                                                |
+
+### Enumerations
+
+* `LLM_PROVIDER`
+    - `mistral` Mistral AI
+    - `claude` Anthropic Claude
+    - `openai` Open Ai
+    - `mammouth` Mammouth AI
+    - `Albert` Albert API
+
+### Description (from code)
+
+> Business object LlmProvider
+
+### Implemented hooks
+
+* `postLoad`
+* `preCreate`
 
 External objects
 ----------------
 
+* `AIChatBot`: Chat interface
 * `AiMcpClientApi`: _No description._
 * `AiMonitoring`: _No description._
+* `LlmSetup`: _No description._
 
 Shared code
 -----------

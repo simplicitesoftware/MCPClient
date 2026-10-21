@@ -1,10 +1,13 @@
 {
-    "date": "2026-10-14 09:46:43",
+    "date": "2026-10-21 18:24:55",
     "name": "McpClient",
     "format": "json",
     "files": ["McpClient.json"],
-    "repository": {"origin": {"uri": "https://github.com/simplicitesoftware/MCPClient"}},
+    "repository": {"origin": {
+        "uri": "https://github.com/simplicitesoftware/MCPClient",
+        "branch": "chat"
+    }},
     "version": "7",
-    "branch": "master",
+    "branch": "chat",
     "platform": "7.0.0-beta"
 }

@@ -13,7 +13,7 @@ ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
   <description>Simplicite module: McpClient</description>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <simplicite.url>https://beta.cbi.simplicite.io</simplicite.url>
+    <simplicite.url>http://localhost:8080</simplicite.url>
     <simplicite.version>7.0-SNAPSHOT</simplicite.version>
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
@@ -93,12 +93,6 @@ ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
       <groupId>com.simplicite</groupId>
       <artifactId>simplicite-api</artifactId>
       <version>${simplicite.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.simplicite</groupId>
-      <artifactId>simplicite-api</artifactId>
-      <version>${simplicite.version}</version>
-      <classifier>javadoc</classifier>
     </dependency>
   </dependencies>
   <profiles>
