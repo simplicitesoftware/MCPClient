@@ -230,7 +230,18 @@ public class LlmTools implements java.io.Serializable {
                     messages.putAll(getCleanHistoric(historic));
                 }
 
-                messages.put(new JSONObject().put("role", "user").put(CONTENT_KEY, prompt));
+                JSONObject lastHist;
+                if (!Tool.isEmpty(historic)) {
+                    messages.putAll(getCleanHistoric(historic));
+                    lastHist = historic.optJSONObject(historic.length() - 1);
+                }else{
+                    lastHist = null;
+                }
+
+
+                if(Tool.isEmpty(lastHist) || !"tool".equals(lastHist.optString("role", ""))){
+                    messages.put(new JSONObject().put("role", "user").put(CONTENT_KEY, prompt));
+                }
                 if (!Tool.isEmpty(assistantToolsCalls) && !Tool.isEmpty(userToolsResponse)) {
                     messages.put(new JSONObject().put("role", ASSISTANT_ROLE).put(CONTENT_KEY, "").put(TOOL_CALLS_KEY,
                             assistantToolsCalls));
